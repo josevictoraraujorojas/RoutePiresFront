@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Nome -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
             android:text="Nome completo"
             android:textSize="12sp"
             android:fontFamily="@font/inter_bold"
-            android:textColor="@color/black"
+            android:textColor="#2F3036"
             android:layout_marginBottom="8dp"/>
 
         <EditText
@@ -26,14 +27,16 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="Digite seu nome"
-            android:textColor="@android:color/black"
-            android:textColorHint="#888888"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
             android:background="@drawable/bg_edittext_selector"
             android:paddingHorizontal="12dp"
             android:textSize="16sp"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
     </LinearLayout>
 
+    <!-- E-mail -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +50,7 @@
             android:text="E-Mail"
             android:textSize="12sp"
             android:fontFamily="@font/inter_bold"
-            android:textColor="@color/black"
+            android:textColor="#2F3036"
             android:layout_marginBottom="8dp"/>
 
         <EditText
@@ -55,14 +58,16 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="nome@email.com"
-            android:textColor="@android:color/black"
-            android:textColorHint="#888888"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
             android:background="@drawable/bg_edittext_selector"
             android:paddingHorizontal="12dp"
             android:textSize="16sp"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
     </LinearLayout>
 
+    <!-- Telefone -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +81,7 @@
             android:text="Número de telefone"
             android:textSize="12sp"
             android:fontFamily="@font/inter_bold"
-            android:textColor="@color/black"
+            android:textColor="#2F3036"
             android:layout_marginBottom="8dp"/>
 
         <EditText
@@ -84,14 +89,16 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="(64) 12345-6789"
-            android:textColor="@android:color/black"
-            android:textColorHint="#888888"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
             android:background="@drawable/bg_edittext_selector"
             android:paddingHorizontal="12dp"
             android:textSize="16sp"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
     </LinearLayout>
 
+    <!-- Senha -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,7 +112,7 @@
             android:text="Senha"
             android:textSize="12sp"
             android:fontFamily="@font/inter_bold"
-            android:textColor="@color/black"
+            android:textColor="#2F3036"
             android:layout_marginBottom="8dp"/>
 
         <EditText
@@ -113,14 +120,16 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="Crie uma senha"
-            android:textColor="@android:color/black"
-            android:textColorHint="#888888"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
             android:background="@drawable/bg_edittext_selector"
             android:paddingHorizontal="12dp"
             android:textSize="16sp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
     </LinearLayout>
 
+    <!-- Confirmação de senha -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -132,12 +141,23 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="Confirme a senha"
-            android:textColor="@android:color/black"
-            android:textColorHint="#888888"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
             android:background="@drawable/bg_edittext_selector"
             android:paddingHorizontal="12dp"
             android:textSize="16sp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Continuar"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/bg_botao_arredondado"
+        />
+
 
 </LinearLayout>
