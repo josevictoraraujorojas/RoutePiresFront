@@ -18,6 +18,7 @@ class PrimeiroCadastroMototaxistaFragment : Fragment() {
     ): View {
         _binding = FragmentCadastroMototaxista1Binding.inflate(inflater, container, false)
         return binding.root
+
     }
 
 }
