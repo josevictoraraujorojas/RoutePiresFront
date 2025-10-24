@@ -20,4 +20,18 @@ class PrimeiroCadastroMototaxistaFragment : Fragment() {
         return binding.root
     }
 
+    // Configura as interações da view após ela ser criada.
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.button.setOnClickListener {
+            // Navega para o próximo passo do cadastro.
+            (activity as? MainActivity)?.navigateToSecondStep()
+        }
+    }
+
+    // Limpa a referência do binding quando a view é destruída para evitar vazamentos de memória.
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
