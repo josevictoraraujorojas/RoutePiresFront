@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
                 "Cadastro de Mototaxista - Passo 1/3"
             is SegundoCadastroMototaxista -> supportActionBar?.title =
                 "Cadastro de Mototaxista - Passo 2/3"
+            is TerceiroCadastroMototaxistaFragment -> supportActionBar?.title =
+                "Cadastro de Mototaxista - Passo 3/3"
         }
     }
 
@@ -64,5 +66,9 @@ class MainActivity : AppCompatActivity() {
      */
     fun navigateToSecondStep() {
         replaceFragment(SegundoCadastroMototaxista(), R.id.fragment_cadastro)
+    }
+
+    fun navigateToThirdStep() {
+        replaceFragment(TerceiroCadastroMototaxistaFragment(), R.id.fragment_cadastro)
     }
 }
