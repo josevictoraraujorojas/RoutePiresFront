@@ -1,6 +1,8 @@
 package com.example.routepiresfront
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +21,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnApple: ImageView
     private lateinit var btnFacebook: ImageView
 
+    // 🔹 Elementos do popup
+    private lateinit var registrationOverlay: View
+    private lateinit var registrationScrim: View
+    private lateinit var passengerButton: MaterialButton
+    private lateinit var mototaxiButton: MaterialButton
+    private lateinit var cancelButton: MaterialButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -35,8 +44,14 @@ class LoginActivity : AppCompatActivity() {
         btnGoogle = findViewById(R.id.btnGoogle)
         btnApple = findViewById(R.id.btnApple)
         btnFacebook = findViewById(R.id.btnFacebook)
-    }
 
+        // 🔹 Inicializando os elementos do popup
+        registrationOverlay = findViewById(R.id.registrationOverlay)
+        registrationScrim = findViewById(R.id.registrationScrim)
+        passengerButton = findViewById(R.id.passengerButton)
+        mototaxiButton = findViewById(R.id.mototaxiButton)
+        cancelButton = findViewById(R.id.cancelButton)
+    }
 
     private fun setupListeners() {
         btnLogin.setOnClickListener {
@@ -44,13 +59,34 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvForgotPassword.setOnClickListener {
-            // Navegar para tela de recuperação de senha
             Toast.makeText(this, "Recuperar senha", Toast.LENGTH_SHORT).show()
         }
 
+        // 🔹 Mostrar popup ao clicar em "Registre-se agora"
         tvRegister.setOnClickListener {
-            // Navegar para tela de registro
-            Toast.makeText(this, "Criar conta", Toast.LENGTH_SHORT).show()
+            registrationOverlay.visibility = View.VISIBLE
+        }
+
+        // 🔹 Botão cancelar / voltar
+        cancelButton.setOnClickListener {
+            registrationOverlay.visibility = View.GONE
+        }
+
+        // 🔹 Fechar ao clicar fora (no fundo escuro)
+        registrationScrim.setOnClickListener {
+            registrationOverlay.visibility = View.GONE
+        }
+
+        // 🔹 Clicar em "Quero ser Passageiro"
+        passengerButton.setOnClickListener {
+            registrationOverlay.visibility = View.GONE
+            startActivity(Intent(this, CadastroPassageiroActivity::class.java))
+        }
+
+        // 🔹 Clicar em "Quero ser Mototaxista"
+        mototaxiButton.setOnClickListener {
+            registrationOverlay.visibility = View.GONE
+            startActivity(Intent(this, CadastroMototaxistaActivity::class.java))
         }
 
         btnGoogle.setOnClickListener {
@@ -70,7 +106,6 @@ class LoginActivity : AppCompatActivity() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
 
-        // Validações básicas
         if (email.isEmpty()) {
             etEmail.error = "Digite seu email"
             etEmail.requestFocus()
@@ -95,22 +130,18 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        //implementar a lógica de autenticação
         Toast.makeText(this, "Fazendo login...", Toast.LENGTH_SHORT).show()
     }
 
     private fun loginWithGoogle() {
-        // Implementar Google Sign-In
         Toast.makeText(this, "Login com Google", Toast.LENGTH_SHORT).show()
     }
 
     private fun loginWithApple() {
-        // Implementar Apple Sign-In
         Toast.makeText(this, "Login com Apple", Toast.LENGTH_SHORT).show()
     }
 
     private fun loginWithFacebook() {
-        // Implementar Facebook Login
         Toast.makeText(this, "Login com Facebook", Toast.LENGTH_SHORT).show()
     }
 }

@@ -1,12 +1,11 @@
 package com.example.routepiresfront
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.routepiresfront.databinding.ActivityCadastroMototaxistaBinding
 
-class MainActivity : AppCompatActivity() {
+class CadastroMototaxistaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroMototaxistaBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +43,13 @@ class MainActivity : AppCompatActivity() {
 
     // Lida com o evento de clique no botão "Up" (voltar) na ActionBar.
     override fun onSupportNavigateUp(): Boolean {
-        if (supportFragmentManager.popBackStackImmediate()) {
-            return true
+        return if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+            true
+        } else {
+            finish() // Fecha a activity e volta para a tela de login
+            true
         }
-        return super.onSupportNavigateUp()
     }
 
     //Substitui o fragmento atual em um container por um novo.

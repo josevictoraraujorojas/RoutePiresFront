@@ -6,77 +6,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F2F3F8"
-    tools:context=".MainActivity">
+    tools:context=".CadastroMototaxistaActivity">
 
-    <!-- Layout fictício para representar a tela de login existente -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loginContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp">
+<!--    &lt;!&ndash; Layout fictício para representar a tela de login existente &ndash;&gt;-->
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/loginContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:paddingStart="24dp"-->
+<!--        android:paddingEnd="24dp">-->
 
-        <TextView
-            android:id="@+id/loginTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:text="Route Pires"
-            android:textColor="#1D1D1D"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/loginTitle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="80dp"-->
+<!--            android:text="Route Pires"-->
+<!--            android:textColor="#1D1D1D"-->
+<!--            android:textSize="32sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <TextView
-            android:id="@+id/loginSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Faça login para continuar"
-            android:textColor="#808080"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/loginTitle"
-            app:layout_constraintStart_toStartOf="@id/loginTitle"
-            app:layout_constraintTop_toBottomOf="@id/loginTitle" />
+<!--        <TextView-->
+<!--            android:id="@+id/loginSubtitle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:text="Faça login para continuar"-->
+<!--            android:textColor="#808080"-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/loginTitle"-->
+<!--            app:layout_constraintStart_toStartOf="@id/loginTitle"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/loginTitle" />-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="#0D6EFD"
-            android:insetBottom="0dp"
-            android:insetTop="0dp"
-            android:text="Entrar"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            app:cornerRadius="26dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginSubtitle" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/loginButton"-->
+<!--            style="@style/Widget.MaterialComponents.Button"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:backgroundTint="#0D6EFD"-->
+<!--            android:insetBottom="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:text="Entrar"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            app:cornerRadius="26dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/loginSubtitle" />-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/registerButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#F75464"
-            android:insetBottom="0dp"
-            android:insetTop="0dp"
-            android:text="Cadastrar"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            app:cornerRadius="26dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/registerButton"-->
+<!--            style="@style/Widget.MaterialComponents.Button"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:backgroundTint="#F75464"-->
+<!--            android:insetBottom="0dp"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:text="Cadastrar"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            app:cornerRadius="26dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/loginButton" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <!-- Overlay de seleção de tipo de cadastro -->
     <androidx.constraintlayout.widget.ConstraintLayout

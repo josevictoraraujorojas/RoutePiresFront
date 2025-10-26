@@ -1,5 +1,19 @@
 <resources>
-    <string name="app_name">RoutePiresFront</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">RoutePiresFront</string>
+    <string name="logo_route_pires">Logo Route Pires</string>
+
+    <string name="bem_vindo">Bem-vindo!</string>
+    <string name="nome_gmail_com">nome@gmail.com</string>
+    <string name="senha">senha</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="login">Login</string>
+
+    <string name="n_o_membro">Não é membro?</string>
+    <string name="registre_se_agora">Registre-se agora</string>
+
+    <string name="ou_continue_com">Ou continue com</string>
+    <string name="login_com_google">Login com Google</string>
+    <string name="login_com_apple">Login com Apple</string>
+    <string name="login_com_facebook">Login com Facebook</string>
 </resources>
