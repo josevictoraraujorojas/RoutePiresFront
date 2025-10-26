@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Cabeçalho -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/black"
+            android:contentDescription="Voltar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Histórico de Corridas"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="24dp"/>
+    </LinearLayout>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCorridas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="8dp"
+        android:scrollbars="vertical"/>
+
+    <!-- Barra inferior -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="4"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <!-- Corrida -->
+        <LinearLayout
+            android:id="@+id/itemCorrida"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/iconCorrida"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_corrida_bussola"
+                app:tint="@color/gray"
+                android:contentDescription="Ícone Corrida"/>
+            <TextView
+                android:id="@+id/labelCorrida"
+                android:text="Corrida"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- Avaliações -->
+        <LinearLayout
+            android:id="@+id/itemAvaliacao"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/iconAvaliacao"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_avaliacao"
+                app:tint="@color/gray"
+                android:contentDescription="Ícone Avaliações"/>
+            <TextView
+                android:id="@+id/labelAvaliacao"
+                android:text="Avaliações"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- Negociação -->
+        <LinearLayout
+            android:id="@+id/itemNegociacao"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/iconNegociacao"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_mensagem"
+                app:tint="@color/gray"
+                android:contentDescription="Ícone Negociação"/>
+            <TextView
+                android:id="@+id/labelNegociacao"
+                android:text="Negociação"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- Profile (selecionado) -->
+        <LinearLayout
+            android:id="@+id/itemProfile"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_avaliacao"
+                app:tint="@color/blue"
+                android:contentDescription="Ícone Profile"/>
+            <TextView
+                android:id="@+id/labelProfile"
+                android:text="Profile"
+                android:textColor="@color/blue"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

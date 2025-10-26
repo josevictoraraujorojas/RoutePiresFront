@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoutePiresFront">
         <activity android:name=".CadastroPassageiroActivity"/>
+        <activity android:name=".HistoricoCorridasActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
