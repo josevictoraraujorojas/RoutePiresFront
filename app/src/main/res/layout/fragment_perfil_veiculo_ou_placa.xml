@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Placa da moto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/textViewPlaca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Placa da moto"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="#2F3036"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/editPlaca"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="XXX-9999"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
+            android:background="@drawable/bg_edittext_selector"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
+            android:inputType="textCapCharacters"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
+    </LinearLayout>
+
+    <!-- Renavam -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/textViewRenavam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Renavam"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="#2F3036"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/editRenavam"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="99999999999"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
+            android:background="@drawable/bg_edittext_selector"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
+            android:inputType="numberDecimal"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
+    </LinearLayout>
+
+    <!-- Modelo da moto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/textViewModeloMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modelo da moto"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="#2F3036"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/editModeloMoto"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Honda CG 160 Titan"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
+            android:background="@drawable/bg_edittext_selector"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
+    </LinearLayout>
+
+    <!-- ano da moto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/textViewAnoDaMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ano da moto"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="#2F3036"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/editAnoDaMoto"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="1999"
+            android:textColor="#1F2024"
+            android:textColorHint="#8F9098"
+            android:background="@drawable/bg_edittext_selector"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
+            android:inputType="numberDecimal"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAtualizar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Atualizar"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/bg_botao_arredondado"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonCancelar"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_height="45dp"
+        android:text="Cancelar"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_button_red"
+        />
+
+
+</LinearLayout>
