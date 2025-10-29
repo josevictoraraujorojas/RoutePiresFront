@@ -44,6 +44,7 @@ class CadastroPassageiroActivity : AppCompatActivity() {
                     // Aqui você pode enviar os dados para API ou banco local
                 }
             }
+            btnFinalizar.isEnabled = false
         }
     }
 
