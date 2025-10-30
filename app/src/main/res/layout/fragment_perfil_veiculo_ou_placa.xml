@@ -13,7 +13,7 @@
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:id="@+id/textViewPlaca"
+            android:id="@+id/textViewPlacaPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Placa da moto"
@@ -23,7 +23,7 @@
             android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/editPlaca"
+            android:id="@+id/editPlacaPerfil"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="XXX-9999"
@@ -44,7 +44,7 @@
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:id="@+id/textViewRenavam"
+            android:id="@+id/textViewRenavamPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Renavam"
@@ -54,7 +54,7 @@
             android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/editRenavam"
+            android:id="@+id/editRenavamPerfil"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="99999999999"
@@ -75,7 +75,7 @@
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:id="@+id/textViewModeloMoto"
+            android:id="@+id/textViewModeloMotoPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Modelo da moto"
@@ -85,7 +85,7 @@
             android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/editModeloMoto"
+            android:id="@+id/editModeloMotoPerfil"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="Honda CG 160 Titan"
@@ -106,7 +106,7 @@
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:id="@+id/textViewAnoDaMoto"
+            android:id="@+id/textViewAnoDaMotoPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ano da moto"
@@ -116,7 +116,7 @@
             android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/editAnoDaMoto"
+            android:id="@+id/editAnoDaMotoPerfil"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="1999"
@@ -130,7 +130,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAtualizar"
+        android:id="@+id/buttonAtualizarPerfil"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="Atualizar"
@@ -139,7 +139,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonCancelar"
+        android:id="@+id/buttonCancelarPerfil"
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
         android:layout_height="45dp"
