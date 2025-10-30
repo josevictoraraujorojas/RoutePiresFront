@@ -3,4 +3,13 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#006FFD</color>
+    <color name="profile_blue_light">#E6F1FF</color>
+    <color name="profile_handle_color">#6F6F6F</color>
+    <color name="divider_color">#E5E5EA</color>
+    <color name="bottom_nav_selected">#006FFD</color>
+    <color name="bottom_nav_unselected">#9E9E9E</color>
+    <color name="availability_switch_on">#6DFF28</color>
+    <color name="availability_track_on">#AA6DFF28</color>
+    <color name="availability_track_off">#FFE0E0E0</color>
+    <color name="availability_thumb_off">#FFFFFFFF</color>
 </resources>

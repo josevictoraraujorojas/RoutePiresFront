@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name">RoutePiresFront</string>
@@ -9,11 +10,35 @@
     <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
     <string name="login">Login</string>
 
-    <string name="n_o_membro">Não é membro?</string>
+    <string name="n_o_membro">N\u00e3o \u00e9 membro?</string>
     <string name="registre_se_agora">Registre-se agora</string>
 
     <string name="ou_continue_com">Ou continue com</string>
     <string name="login_com_google">Login com Google</string>
     <string name="login_com_apple">Login com Apple</string>
     <string name="login_com_facebook">Login com Facebook</string>
+
+    <string name="configuracao_titulo_motorista">Configura\u00e7\u00e3o do motorista</string>
+    <string name="configuracao_titulo_passageiro">Configura\u00e7\u00e3o do passageiro</string>
+    <string name="configuracao_motorista_nome">Xaulin</string>
+    <string name="configuracao_motorista_apelido">@mototaxi</string>
+    <string name="configuracao_passageiro_nome">Lucas</string>
+    <string name="configuracao_passageiro_apelido">@passageiro</string>
+    <string name="configuracao_avatar_descricao">Foto do perfil</string>
+    <string name="configuracao_acao_editar">Editar perfil</string>
+    <string name="configuracao_disponibilidade">Disponibilidade:</string>
+    <string name="configuracao_opcao_editar">Editar perfil</string>
+    <string name="configuracao_opcao_veiculo">Ve\u00edculo ou placa</string>
+    <string name="configuracao_opcao_historico">Hist\u00f3rico de corridas</string>
+    <string name="configuracao_opcao_notificacoes">Notifica\u00e7\u00f5es</string>
+    <string name="configuracao_opcao_sair">Sair da conta</string>
+    <string name="configuracao_icone_avancar">Avan\u00e7ar para a pr\u00f3xima etapa</string>
+    <string name="configuracao_mensagem_placeholder">Funcionalidade "%1$s" dispon\u00edvel em breve</string>
+    <string name="configuracao_status_disponivel">Disponibilidade ativada</string>
+    <string name="configuracao_status_indisponivel">Disponibilidade desativada</string>
+
+    <string name="menu_corrida">Corrida</string>
+    <string name="menu_avaliacoes">Avalia\u00e7\u00f5es</string>
+    <string name="menu_negociacao">Negocia\u00e7\u00e3o</string>
+    <string name="menu_configuracao">Configura\u00e7\u00e3o</string>
 </resources>
