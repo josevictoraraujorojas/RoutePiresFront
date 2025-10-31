@@ -1,26 +1,34 @@
 package com.example.routepiresfront
 
+
 import android.os.Bundle
-import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routepiresfront.databinding.FragmentNotificacaoBinding
 
-class NotificacaoFragment : AppCompatActivity() {
+class NotificacaoFragment : Fragment() {
 
-    private lateinit var recyclerCorridas: RecyclerView
+    private lateinit var recyclerNotificacao: RecyclerView
     private lateinit var adapter: NotificacaoAdapter
+    private lateinit var binding: FragmentNotificacaoBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notificacao)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentNotificacaoBinding.inflate(inflater, container, false)
+        recyclerNotificacao = binding.recyclerCorridas
+        val btnVoltar = binding.btnVoltar
 
-        recyclerCorridas = findViewById(R.id.recyclerCorridas)
-        val btnVoltar = findViewById<ImageButton>(R.id.btnVoltar)
+        btnVoltar.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
-        btnVoltar.setOnClickListener { finish() }
-
-        val listaCorridas = listOf(
+        val listaNotificacao = listOf(
             Notificacao("João", "20/03/2025 08:30"),
             Notificacao("Jose", "19/03/2025 08:20"),
             Notificacao("Rodrigo", "14/03/2025 10:30"),
@@ -28,8 +36,10 @@ class NotificacaoFragment : AppCompatActivity() {
             Notificacao("Luan", "20/03/2025")
         )
 
-        adapter = NotificacaoAdapter(listaCorridas)
-        recyclerCorridas.layoutManager = LinearLayoutManager(this)
-        recyclerCorridas.adapter = adapter
+        adapter = NotificacaoAdapter(listaNotificacao)
+        recyclerNotificacao.layoutManager = LinearLayoutManager(requireContext())
+        recyclerNotificacao.adapter = adapter
+
+        return binding.root
     }
 }

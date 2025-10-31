@@ -52,7 +52,7 @@ class MenubarActivity : AppCompatActivity() {
         }
     }
 
-    public fun replaceFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = true) {
+    fun replaceFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = true) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(containerId, fragment)
         if (addToBackStack) {
@@ -61,9 +61,7 @@ class MenubarActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-//   fun navigateToHistorico() {
-//        replaceFragment(HistoricoCorridasFragment(), R.id.fragment_principal)
-//    }
+
 
        private fun exibirMensagemPlaceholder(mensagem: CharSequence) {
            Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show()

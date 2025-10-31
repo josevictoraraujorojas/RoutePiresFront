@@ -58,7 +58,7 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         }
 
         binding.opcaoNotificacoes.setOnClickListener {
-
+            (activity as? MenubarActivity)?.replaceFragment(NotificacaoFragment(), R.id.fragment_principal)
         }
 
         binding.opcaoSair.setOnClickListener {
