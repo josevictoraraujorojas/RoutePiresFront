@@ -22,12 +22,12 @@ class PerfilVeiculoOuPlacaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonAtualizar.setOnClickListener {
+        binding.buttonAtualizarPerfil.setOnClickListener {
             // Atualiza e volta para perfil
         }
 
-        binding.buttonCancelar.setOnClickListener {
-            // cancela alteração e volta para perfil
+        binding.buttonCancelarPerfil.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
     }

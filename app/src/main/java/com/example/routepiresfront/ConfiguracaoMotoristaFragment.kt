@@ -50,7 +50,7 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         }
 
         binding.opcaoVeiculo.setOnClickListener {
-
+            (activity as? MenubarActivity)?.replaceFragment(PerfilVeiculoOuPlacaFragment(), R.id.fragment_principal)
         }
 
         binding.opcaoHistorico.setOnClickListener {
