@@ -53,8 +53,10 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         }
 
         binding.opcaoSair.setOnClickListener {
-
+            val dialog = SairDialogFragment()
+            dialog.show(parentFragmentManager, "SairDialog")
         }
+
 
         binding.swDisponibilidade.setOnCheckedChangeListener { _, isChecked ->
             val mensagem = if (isChecked) {

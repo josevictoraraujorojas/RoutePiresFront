@@ -7,87 +7,92 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/dialog_background"
-        android:padding="24dp">
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sair"
-            android:textColor="#1C1B1F"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/dialog_background"
+            android:padding="24dp"
+            android:clipToPadding="false">
 
-        <!-- Mensagem -->
-        <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Tem certeza de que deseja sair? Você precisará fazer login novamente para usar o aplicativo."
-            android:textColor="#49454F"
-            android:textSize="14sp"
-            android:lineSpacingExtra="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sair"
+                android:textColor="#1C1B1F"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Botão Cancel -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancel"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textColor="#007AFF"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:backgroundTint="#FFFFFF"
-            app:strokeColor="#007AFF"
-            app:strokeWidth="1.5dp"
-            app:cornerRadius="12dp"
-            app:rippleColor="#E3F2FD"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            app:layout_constraintEnd_toStartOf="@id/btnExit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMessage"
-            app:layout_constraintHorizontal_weight="1" />
+            <!-- Mensagem -->
+            <TextView
+                android:id="@+id/tvMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Tem certeza de que deseja sair? Você precisará fazer login novamente para usar o aplicativo."
+                android:textColor="#49454F"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <!-- Botão Sair -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExit"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:text="Sair"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:backgroundTint="#007AFF"
-            app:cornerRadius="12dp"
-            app:rippleColor="#0051D5"
-            style="@style/Widget.Material3.Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnCancel"
-            app:layout_constraintTop_toTopOf="@id/btnCancel"
-            app:layout_constraintHorizontal_weight="1" />
+            <!-- Botão Cancelar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textColor="#007AFF"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-medium"
+                app:backgroundTint="#FFFFFF"
+                app:strokeColor="#007AFF"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="12dp"
+                app:rippleColor="#E3F2FD"
+                app:layout_constraintEnd_toStartOf="@id/btnExit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMessage"
+                app:layout_constraintHorizontal_weight="1" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Botão Sair -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExit"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:text="Sair"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-medium"
+                app:backgroundTint="#007AFF"
+                app:cornerRadius="12dp"
+                app:rippleColor="#0051D5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnCancel"
+                app:layout_constraintTop_toTopOf="@id/btnCancel"
+                app:layout_constraintHorizontal_weight="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

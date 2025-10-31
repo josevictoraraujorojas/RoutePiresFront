@@ -18,7 +18,8 @@ class MenubarActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             // Exibe o Fragmento da Lista de Exercícios na inicialização
-            replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
+//            replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
+            replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
         }
         menuInferior = findViewById(R.id.menuInferior)
         configurarMenuInferior()
@@ -28,7 +29,11 @@ class MenubarActivity : AppCompatActivity() {
         menuInferior.selectedItemId = R.id.navigation_configuracao
         menuInferior.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_configuracao -> true
+                R.id.navigation_configuracao -> {
+//                    replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
+                    replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
+                    true
+                }
                 else -> {
                     exibirMensagemPlaceholder(
                         getString(
