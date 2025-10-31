@@ -20,13 +20,12 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/black"
             android:contentDescription="Voltar" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Histórico de Corridas"
+            android:text="Notificações"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"

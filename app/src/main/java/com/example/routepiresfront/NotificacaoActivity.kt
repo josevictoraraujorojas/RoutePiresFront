@@ -6,14 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class HistoricoCorridasActivity : AppCompatActivity() {
+class NotificacaoActivity : AppCompatActivity() {
 
     private lateinit var recyclerCorridas: RecyclerView
-    private lateinit var adapter: CorridaAdapter
+    private lateinit var adapter: NotificacaoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_historico_corridas)
+        setContentView(R.layout.activity_notificacao)
 
         recyclerCorridas = findViewById(R.id.recyclerCorridas)
         val btnVoltar = findViewById<ImageButton>(R.id.btnVoltar)
@@ -21,14 +21,14 @@ class HistoricoCorridasActivity : AppCompatActivity() {
         btnVoltar.setOnClickListener { finish() }
 
         val listaCorridas = listOf(
-            Corrida("João", "20/03/2025 08:30", "Cancelado"),
-            Corrida("Jose", "19/03/2025 08:20", "Finalizado"),
-            Corrida("Rodrigo", "14/03/2025 10:30", "Finalizado"),
-            Corrida("Otavio", "20/03/2025", "Cancelado"),
-            Corrida("Luan", "20/03/2025", "Cancelado")
+            Notificacao("João", "20/03/2025 08:30"),
+            Notificacao("Jose", "19/03/2025 08:20"),
+            Notificacao("Rodrigo", "14/03/2025 10:30"),
+            Notificacao("Otavio", "20/03/2025"),
+            Notificacao("Luan", "20/03/2025")
         )
 
-        adapter = CorridaAdapter(listaCorridas)
+        adapter = NotificacaoAdapter(listaCorridas)
         recyclerCorridas.layoutManager = LinearLayoutManager(this)
         recyclerCorridas.adapter = adapter
     }
