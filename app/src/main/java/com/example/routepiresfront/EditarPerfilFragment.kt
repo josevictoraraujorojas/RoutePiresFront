@@ -29,6 +29,10 @@ class EditarPerfilFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.btnVoltar.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     override fun onDestroyView() {

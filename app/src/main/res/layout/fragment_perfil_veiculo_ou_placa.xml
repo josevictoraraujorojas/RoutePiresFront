@@ -5,7 +5,35 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Cabeçalho -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_voltar_custom"
+            android:contentDescription="Voltar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Veiculo ou placa"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="24dp"/>
+    </LinearLayout>
+
     <!-- Placa da moto -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
