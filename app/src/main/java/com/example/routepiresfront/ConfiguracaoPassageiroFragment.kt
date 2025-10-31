@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Tela de configuracao do passageiro.
  * Apresenta dados do usuario e links para demais fluxos ainda nao implementados.
  */
-class ConfiguracaoPassageiroActivity : AppCompatActivity() {
+class ConfiguracaoPassageiroFragment : AppCompatActivity() {
 
     private lateinit var menuInferior: BottomNavigationView
     private lateinit var fabEditarFoto: FloatingActionButton

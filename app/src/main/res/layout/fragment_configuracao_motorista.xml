@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ConfiguracaoMotoristaActivity">
+    tools:context=".ConfiguracaoMotoristaFragment">
 
     <TextView
         android:id="@+id/tvTituloConfiguracao"
@@ -27,7 +27,7 @@
         android:fillViewport="true"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        app:layout_constraintBottom_toTopOf="@id/menuInferior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTituloConfiguracao">
@@ -137,8 +137,8 @@
                     android:minHeight="56dp"
                     android:orientation="horizontal"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="4dp">
 
                     <TextView
@@ -154,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/configuracao_icone_avancar"
                         android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/bottom_nav_unselected" />
+                        app:tint="@color/bottom_nav_unselected" />
                 </LinearLayout>
 
                 <View
@@ -173,8 +173,8 @@
                     android:minHeight="56dp"
                     android:orientation="horizontal"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="4dp">
 
                     <TextView
@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/configuracao_icone_avancar"
                         android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/bottom_nav_unselected" />
+                        app:tint="@color/bottom_nav_unselected" />
                 </LinearLayout>
 
                 <View
@@ -209,8 +209,8 @@
                     android:minHeight="56dp"
                     android:orientation="horizontal"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="4dp">
 
                     <TextView
@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/configuracao_icone_avancar"
                         android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/bottom_nav_unselected" />
+                        app:tint="@color/bottom_nav_unselected" />
                 </LinearLayout>
 
                 <View
@@ -245,8 +245,8 @@
                     android:minHeight="56dp"
                     android:orientation="horizontal"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="4dp">
 
                     <TextView
@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/configuracao_icone_avancar"
                         android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/bottom_nav_unselected" />
+                        app:tint="@color/bottom_nav_unselected" />
                 </LinearLayout>
 
                 <View
@@ -281,8 +281,8 @@
                     android:minHeight="56dp"
                     android:orientation="horizontal"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="4dp">
 
                     <TextView
@@ -298,24 +298,11 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/configuracao_icone_avancar"
                         android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/bottom_nav_unselected" />
+                        app:tint="@color/bottom_nav_unselected" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/menuInferior"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="8dp"
-        app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemTextColor="@color/bottom_nav_item_color"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_configuracao_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

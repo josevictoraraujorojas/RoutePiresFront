@@ -1,0 +1,29 @@
+[33md5b869a[m[33m ([m[1;36mHEAD -> [m[1;32mDevelop[m[33m)[m Merge remote-tracking branch 'refs/remotes/origin/feature/notificações' into Develop
+[33ma0d6c0a[m Merge remote-tracking branch 'origin/feature/historico-corrida' into Develop
+[33mb69eec2[m[33m ([m[1;31morigin/feature/configuracao-passageiro-motorista[m[33m)[m feat: Adiciona telas de configuração para motorista e passageiro
+[33m5cda784[m[33m ([m[1;31morigin/feature/notificações[m[33m, [m[1;32mfeature/notificações[m[33m)[m - telas de notificao
+[33mfd0e59d[m - telas de notificao
+[33mf507aef[m[33m ([m[1;31morigin/feature/historico-corrida[m[33m)[m feat: Disable finish button after click
+[33mb0a0fdb[m[33m ([m[1;32mfeature/historico-corrida[m[33m)[m chore: Remove trailing newline from layout file
+[33m334bd34[m refactor: Ajusta o layout do menu inferior
+[33meee34be[m feat: Adiciona tela de histórico de corridas
+[33m6c8b7b7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/Develop[m[33m, [m[1;32mmaster[m[33m)[m - telas de login e cadastro ajustadas - fluxo entre telas de logine e cadastro
+[33m691f462[m Merge remote-tracking branch 'refs/remotes/origin/feature/tipo-cadastro' into Develop
+[33ma2df6f5[m Merge remote-tracking branch 'refs/remotes/origin/feature/login' into Develop
+[33m9b5ee1c[m Merge remote-tracking branch 'origin/feature/cadastro-passageiro' into Develop
+[33md39c847[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-3-3[m[33m)[m feat: Add third step of mototaxi driver registration
+[33m69eda66[m Merge pull request #1 from josevictoraraujorojas/feature/cadastro-mototaxista-2-3
+[33m4697085[m[33m ([m[1;31morigin/feature/login[m[33m)[m feature:Tela de Login
+[33mf592f28[m[33m ([m[1;31morigin/feature/cadastro-passageiro[m[33m, [m[1;32mfeature/Tela-cadastro-passageiro[m[33m)[m refactor: Remove trailing newline from AndroidManifest.xml
+[33mc4aee4a[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-2-3[m[33m)[m feat: Adiciona navegação e título dinâmico
+[33me7db5e9[m feat: Adicionar navegação e limpar binding no fragmento
+[33m86db24a[m feat: Adiciona segunda etapa do cadastro de mototaxista
+[33mfdd3e93[m[33m ([m[1;31morigin/feature/tipo-cadastro[m[33m)[m feat: Adiciona overlay de seleção de tipo de cadastro
+[33m2079dbf[m refactor: Update rounded_button drawable
+[33m429fd88[m refactor: Update back arrow icon
+[33mea3dc66[m refactor: Update blue color value
+[33md4b59a3[m - Implementada a primeira parte da tela de cadastro de mototaxista como Fragment. - Criada a Activity de cadastro de mototaxista para gerenciar os layouts. - Adicionadas duas classes Kotlin: uma para a Activity e outra para o Fragment. - Adicionados drawables:     - Botões arredondados     - EditTexts     - Botão de voltar
+[33ma077500[m feat: Adiciona tela de cadastro de passageiro
+[33mccb47cf[m feat: Update project configuration and add blue color
+[33mfaf0788[m initial
+[33mea9f46f[m Initial commit

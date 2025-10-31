@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class NotificacaoActivity : AppCompatActivity() {
+class NotificacaoFragment : AppCompatActivity() {
 
     private lateinit var recyclerCorridas: RecyclerView
     private lateinit var adapter: NotificacaoAdapter

@@ -40,5 +40,5 @@
     <string name="menu_corrida">Corrida</string>
     <string name="menu_avaliacoes">Avalia\u00e7\u00f5es</string>
     <string name="menu_negociacao">Negocia\u00e7\u00e3o</string>
-    <string name="menu_configuracao">Configura\u00e7\u00e3o</string>
+    <string name="menu_configuracao">Perfil</string>
 </resources>
