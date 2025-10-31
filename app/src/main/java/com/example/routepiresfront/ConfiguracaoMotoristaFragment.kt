@@ -4,17 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.routepiresfront.databinding.FragmentConfiguracaoMotoristaBinding
-import com.example.routepiresfront.databinding.FragmentPrimeiroCadastroMototaxistaBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**
  * Tela de configuracao do motorista.
@@ -46,7 +37,7 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         }
 
         binding.opcaoEditar.setOnClickListener {
-
+            (activity as? MenubarActivity)?.replaceFragment(EditarPerfilFragment(), R.id.fragment_principal)
         }
 
         binding.opcaoVeiculo.setOnClickListener {
@@ -62,6 +53,7 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         }
 
         binding.opcaoSair.setOnClickListener {
+
         }
 
         binding.swDisponibilidade.setOnCheckedChangeListener { _, isChecked ->
