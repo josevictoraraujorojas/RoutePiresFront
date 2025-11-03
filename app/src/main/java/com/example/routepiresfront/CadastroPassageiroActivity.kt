@@ -1,6 +1,11 @@
 package com.example.routepiresfront
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
@@ -18,9 +23,38 @@ class CadastroPassageiroActivity : AppCompatActivity() {
         val edtConfirmarSenha = findViewById<EditText>(R.id.edtConfirmarSenha)
         val chkTermos = findViewById<CheckBox>(R.id.chkTermos)
         val btnFinalizar = findViewById<Button>(R.id.btnFinalizar)
+        val txtTermosCompletos = findViewById<TextView>(R.id.txtTermosCompletos)
 
         btnVoltar.setOnClickListener { finish() }
 
+        // === Configurar termos e política clicáveis ===
+        val texto = "Li e concordo com os Termos de uso e a Política de Privacidade"
+        val spannable = SpannableString(texto)
+
+        // "Termos de uso" clicável
+        val termosStart = texto.indexOf("Termos de uso")
+        val termosEnd = termosStart + "Termos de uso".length
+        spannable.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                Toast.makeText(this@CadastroPassageiroActivity, "Termos clicado", Toast.LENGTH_SHORT).show()
+                // Aqui você pode abrir a Activity ou link dos Termos
+            }
+        }, termosStart, termosEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // "Política de Privacidade" clicável
+        val privStart = texto.indexOf("Política de Privacidade")
+        val privEnd = privStart + "Política de Privacidade".length
+        spannable.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                Toast.makeText(this@CadastroPassageiroActivity, "Política clicada", Toast.LENGTH_SHORT).show()
+                // Aqui você pode abrir a Activity ou link da Política
+            }
+        }, privStart, privEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        txtTermosCompletos.text = spannable
+        txtTermosCompletos.movementMethod = LinkMovementMethod.getInstance()
+
+        // === Botão finalizar ===
         btnFinalizar.setOnClickListener {
             val nome = edtNome.text.toString().trim()
             val email = edtEmail.text.toString().trim()

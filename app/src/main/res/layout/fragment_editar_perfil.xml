@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".EditarPerfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/btnVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_voltar_custom"
+                android:contentDescription="Voltar" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar Perfil"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="24dp"/>
+        </LinearLayout>
+
+        <!-- Campos de formulário -->
+        <!-- Nome completo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewNomeCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Nome completo"
+                android:textColor="#2F3036"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editNomeCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="Seu nome completo"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1F2024"
+                android:textColorHint="#8F9098"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Email -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Email"
+                android:textColor="#2F3036"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="seuemail@exemplo.com"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1F2024"
+                android:textColorHint="#8F9098"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Número de telefone -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Número de telefone"
+                android:textColor="#2F3036"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="(99) 99999-9999"
+                android:inputType="phone"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1F2024"
+                android:textColorHint="#8F9098"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Senha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Senha"
+                android:textColor="#2F3036"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editSenha"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="********"
+                android:inputType="textPassword"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1F2024"
+                android:textColorHint="#8F9098"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Confirmação de senha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewConfirmarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Confirme sua senha"
+                android:textColor="#2F3036"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editConfirmarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="********"
+                android:inputType="textPassword"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1F2024"
+                android:textColorHint="#8F9098"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Botões -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAtualizarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_botao_arredondado"
+            android:text="Atualizar"
+            android:textColor="#FFFFFF" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonCancelarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_botao_arredondado_vermelho"
+            android:text="Cancelar"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>

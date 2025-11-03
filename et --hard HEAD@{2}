@@ -1,0 +1,39 @@
+[33md5b869a[m[33m ([m[1;36mHEAD -> [m[1;32mDevelop[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33md5b869a[m[33m ([m[1;36mHEAD -> [m[1;32mDevelop[m[33m)[m HEAD@{1}: reset: moving to d5b869ae2a4a18db9e7675b7c823419cb35ae003
+[33md5b869a[m[33m ([m[1;36mHEAD -> [m[1;32mDevelop[m[33m)[m HEAD@{2}: commit (merge): Merge remote-tracking branch 'refs/remotes/origin/feature/notificações' into Develop
+[33ma0d6c0a[m HEAD@{3}: commit (merge): Merge remote-tracking branch 'origin/feature/historico-corrida' into Develop
+[33mb69eec2[m[33m ([m[1;31morigin/feature/configuracao-passageiro-motorista[m[33m)[m HEAD@{4}: merge origin/feature/configuracao-passageiro-motorista: Fast-forward
+[33m6c8b7b7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/Develop[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{5}: checkout: moving from feature/notificações to Develop
+[33m5cda784[m[33m ([m[1;31morigin/feature/notificações[m[33m, [m[1;32mfeature/notificações[m[33m)[m HEAD@{6}: commit: - telas de notificao
+[33mfd0e59d[m HEAD@{7}: commit: - telas de notificao
+[33mb0a0fdb[m[33m ([m[1;32mfeature/historico-corrida[m[33m)[m HEAD@{8}: checkout: moving from feature/historico-corrida to feature/notificações
+[33mb0a0fdb[m[33m ([m[1;32mfeature/historico-corrida[m[33m)[m HEAD@{9}: checkout: moving from master to feature/historico-corrida
+[33m6c8b7b7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/Develop[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{10}: merge Develop: Fast-forward
+[33mccb47cf[m HEAD@{11}: checkout: moving from Develop to master
+[33m6c8b7b7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/Develop[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{12}: commit: - telas de login e cadastro ajustadas
+[33m691f462[m HEAD@{13}: commit (merge): Merge remote-tracking branch 'refs/remotes/origin/feature/tipo-cadastro' into Develop
+[33ma2df6f5[m HEAD@{14}: commit (merge): Merge remote-tracking branch 'refs/remotes/origin/feature/login' into Develop
+[33m9b5ee1c[m HEAD@{15}: merge origin/feature/cadastro-passageiro: Merge made by the 'recursive' strategy.
+[33md39c847[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-3-3[m[33m)[m HEAD@{16}: merge refs/remotes/origin/feature/cadastro-mototaxista-3-3: Fast-forward
+[33mc4aee4a[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-2-3[m[33m)[m HEAD@{17}: merge origin/feature/cadastro-mototaxista-2-3: Fast-forward
+[33mea9f46f[m HEAD@{18}: checkout: moving from feature/cadastro-mototaxista-1-3 to Develop
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{19}: checkout: moving from feature/Tela-cadastro-passageiro to feature/cadastro-mototaxista-1-3
+[33mf592f28[m[33m ([m[1;31morigin/feature/cadastro-passageiro[m[33m, [m[1;32mfeature/Tela-cadastro-passageiro[m[33m)[m HEAD@{20}: Branch: renamed refs/heads/Cristian to refs/heads/feature/Tela-cadastro-passageiro
+[33mf592f28[m[33m ([m[1;31morigin/feature/cadastro-passageiro[m[33m, [m[1;32mfeature/Tela-cadastro-passageiro[m[33m)[m HEAD@{22}: merge origin/Cristian: Fast-forward
+[33ma077500[m HEAD@{23}: checkout: moving from feature/Tela-Cadastro-Mototaxista-1-3 to Cristian
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{24}: checkout: moving from feature/Tela-Cadastro-Mototaxista-1-3 to feature/Tela-Cadastro-Mototaxista-1-3
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{25}: branch: Reset to origin/feature/Tela-Cadastro-Mototaxista-1-3
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{26}: Branch: renamed refs/heads/feature/Tela-Cadastro-Mototaxista-1/3 to refs/heads/feature/Tela-Cadastro-Mototaxista-1-3
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{28}: checkout: moving from Cristian to feature/Tela-Cadastro-Mototaxista-1/3
+[33ma077500[m HEAD@{29}: checkout: moving from feature/Tela-Cadastro-Mototaxista-1/3 to Cristian
+[33mec9201c[m[33m ([m[1;31morigin/feature/cadastro-mototaxista-1-3[m[33m, [m[1;32mfeature/cadastro-mototaxista-1-3[m[33m)[m HEAD@{30}: commit: Organizando a branch
+[33md4b59a3[m HEAD@{31}: Branch: renamed refs/heads/jose to refs/heads/feature/Tela-Cadastro-Mototaxista-1/3
+[33md4b59a3[m HEAD@{33}: checkout: moving from Cristian to jose
+[33ma077500[m HEAD@{34}: checkout: moving from master to Cristian
+[33mccb47cf[m HEAD@{35}: merge origin/master: Fast-forward
+[33mea9f46f[m HEAD@{36}: checkout: moving from jose to master
+[33md4b59a3[m HEAD@{37}: commit: - Implementada a primeira parte da tela de cadastro de mototaxista como Fragment.
+[33mfaf0788[m HEAD@{38}: commit: initial
+[33mea9f46f[m HEAD@{39}: checkout: moving from Develop to jose
+[33mea9f46f[m HEAD@{40}: checkout: moving from master to Develop
+[33mea9f46f[m HEAD@{41}: commit (initial): Initial commit

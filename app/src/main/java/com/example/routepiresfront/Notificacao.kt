@@ -1,7 +1,6 @@
 package com.example.routepiresfront
 
-data class Corrida(
+data class Notificacao(
     val nome: String,
     val dataHora: String,
-    val status: String
 )

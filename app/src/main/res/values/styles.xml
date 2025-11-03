@@ -32,12 +32,26 @@
 
     <style name="ChipRed" parent="ChipBase">
         <item name="chipBackgroundColor">@color/red</item>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="DialogFragmentStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
     <style name="ChipGreen" parent="ChipBase">
         <item name="chipBackgroundColor">@color/green</item>
     </style>
 
+    <style name="FullScreenDialogStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
     <style name="ChipBlue" parent="ChipBase">
         <item name="chipBackgroundColor">@color/blue</item>
     </style>
@@ -49,4 +63,7 @@
     <style name="ChipOrange" parent="ChipBase">
         <item name="chipBackgroundColor">@color/orange</item>
     </style>
+
+
+
 </resources>

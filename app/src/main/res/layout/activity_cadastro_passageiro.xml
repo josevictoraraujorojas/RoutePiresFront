@@ -23,8 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="@color/black"
+                android:src="@drawable/ic_voltar_custom"
                 android:contentDescription="Voltar" />
 
             <TextView
@@ -121,7 +120,7 @@
             android:layout_marginBottom="12dp"
             android:inputType="textPassword" />
 
-        <!-- Checkbox Termos -->
+        <!-- Checkbox Termos corrigido -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -132,47 +131,30 @@
             <CheckBox
                 android:id="@+id/chkTermos"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/txtTermosCompletos"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Li e concordo com os "
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/txtTermos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Termos de uso"
-                android:textColor="@color/blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" e a "
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/txtPrivacidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Política de Privacidade"
-                android:textColor="@color/blue"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:text="Li e concordo com os Termos de uso e a Política de Privacidade"
+                android:textColor="@android:color/black"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:singleLine="false"/>
         </LinearLayout>
 
+
         <!-- Botão Finalizar -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFinalizar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:text="Finalizar"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rounded_button"
-            android:layout_marginBottom="24dp" />
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_botao_arredondado"
+            />
 
     </LinearLayout>
 </ScrollView>
