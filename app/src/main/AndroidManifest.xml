@@ -19,7 +19,7 @@
         <activity android:name=".CriacaoCorridaActivity">
         </activity>
         <activity android:name=".CadastroPassageiroActivity"/>
-        <activity android:name=".HistoricoCorridasActivity"/>
+<!--        <activity android:name=".HistoricoCorridasActivity"/>-->
         <activity
             android:name=".MenubarActivity"
             android:exported="true">

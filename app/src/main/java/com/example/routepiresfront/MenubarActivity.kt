@@ -29,11 +29,17 @@ class MenubarActivity : AppCompatActivity() {
         menuInferior.selectedItemId = R.id.navigation_configuracao
         menuInferior.setOnItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.navigation_corrida -> {
+                    // Aqui você abre o fragmento do mapa
+                    replaceFragment(SelecionarLocalFragment(), R.id.fragment_principal, addToBackStack = false)
+                    true
+                }
+
                 R.id.navigation_configuracao -> {
-//                    replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
                     replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
                     true
                 }
+
                 else -> {
                     exibirMensagemPlaceholder(
                         getString(
@@ -43,16 +49,6 @@ class MenubarActivity : AppCompatActivity() {
                     )
                     true
                 }
-            }
-        }
-        menuInferior.setOnItemReselectedListener { item ->
-            if (item.itemId != R.id.navigation_configuracao) {
-                exibirMensagemPlaceholder(
-                    getString(
-                        R.string.configuracao_mensagem_placeholder,
-                        item.title.toString()
-                    )
-                )
             }
         }
     }
