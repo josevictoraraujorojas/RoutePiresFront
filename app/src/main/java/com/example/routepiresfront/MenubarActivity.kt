@@ -34,6 +34,10 @@ class MenubarActivity : AppCompatActivity() {
                     replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
                     true
                 }
+                R.id.navigation_corrida ->{
+                    replaceFragment(MototaxistaCaminhoFragment(), R.id.fragment_principal, addToBackStack = false)
+                    true
+                }
                 else -> {
                     exibirMensagemPlaceholder(
                         getString(
