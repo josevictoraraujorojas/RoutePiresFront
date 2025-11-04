@@ -13,4 +13,5 @@
     <color name="availability_track_on">#AA6DFF28</color>
     <color name="availability_track_off">#FFE0E0E0</color>
     <color name="availability_thumb_off">#FFFFFFFF</color>
+    <color name="negociacao_search_background">#F4F6FA</color>
 </resources>

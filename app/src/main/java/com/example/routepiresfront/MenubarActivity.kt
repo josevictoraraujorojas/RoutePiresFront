@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import com.example.routepiresfront.databinding.ActivityMenubarBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+/**
+ * Activity responsavel pela navegacao inferior do app.
+ */
 class MenubarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenubarBinding
     private lateinit var menuInferior: BottomNavigationView
@@ -17,24 +20,43 @@ class MenubarActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            // Exibe o Fragmento da Lista de Exercícios na inicialização
-//            replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
-            replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
+            // Abre a aba de perfil como tela inicial.
+            replaceFragment(
+                ConfiguracaoPassageiroFragment(),
+                R.id.fragment_principal,
+                addToBackStack = false
+            )
         }
+
         menuInferior = findViewById(R.id.menuInferior)
         configurarMenuInferior()
     }
 
     private fun configurarMenuInferior() {
-        menuInferior.selectedItemId = R.id.navigation_configuracao
         menuInferior.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_configuracao -> {
-//                    replaceFragment(ConfiguracaoMotoristaFragment(), R.id.fragment_principal, addToBackStack = false)
-                    replaceFragment(ConfiguracaoPassageiroFragment(), R.id.fragment_principal, addToBackStack = false)
+                R.id.navigation_negociacao -> {
+                    // Mostra a tela de negociacoes.
+                    replaceFragment(
+                        NegociacaoFragment(),
+                        R.id.fragment_principal,
+                        addToBackStack = false
+                    )
                     true
                 }
+
+                R.id.navigation_configuracao -> {
+                    // Mantem a logica existente de configuracao do usuario.
+                    replaceFragment(
+                        ConfiguracaoPassageiroFragment(),
+                        R.id.fragment_principal,
+                        addToBackStack = false
+                    )
+                    true
+                }
+
                 else -> {
+                    // Exibe uma mensagem temporaria para abas ainda nao implementadas.
                     exibirMensagemPlaceholder(
                         getString(
                             R.string.configuracao_mensagem_placeholder,
@@ -45,8 +67,9 @@ class MenubarActivity : AppCompatActivity() {
                 }
             }
         }
+
         menuInferior.setOnItemReselectedListener { item ->
-            if (item.itemId != R.id.navigation_configuracao) {
+            if (item.itemId != R.id.navigation_configuracao && item.itemId != R.id.navigation_negociacao) {
                 exibirMensagemPlaceholder(
                     getString(
                         R.string.configuracao_mensagem_placeholder,
@@ -55,9 +78,16 @@ class MenubarActivity : AppCompatActivity() {
                 )
             }
         }
+
+        menuInferior.selectedItemId = R.id.navigation_configuracao
     }
 
-    fun replaceFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = true) {
+    fun replaceFragment(
+        fragment: Fragment,
+        containerId: Int,
+        addToBackStack: Boolean = true
+    ) {
+        // Centraliza a troca de fragmentos garantindo o uso uniforme da back stack.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(containerId, fragment)
         if (addToBackStack) {
@@ -66,10 +96,7 @@ class MenubarActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-
-
-       private fun exibirMensagemPlaceholder(mensagem: CharSequence) {
-           Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show()
-       }
-
+    private fun exibirMensagemPlaceholder(mensagem: CharSequence) {
+        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show()
+    }
 }
