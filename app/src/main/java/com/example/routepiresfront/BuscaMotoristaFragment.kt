@@ -1,65 +1,53 @@
 package com.example.routepiresfront
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.example.routepiresfront.databinding.FragmentBuscaMotoristaBinding
 
 class BuscaMotoristaFragment : Fragment() {
 
-    private lateinit var searchIcon: ImageView
-    private lateinit var procurandoButton: Button
-    private lateinit var cancelButton: Button
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var _binding: FragmentBuscaMotoristaBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_busca_motorista, container, false)
-        
-        // Inicializar views
-        searchIcon = view.findViewById(R.id.search_icon)
-        procurandoButton = view.findViewById(R.id.procurando_corrida_button)
-        cancelButton = view.findViewById(R.id.cancel_button)
-        
-        // Iniciar animações
+    ): View {
+        _binding = FragmentBuscaMotoristaBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         startAnimations()
-        
-        // Configurar listener do botão cancelar
-        cancelButton.setOnClickListener {
-            // Adicionar lógica de cancelamento aqui
+
+        binding.cancelButton.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
             stopAnimations()
         }
-        
-        return view
     }
-    
+
     private fun startAnimations() {
-        // Animação de rotação para o ícone de busca
         val rotateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation)
-        searchIcon.startAnimation(rotateAnimation)
-        
-        // Animação de pulse para o botão "Procurando Corrida"
+        binding.searchIcon.startAnimation(rotateAnimation)
+
         val pulseAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse_animation)
-        procurandoButton.startAnimation(pulseAnimation)
+        binding.procurandoCorridaButton.startAnimation(pulseAnimation)
     }
-    
+
     private fun stopAnimations() {
-        searchIcon.clearAnimation()
-        procurandoButton.clearAnimation()
+        binding.searchIcon.clearAnimation()
+        binding.procurandoCorridaButton.clearAnimation()
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         stopAnimations()
+        _binding = null
     }
 }
