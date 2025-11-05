@@ -23,6 +23,11 @@ class SairDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DialogSairBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.btnCancel.setOnClickListener {
             dismiss()
@@ -34,8 +39,6 @@ class SairDialogFragment : DialogFragment() {
             startActivity(intent)
             dismiss()
         }
-
-        return binding.root
     }
 
     override fun onStart() {

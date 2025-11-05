@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
 
 class HistoricoCorridasFragment : Fragment() {
+
     private lateinit var recyclerCorridas: RecyclerView
     private lateinit var adapter: CorridaAdapter
-
     private lateinit var binding: FragmentHistoricoCorridasBinding
 
     override fun onCreateView(
@@ -20,11 +21,12 @@ class HistoricoCorridasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHistoricoCorridasBinding.inflate(inflater, container, false)
-        recyclerCorridas = binding.recyclerCorridas
-        val btnVoltar = binding.btnVoltar
 
-        btnVoltar.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        recyclerCorridas = binding.recyclerCorridas
+
+        // ✅ Botão voltar com Navigation Component
+        binding.btnVoltar.setOnClickListener {
+            findNavController().navigateUp()
         }
 
         val listaCorridas = listOf(

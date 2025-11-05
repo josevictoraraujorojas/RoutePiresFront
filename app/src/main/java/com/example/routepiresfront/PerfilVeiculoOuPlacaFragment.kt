@@ -15,15 +15,17 @@ class PerfilVeiculoOuPlacaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPerfilVeiculoOuPlacaBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.buttonAtualizarPerfil.setOnClickListener {
-            // Atualiza e volta para perfil
+            // TODO: Implementar lógica de atualização
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         binding.buttonCancelarPerfil.setOnClickListener {
@@ -33,7 +35,6 @@ class PerfilVeiculoOuPlacaFragment : Fragment() {
         binding.btnVoltar.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
     }
 
     override fun onDestroyView() {

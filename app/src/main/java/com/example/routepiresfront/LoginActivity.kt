@@ -103,34 +103,33 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin() {
-        val email = etEmail.text.toString().trim()
-        val password = etPassword.text.toString().trim()
-
-        if (email.isEmpty()) {
-            etEmail.error = "Digite seu email"
-            etEmail.requestFocus()
-            return
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.error = "Email inválido"
-            etEmail.requestFocus()
-            return
-        }
-
-        if (password.isEmpty()) {
-            etPassword.error = "Digite sua senha"
-            etPassword.requestFocus()
-            return
-        }
-
-        if (password.length < 6) {
-            etPassword.error = "Senha deve ter no mínimo 6 caracteres"
-            etPassword.requestFocus()
-            return
-        }
-
-        Toast.makeText(this, "Fazendo login...", Toast.LENGTH_SHORT).show()
+//        val email = etEmail.text.toString().trim()
+//        val password = etPassword.text.toString().trim()
+//
+//        if (email.isEmpty()) {
+//            etEmail.error = "Digite seu email"
+//            etEmail.requestFocus()
+//            return
+//        }
+//
+//        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            etEmail.error = "Email inválido"
+//            etEmail.requestFocus()
+//            return
+//        }
+//
+//        if (password.isEmpty()) {
+//            etPassword.error = "Digite sua senha"
+//            etPassword.requestFocus()
+//            return
+//        }
+//
+//        if (password.length < 6) {
+//            etPassword.error = "Senha deve ter no mínimo 6 caracteres"
+//            etPassword.requestFocus()
+//            return
+//        }
+        startActivity(Intent(this, MenubarActivity::class.java))
     }
 
     private fun loginWithGoogle() {

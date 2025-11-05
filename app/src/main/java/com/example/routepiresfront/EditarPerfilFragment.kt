@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.databinding.FragmentEditarPerfilBinding
 
 class EditarPerfilFragment : Fragment() {
@@ -21,18 +22,23 @@ class EditarPerfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Botão salvar/atualizar
         binding.buttonAtualizarPerfil.setOnClickListener {
-            // Atualiza e volta para perfil
+            // 👉 Aqui você faz o update do perfil
+            // E depois volta para a tela anterior
+            findNavController().navigateUp()
         }
 
+        // Botão cancelar
         binding.buttonCancelarPerfil.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            findNavController().navigateUp()
         }
 
+        // Botão voltar (ícone / arrow)
         binding.btnVoltar.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            findNavController().navigateUp()
         }
-
     }
 
     override fun onDestroyView() {

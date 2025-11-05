@@ -1,11 +1,11 @@
 package com.example.routepiresfront
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.databinding.FragmentNotificacaoBinding
@@ -21,11 +21,12 @@ class NotificacaoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotificacaoBinding.inflate(inflater, container, false)
-        recyclerNotificacao = binding.recyclerCorridas
-        val btnVoltar = binding.btnVoltar
 
-        btnVoltar.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        recyclerNotificacao = binding.recyclerCorridas
+
+        // ✅ Botão voltar com Navigation Component
+        binding.btnVoltar.setOnClickListener {
+            findNavController().navigateUp()
         }
 
         val listaNotificacao = listOf(

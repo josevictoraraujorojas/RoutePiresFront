@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.example.routepiresfront.databinding.FragmentConfiguracaoMotoristaBinding
 
-/**
- * Tela de configuracao do motorista.
- * Exibe dados basicos, permite controlar disponibilidade e oferece atalhos para outras areas.
- */
 class ConfiguracaoMotoristaFragment : Fragment() {
 
-    private lateinit var binding : FragmentConfiguracaoMotoristaBinding
+    private lateinit var binding: FragmentConfiguracaoMotoristaBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,48 +20,30 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         return binding.root
     }
 
-
-
-    /** Define as acoes dos botoes, exibindo mensagens temporarias. */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fabEditarFoto.setOnClickListener {
 
-        }
-
-        binding.ivAvatar.setOnClickListener {
-
-        }
+        val navController = Navigation.findNavController(view)
 
         binding.opcaoEditar.setOnClickListener {
-            (activity as? MenubarActivity)?.replaceFragment(EditarPerfilFragment(), R.id.fragment_principal)
+            navController.navigate(R.id.action_configuracaoMotoristaFragment_to_editarPerfilFragment)
         }
 
         binding.opcaoVeiculo.setOnClickListener {
-            (activity as? MenubarActivity)?.replaceFragment(PerfilVeiculoOuPlacaFragment(), R.id.fragment_principal)
+            navController.navigate(R.id.action_configuracaoMotoristaFragment_to_perfilVeiculoOuPlacaFragment)
         }
 
         binding.opcaoHistorico.setOnClickListener {
-            (activity as? MenubarActivity)?.replaceFragment(HistoricoCorridasFragment(), R.id.fragment_principal)
+            navController.navigate(R.id.action_configuracaoMotoristaFragment_to_historicoCorridasFragment)
         }
 
         binding.opcaoNotificacoes.setOnClickListener {
-            (activity as? MenubarActivity)?.replaceFragment(NotificacaoFragment(), R.id.fragment_principal)
+            navController.navigate(R.id.action_configuracaoMotoristaFragment_to_notificacaoFragment)
         }
 
         binding.opcaoSair.setOnClickListener {
             val dialog = SairDialogFragment()
             dialog.show(parentFragmentManager, "SairDialog")
-        }
-
-
-        binding.swDisponibilidade.setOnCheckedChangeListener { _, isChecked ->
-            val mensagem = if (isChecked) {
-
-            } else {
-
-            }
-
         }
     }
 }
