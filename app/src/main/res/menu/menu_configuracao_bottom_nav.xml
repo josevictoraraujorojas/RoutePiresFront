@@ -3,7 +3,8 @@
     <item
         android:id="@+id/selecionarLocalFragment"
         android:icon="@drawable/ic_corrida_bussola"
-        android:title="@string/menu_corrida" />
+        android:title="@string/menu_corrida"
+        />
     <item
         android:id="@+id/navigation_avaliacoes"
         android:icon="@drawable/ic_avaliacao"
@@ -16,6 +17,6 @@
         android:id="@+id/configuracaoPassageiroFragment"
         android:icon="@drawable/ic_avaliacao"
         android:title="@string/menu_configuracao"
-        android:checked="true"
+
         />
 </menu>

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.databinding.FragmentCriacaoCorridaBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -57,14 +58,18 @@ class CriacaoCorridaFragment : Fragment() {
 
         // Botão "Buscar corrida"
         binding.btnBuscar.setOnClickListener {
-            val inicio = binding.tvLocalInicio.text.toString()
-            val destino = binding.tvLocalTermino.text.toString()
+//            val inicio = binding.tvLocalInicio.text.toString()
+//            val destino = binding.tvLocalTermino.text.toString()
+//
+//            if (inicio.contains("Local") || destino.contains("Destino")) {
+//                Toast.makeText(requireContext(), "Selecione os locais antes de buscar", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(requireContext(), "Buscando corrida de:\n$inicio\naté\n$destino", Toast.LENGTH_LONG).show()
+//            }
+            findNavController().navigate(
+                R.id.action_criacaoCorridaFragment_to_buscaMotoristaFragment
+            )
 
-            if (inicio.contains("Local") || destino.contains("Destino")) {
-                Toast.makeText(requireContext(), "Selecione os locais antes de buscar", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Buscando corrida de:\n$inicio\naté\n$destino", Toast.LENGTH_LONG).show()
-            }
         }
 
         // Botão "Cancelar"

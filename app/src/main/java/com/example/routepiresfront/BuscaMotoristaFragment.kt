@@ -27,7 +27,7 @@ class BuscaMotoristaFragment : Fragment() {
         startAnimations()
 
         binding.cancelButton.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            parentFragmentManager.popBackStack()
             stopAnimations()
         }
     }
