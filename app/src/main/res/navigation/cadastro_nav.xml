@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cadastro_nav"
+    app:startDestination="@id/primeiroCadastroMototaxistaFragment">
+
+    <fragment
+        android:id="@+id/primeiroCadastroMototaxistaFragment"
+        android:name="com.example.routepiresfront.PrimeiroCadastroMototaxistaFragment"
+        android:label="PrimeiroCadastroMototaxistaFragment" >
+        <action
+            android:id="@+id/action_primeiroCadastroMototaxistaFragment_to_segundoCadastroMototaxista"
+            app:destination="@id/segundoCadastroMototaxista" />
+    </fragment>
+    <fragment
+        android:id="@+id/segundoCadastroMototaxista"
+        android:name="com.example.routepiresfront.SegundoCadastroMototaxista"
+        android:label="fragment_segundo_cadastro_mototaxista"
+        tools:layout="@layout/fragment_segundo_cadastro_mototaxista" >
+        <action
+            android:id="@+id/action_segundoCadastroMototaxista_to_terceiroCadastroMototaxistaFragment"
+            app:destination="@id/terceiroCadastroMototaxistaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/terceiroCadastroMototaxistaFragment"
+        android:name="com.example.routepiresfront.TerceiroCadastroMototaxistaFragment"
+        android:label="TerceiroCadastroMototaxistaFragment" />
+</navigation>

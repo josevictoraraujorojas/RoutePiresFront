@@ -2,75 +2,64 @@ package com.example.routepiresfront
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.routepiresfront.databinding.ActivityCadastroMototaxistaBinding
 
 class CadastroMototaxistaActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityCadastroMototaxistaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCadastroMototaxistaBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            title = "Cadastro de Mototaxista - Passo 1/3"
-            setDisplayHomeAsUpEnabled(true)
-        }
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_voltar_custom)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if (savedInstanceState == null) {
-            // Exibe o Fragmento da Lista de Exercícios na inicialização
-            replaceFragment(PrimeiroCadastroMototaxistaFragment(), R.id.fragment_cadastro, addToBackStack = false)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_cadastro) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        val appBarConfiguration = AppBarConfiguration(emptySet())
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Função para setar o ícone e ação default
+        fun applyCustomBack(onClick: () -> Unit) {
+            binding.toolbar.navigationIcon =
+                ContextCompat.getDrawable(this, R.drawable.ic_voltar_custom)
+            binding.toolbar.setNavigationOnClickListener { onClick() }
         }
 
-        supportFragmentManager.addOnBackStackChangedListener { updateTitle() }
+        // Listener das mudanças de tela
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+            when (destination.id) {
+
+                // Primeira tela → botão fecha Activity
+                R.id.primeiroCadastroMototaxistaFragment -> {
+                    binding.toolbar.title = "Cadastro - Passo 1/3"
+                    applyCustomBack { finish() }
+                }
+
+                // Nas outras telas → voltar navegação
+                R.id.segundoCadastroMototaxista -> {
+                    binding.toolbar.title = "Cadastro - Passo 2/3"
+                    applyCustomBack { navController.navigateUp() }
+                }
+
+                R.id.terceiroCadastroMototaxistaFragment -> {
+                    binding.toolbar.title = "Cadastro - Passo 3/3"
+                    applyCustomBack { navController.navigateUp() }
+                }
+            }
+        }
     }
 
-    // Atualiza o título da ActionBar com base no fragmento atualmente visível.
-    private fun updateTitle() {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_cadastro)
-        when (currentFragment) {
-            is PrimeiroCadastroMototaxistaFragment -> supportActionBar?.title =
-                "Cadastro de Mototaxista - Passo 1/3"
-            is SegundoCadastroMototaxista -> supportActionBar?.title =
-                "Cadastro de Mototaxista - Passo 2/3"
-            is TerceiroCadastroMototaxistaFragment -> supportActionBar?.title =
-                "Cadastro de Mototaxista - Passo 3/3"
-        }
-    }
-
-    // Lida com o evento de clique no botão "Up" (voltar) na ActionBar.
     override fun onSupportNavigateUp(): Boolean {
-        return if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-            true
-        } else {
-            finish() // Fecha a activity e volta para a tela de login
-            true
-        }
-    }
-
-    //Substitui o fragmento atual em um container por um novo.
-    private fun replaceFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = true) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(containerId, fragment)
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(null)
-        }
-        fragmentTransaction.commit()
-    }
-
-    /**
-     * Navega para o segundo passo do fluxo de cadastro.
-     * Esta função é chamada a partir do primeiro fragmento de cadastro.
-     */
-    fun navigateToSecondStep() {
-        replaceFragment(SegundoCadastroMototaxista(), R.id.fragment_cadastro)
-    }
-
-    fun navigateToThirdStep() {
-        replaceFragment(TerceiroCadastroMototaxistaFragment(), R.id.fragment_cadastro)
+        finish()
+        return true
     }
 }

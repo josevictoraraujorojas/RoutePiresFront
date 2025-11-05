@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     >
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FFFFFF"
-        app:titleTextAppearance="@style/ToolbarTitleText"
-        app:titleTextColor="#1F2024"
-        />
+        android:layout_height="wrap_content"
+        app:titleCentered="true" />
 
-    <FrameLayout
-        android:id="@+id/fragment_cadastro"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_cadastro"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-</LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/cadastro_nav" />
 
+</LinearLayout>

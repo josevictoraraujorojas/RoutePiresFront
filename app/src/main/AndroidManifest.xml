@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoutePiresFront">
         <activity
-            android:name=".MenubarActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".CadastroMototaxistaActivity"/>
+        <activity android:name=".CadastroPassageiroActivity"/>
 
 
 
