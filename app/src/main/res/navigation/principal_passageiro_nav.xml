@@ -53,4 +53,8 @@
         android:name="com.example.routepiresfront.BuscaMotoristaFragment"
         android:label="fragment_busca_motorista"
         tools:layout="@layout/fragment_busca_motorista" />
+    <fragment
+        android:id="@+id/avaliacaoFragment"
+        android:name="com.example.routepiresfront.AvaliacaoFragment"
+        android:label="AvaliacaoFragment" />
 </navigation>

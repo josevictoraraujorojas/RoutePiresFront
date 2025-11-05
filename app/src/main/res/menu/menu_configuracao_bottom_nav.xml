@@ -6,7 +6,7 @@
         android:title="@string/menu_corrida"
         />
     <item
-        android:id="@+id/navigation_avaliacoes"
+        android:id="@+id/avaliacaoFragment"
         android:icon="@drawable/ic_avaliacao"
         android:title="@string/menu_avaliacoes" />
     <item
