@@ -1,11 +1,14 @@
 package com.example.routepiresfront
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.databinding.FragmentBuscaMotoristaBinding
 
 class BuscaMotoristaFragment : Fragment() {
@@ -26,9 +29,13 @@ class BuscaMotoristaFragment : Fragment() {
 
         startAnimations()
 
+        // Simula o tempo de busca (ex: 4 segundos)
+        Handler(Looper.getMainLooper()).postDelayed({
+            mostrarResultados()
+        }, 4000)
+
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.popBackStack()
-            stopAnimations()
         }
     }
 
@@ -43,6 +50,26 @@ class BuscaMotoristaFragment : Fragment() {
     private fun stopAnimations() {
         binding.searchIcon.clearAnimation()
         binding.procurandoCorridaButton.clearAnimation()
+    }
+
+    private fun mostrarResultados() {
+        stopAnimations()
+
+        // Esconde as animações e mostra o RecyclerView
+        binding.layoutAnimacoes.visibility = View.GONE
+        binding.recyclerViewMototaxistas.visibility = View.VISIBLE
+
+        // Dados de exemplo (você pode depois puxar da API)
+        val mototaxistas = listOf(
+            Mototaxista("João Silva", 4.8f, R.drawable.ic_launcher_foreground),
+            Mototaxista("Carlos Souza", 4.5f, R.drawable.ic_launcher_foreground),
+            Mototaxista("Marcos Lima", 4.9f, R.drawable.ic_launcher_foreground)
+        )
+
+        // Configura o RecyclerView
+        val adapter = MototaxistaAdapter(mototaxistas)
+        binding.recyclerViewMototaxistas.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewMototaxistas.adapter = adapter
     }
 
     override fun onDestroyView() {
