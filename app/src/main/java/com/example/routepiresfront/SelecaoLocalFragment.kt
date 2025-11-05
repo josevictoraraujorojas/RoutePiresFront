@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.databinding.FragmentSelecaoLocalBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -75,7 +76,10 @@ class SelecionarLocalFragment : Fragment(), OnMapReadyCallback {
 
         // Botão "Selecionar"
         binding.btnSelecionar.setOnClickListener {
-            Toast.makeText(requireContext(), "Local selecionado!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(
+                R.id.action_selecionarLocalFragment_to_criacaoCorridaFragment
+            )
+
         }
     }
 

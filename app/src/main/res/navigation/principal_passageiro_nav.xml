@@ -35,5 +35,13 @@
     <fragment
         android:id="@+id/selecionarLocalFragment"
         android:name="com.example.routepiresfront.SelecionarLocalFragment"
-        android:label="SelecionarLocalFragment" />
+        android:label="SelecionarLocalFragment" >
+        <action
+            android:id="@+id/action_selecionarLocalFragment_to_criacaoCorridaFragment"
+            app:destination="@id/criacaoCorridaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/criacaoCorridaFragment"
+        android:name="com.example.routepiresfront.CriacaoCorridaFragment"
+        android:label="CriacaoCorridaFragment" />
 </navigation>
