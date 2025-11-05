@@ -32,4 +32,8 @@
         android:id="@+id/notificacaoFragment2"
         android:name="com.example.routepiresfront.NotificacaoFragment"
         android:label="NotificacaoFragment" />
+    <fragment
+        android:id="@+id/selecionarLocalFragment"
+        android:name="com.example.routepiresfront.SelecionarLocalFragment"
+        android:label="SelecionarLocalFragment" />
 </navigation>

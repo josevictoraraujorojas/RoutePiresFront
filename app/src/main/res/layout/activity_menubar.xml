@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/principal_motorista_nav" />
+        app:navGraph="@navigation/principal_passageiro_nav" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuInferior"
