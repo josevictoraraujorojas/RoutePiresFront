@@ -16,9 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoutePiresFront">
 
-        <activity android:name=".CriacaoCorridaActivity">
-        </activity>
-        <activity android:name=".CadastroPassageiroActivity"/>
 <!--        <activity android:name=".HistoricoCorridasActivity"/>-->
         <activity
             android:name=".LoginActivity"
