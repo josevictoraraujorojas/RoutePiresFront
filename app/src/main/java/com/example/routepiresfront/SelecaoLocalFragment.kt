@@ -53,14 +53,14 @@ class SelecionarLocalFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         try {
-            // Define uma posição (latitude e longitude) — neste caso, Birmingham (EUA).
-            val birmingham = LatLng(33.5186, -86.8104)
+            // Define uma posição (latitude e longitude) — neste caso, Pires do Rio.
+            val piresdoRio = LatLng(-17.3019, -48.2784)
 
             // Adiciona um marcador no mapa na posição definida.
-            map.addMarker(MarkerOptions().position(birmingham).title("Birmingham"))
+            map.addMarker(MarkerOptions().position(piresdoRio).title("Birmingham"))
 
             // Move a câmera do mapa para a posição do marcador com zoom 13.
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(birmingham, 13f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(piresdoRio, 13f))
         } catch (e: Exception) {
             // Exibe uma mensagem de erro caso algo dê errado ao carregar o mapa.
             Toast.makeText(requireContext(), "Erro ao carregar o mapa: ${e.message}", Toast.LENGTH_LONG).show()
