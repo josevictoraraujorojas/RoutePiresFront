@@ -42,4 +42,11 @@
     <string name="menu_avaliacoes">Avalia\u00e7\u00f5es</string>
     <string name="menu_negociacao">Negocia\u00e7\u00e3o</string>
     <string name="menu_configuracao">Perfil</string>
+
+    <string name="procurando_corrida">Procurando Corrida</string>
+    <string name="cancelar_busca">Cancelar</string>
+    <string name="mapa">Mapa</string>
+    <string name="satelite">Sat\u00e9lite</string>
+    <string name="buscando_mototaxistas">Buscando mototaxistas dispon\u00edveis\u2026</string>
+    <string name="mototaxista_avatar_desc">Foto ilustrativa do mototaxista</string>
 </resources>

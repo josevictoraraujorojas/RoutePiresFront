@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:gravity="center_vertical"
+    android:minHeight="72dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp"
     android:background="?attr/selectableItemBackground">
 
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:id="@+id/imgPerfil"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        app:cardCornerRadius="28dp">
+        android:background="@drawable/profile_avatar_background"
+        android:contentDescription="@string/mototaxista_avatar_desc"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/avatar_pic" />
 
-        <ImageView
-            android:id="@+id/imgPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/ic_launcher_foreground"
-            android:background="@drawable/profile_avatar_background"
-            />
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtNome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginStart="16dp"
-        android:orientation="horizontal">
+        android:layout_marginEnd="16dp"
+        android:textColor="#1C1C1E"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/ratingAvaliacao"
+        app:layout_constraintStart_toEndOf="@id/imgPerfil"
+        app:layout_constraintTop_toTopOf="@id/imgPerfil"
+        tools:text="Haley James" />
 
-        <TextView
-            android:id="@+id/txtNome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:paddingEnd="20dp"
-            tools:text="Nome do Mototaxista" />
+    <RatingBar
+        android:id="@+id/ratingAvaliacao"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressTint="@color/blue"
+        android:rating="5"
+        android:secondaryProgressTint="@color/blue"
+        android:stepSize="0.5"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/txtNome"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <RatingBar
-            android:id="@+id/ratingAvaliacao"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:numStars="5"
-            android:stepSize="0.5"
-            android:progressTint="#006FFD"
-            tools:rating="4.5" />
-    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/divider_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/txtNome" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

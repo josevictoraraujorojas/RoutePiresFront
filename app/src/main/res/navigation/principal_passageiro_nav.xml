@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/principal_passageiro_nav"
-    app:startDestination="@id/selecionarLocalFragment">
+    app:startDestination="@id/buscaMotoristaFragment">
 
     <fragment
         android:id="@+id/configuracaoPassageiroFragment"
