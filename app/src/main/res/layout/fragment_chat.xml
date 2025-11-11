@@ -16,19 +16,20 @@
         android:id="@+id/recycler_view_chat"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/layout_chat_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/button_container"
         app:reverseLayout="true"
         tools:listitem="@layout/item_mensagem_enviada"
         tools:visibility="gone" />
 
-    <!-- Container with sample messages for design-time preview only. It's hidden at runtime. -->
+    <!-- The button_container has been moved below -->
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -38,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layout_chat_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/button_container"
         tools:visibility="visible">
 
         <include layout="@layout/item_mensagem_recebida" />
@@ -49,6 +50,40 @@
 
         <include layout="@layout/item_mensagem_enviada" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_toolbar">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_recusar_corrida"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_border_blue"
+            android:text="Recusar Corrida"
+            android:textColor="@color/black" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_aceitar_corrida"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_botao_arredondado"
+            android:text="Aceitar Corrida"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
