@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_corrida"
+        android:id="@+id/selecionarLocalFragment"
         android:icon="@drawable/ic_corrida_bussola"
-        android:title="@string/menu_corrida" />
+        android:title="@string/menu_corrida"
+        />
     <item
-        android:id="@+id/navigation_avaliacoes"
+        android:id="@+id/avaliacaoFragment"
         android:icon="@drawable/ic_avaliacao"
         android:title="@string/menu_avaliacoes" />
     <item
@@ -13,9 +14,9 @@
         android:icon="@drawable/ic_mensagem"
         android:title="@string/menu_negociacao" />
     <item
-        android:id="@+id/navigation_configuracao"
+        android:id="@+id/configuracaoPassageiroFragment"
         android:icon="@drawable/ic_avaliacao"
         android:title="@string/menu_configuracao"
-        android:checked="true"
+
         />
 </menu>
