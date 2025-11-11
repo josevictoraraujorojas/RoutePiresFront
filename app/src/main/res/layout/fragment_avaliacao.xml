@@ -12,28 +12,33 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Botão Voltar -->
-        <ImageButton
-            android:id="@+id/btnVoltar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_voltar_custom"
-            android:contentDescription="Voltar"
-            android:layout_gravity="start"
-            android:layout_marginBottom="24dp"
-            app:tint="#007AFF" />
-
-        <!-- Título da Página -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Cabeçalho com botão Voltar e título -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Avaliação"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <ImageButton
+                android:id="@+id/btnVoltar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_voltar_custom"
+                android:contentDescription="Voltar"
+                app:tint="#007AFF"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Avaliação"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
 
         <!-- Título Principal -->
         <TextView
@@ -44,7 +49,6 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:textColor="@android:color/black"
-            android:layout_gravity="start"
             android:layout_marginBottom="8dp" />
 
         <!-- Subtítulo -->
@@ -55,7 +59,6 @@
             android:text="Como você avalia a Corrida?"
             android:textSize="16sp"
             android:textColor="#666666"
-            android:layout_gravity="start"
             android:layout_marginBottom="24dp" />
 
         <!-- Rating Bar (Estrelas) -->
@@ -69,7 +72,6 @@
             android:progressTint="#007AFF"
             android:secondaryProgressTint="#E0E0E0"
             android:progressBackgroundTint="#E0E0E0"
-            android:layout_gravity="start"
             android:layout_marginBottom="16dp" />
 
         <!-- Texto de Avaliação -->
@@ -80,7 +82,6 @@
             android:text="4 estrelas"
             android:textSize="14sp"
             android:textColor="#666666"
-            android:layout_gravity="start"
             android:layout_marginBottom="32dp" />
 
         <!-- Label Comentário -->
@@ -91,7 +92,6 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="@android:color/black"
-            android:layout_gravity="start"
             android:layout_marginBottom="8dp" />
 
         <!-- Campo de Comentário -->
@@ -110,6 +110,7 @@
             android:maxLines="5"
             android:scrollbars="vertical" />
 
+        <!-- Botão Enviar -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
