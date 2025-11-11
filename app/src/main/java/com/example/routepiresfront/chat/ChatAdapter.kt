@@ -7,67 +7,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
 
-class ChatAdapter(
-    private val mensagens: List<Mensagem>,
-    private val idUsuarioAtual: String
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(private val mensagens: List<Mensagem>) :
+    RecyclerView.Adapter<ChatAdapter.MensagemViewHolder>() {
 
-    // Constantes para identificar os tipos de view
-    private const val TIPO_MENSAGEM_ENVIADA = 1
-    private const val TIPO_MENSAGEM_RECEBIDA = 2
-
-    // ViewHolder para mensagens ENVIADAS
-    inner class EnviadaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Encontra o TextView no layout item_mensagem_enviada.xml
-        private val textoMensagem: TextView = itemView.findViewById(R.id.texto_mensagem)
-
-        fun bind(mensagem: Mensagem) {
-            textoMensagem.text = mensagem.texto
-        }
-    }
-
-    // ViewHolder para mensagens RECEBIDAS
-    inner class RecebidaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Encontra o TextView no layout item_mensagem_recebida.xml
-        private val textoMensagem: TextView = itemView.findViewById(R.id.texto_mensagem)
-
-        fun bind(mensagem: Mensagem) {
-            textoMensagem.text = mensagem.texto
-        }
-    }
-
-    // Este método decide qual layout usar (enviado vs. recebido)
     override fun getItemViewType(position: Int): Int {
-        val mensagem = mensagens[position]
-        return if (mensagem.remetenteId == idUsuarioAtual) {
-            TIPO_MENSAGEM_ENVIADA
+        return mensagens[position].tipo
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MensagemViewHolder {
+        val layoutId = if (viewType == Mensagem.TIPO_ENVIADA) {
+            R.layout.item_mensagem_enviada
         } else {
-            TIPO_MENSAGEM_RECEBIDA
+            R.layout.item_mensagem_recebida
         }
+        val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
+        return MensagemViewHolder(view)
     }
 
-    // Este método cria o ViewHolder correto com base no tipo de view
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TIPO_MENSAGEM_ENVIADA) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_mensagem_enviada, parent, false)
-            EnviadaViewHolder(view)
-        } else { // TIPO_MENSAGEM_RECEBIDA
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_mensagem_recebida, parent, false)
-            RecebidaViewHolder(view)
-        }
-    }
-
-    // Este método vincula os dados (a mensagem) ao ViewHolder
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
         val mensagem = mensagens[position]
-        when (holder) {
-            is EnviadaViewHolder -> holder.bind(mensagem)
-            is RecebidaViewHolder -> holder.bind(mensagem)
-        }
+        holder.textoMensagem.text = mensagem.texto
+        holder.horaMensagem.text = mensagem.hora
     }
 
-    // Retorna o número total de itens na lista
     override fun getItemCount() = mensagens.size
+
+    class MensagemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textoMensagem: TextView = view.findViewById(R.id.texto_mensagem)
+        val horaMensagem: TextView = view.findViewById(R.id.hora_mensagem)
+    }
 }
