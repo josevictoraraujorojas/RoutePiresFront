@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.notificacao
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,20 +6,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routepiresfront.R
 
-class CorridaAdapter(private val lista: List<Corrida>) :
-    RecyclerView.Adapter<CorridaAdapter.CorridaViewHolder>() {
+class NotificacaoAdapter(private val lista: List<Notificacao>) :
+    RecyclerView.Adapter<NotificacaoAdapter.CorridaViewHolder>() {
 
     class CorridaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nome: TextView = view.findViewById(R.id.txtNome)
         val dataHora: TextView = view.findViewById(R.id.txtDataHora)
-        val status: TextView = view.findViewById(R.id.txtStatus)
         val mensagem: ImageView = view.findViewById(R.id.imgMensagem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CorridaViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_corrida, parent, false)
+            .inflate(R.layout.item_notificacao, parent, false)
         return CorridaViewHolder(view)
     }
 
@@ -27,7 +27,6 @@ class CorridaAdapter(private val lista: List<Corrida>) :
         val corrida = lista[position]
         holder.nome.text = corrida.nome
         holder.dataHora.text = corrida.dataHora
-        holder.status.text = corrida.status
     }
 
     override fun getItemCount(): Int = lista.size

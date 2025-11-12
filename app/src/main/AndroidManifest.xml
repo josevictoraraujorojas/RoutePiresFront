@@ -18,7 +18,7 @@
 
 <!--        <activity android:name=".HistoricoCorridasActivity"/>-->
         <activity
-            android:name=".LoginActivity"
+            android:name=".UI.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,9 +29,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
-        <activity android:name=".CadastroMototaxistaActivity"/>
-        <activity android:name=".CadastroPassageiroActivity"/>
-        <activity android:name=".MenubarActivity"/>
+        <activity android:name=".UI.cadastro.CadastroMototaxistaActivity"/>
+        <activity android:name=".UI.cadastro.CadastroPassageiroActivity"/>
+        <activity android:name=".UI.menu.MenubarActivity"/>
 
 
 

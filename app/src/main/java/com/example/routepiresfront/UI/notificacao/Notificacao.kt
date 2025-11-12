@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.notificacao
 
 data class Notificacao(
     val nome: String,

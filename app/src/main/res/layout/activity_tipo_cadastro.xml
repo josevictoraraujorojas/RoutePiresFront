@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F2F3F8"
-    tools:context=".CadastroMototaxistaActivity">
+    tools:context=".UI.cadastro.CadastroMototaxistaActivity">
 
 <!--    &lt;!&ndash; Layout fictício para representar a tela de login existente &ndash;&gt;-->
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->

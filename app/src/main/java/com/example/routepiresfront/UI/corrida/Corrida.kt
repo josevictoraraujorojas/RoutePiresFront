@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.corrida
 
 data class Corrida(
     val nome: String,

@@ -1,6 +1,6 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.corrida
 
-import android.app.Dialog
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +24,7 @@ class EscolhaMototaxistaFragment : DialogFragment() {
             avaliacao = it.getFloat("avaliacao", 0f)
         }
         // Define o estilo do pop-up (sem bordas e com fundo transparente)
-        setStyle(STYLE_NO_FRAME, android.R.style.Theme_Translucent_NoTitleBar)
+        setStyle(STYLE_NO_FRAME, R.style.Theme_Translucent_NoTitleBar)
     }
 
     override fun onCreateView(

@@ -1,8 +1,9 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.corrida
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.ItemListaLocaisBinding
 
 class LocalSugestaoAdapter(

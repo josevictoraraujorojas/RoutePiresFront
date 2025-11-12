@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.notificacao
 
 import android.os.Bundle
 import android.view.LayoutInflater

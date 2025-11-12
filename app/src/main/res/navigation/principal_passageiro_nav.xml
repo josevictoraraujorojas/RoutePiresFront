@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/configuracaoPassageiroFragment"
-        android:name="com.example.routepiresfront.ConfiguracaoPassageiroFragment"
+        android:name="com.example.routepiresfront.UI.configuracao.ConfiguracaoPassageiroFragment"
         android:label="fragment_configuracao_passageiro"
         tools:layout="@layout/fragment_configuracao_passageiro" >
         <action
@@ -22,15 +22,15 @@
     </fragment>
     <fragment
         android:id="@+id/editarPerfilFragment2"
-        android:name="com.example.routepiresfront.EditarPerfilFragment"
+        android:name="com.example.routepiresfront.UI.perfil.EditarPerfilFragment"
         android:label="EditarPerfilFragment" />
     <fragment
         android:id="@+id/historicoCorridasFragment2"
-        android:name="com.example.routepiresfront.HistoricoCorridasFragment"
+        android:name="com.example.routepiresfront.UI.corrida.HistoricoCorridasFragment"
         android:label="HistoricoCorridasFragment" />
     <fragment
         android:id="@+id/notificacaoFragment2"
-        android:name="com.example.routepiresfront.NotificacaoFragment"
+        android:name="com.example.routepiresfront.UI.notificacao.NotificacaoFragment"
         android:label="NotificacaoFragment" />
     <fragment
         android:id="@+id/selecionarLocalFragment"
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/criacaoCorridaFragment"
-        android:name="com.example.routepiresfront.CriacaoCorridaFragment"
+        android:name="com.example.routepiresfront.UI.corrida.CriacaoCorridaFragment"
         android:label="CriacaoCorridaFragment" >
         <action
             android:id="@+id/action_criacaoCorridaFragment_to_buscaMotoristaFragment"
@@ -50,11 +50,11 @@
     </fragment>
     <fragment
         android:id="@+id/buscaMotoristaFragment"
-        android:name="com.example.routepiresfront.BuscaMotoristaFragment"
+        android:name="com.example.routepiresfront.UI.corrida.BuscaMotoristaFragment"
         android:label="fragment_busca_motorista"
         tools:layout="@layout/fragment_busca_motorista" />
     <fragment
         android:id="@+id/avaliacaoFragment"
-        android:name="com.example.routepiresfront.AvaliacaoFragment"
+        android:name="com.example.routepiresfront.UI.perfil.AvaliacaoFragment"
         android:label="AvaliacaoFragment" />
 </navigation>

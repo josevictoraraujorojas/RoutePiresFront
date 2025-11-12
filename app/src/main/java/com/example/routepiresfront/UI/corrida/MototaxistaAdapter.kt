@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.UI.corrida
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
