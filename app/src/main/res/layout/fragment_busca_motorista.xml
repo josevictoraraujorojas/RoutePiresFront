@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".UI.passageiro.BuscaMotoristaFragment">
+    tools:context=".ui.passageiro.BuscaMotoristaFragment">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/procurando_corrida_button"
