@@ -7,7 +7,7 @@
     android:background="#80000000"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".UI.corrida.EscolhaMototaxistaFragment">
+    tools:context=".UI.passageiro.EscolhaMototaxistaFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
