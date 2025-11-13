@@ -10,7 +10,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
         android:padding="16dp">
 
         <!-- Botão Voltar -->
