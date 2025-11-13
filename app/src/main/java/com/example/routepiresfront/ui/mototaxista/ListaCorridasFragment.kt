@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentListaCorridasBinding
@@ -27,7 +29,22 @@ class ListaCorridasFragment : Fragment() {
         )
 
         val adapter = PassageiroAdapter(passageiros) { passageiro ->
-            (parentFragment as? CorridaMototaxistaFragment)?.mostrarDetalhesCorrida(passageiro)
+            // Obtém o NavController do NavHostFragment do BottomSheet
+            val navController = parentFragment?.childFragmentManager
+                ?.findFragmentById(R.id.bottomSheetContainer)
+                ?.findNavController()
+
+            // Define o destino com base no tipo de passageiro
+            val destinationId = when (passageiro.tipo) {
+                "corrida" -> R.id.selecionaCorridaFragment
+                "entrega" -> R.id.selecionaEntregaFragment
+                else -> null
+            }
+
+            // Navega para o destino
+            destinationId?.let {
+                navController?.navigate(it)
+            }
         }
 
         binding.recyclerPassageiros.layoutManager = LinearLayoutManager(requireContext())

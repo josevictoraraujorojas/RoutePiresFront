@@ -1,0 +1,20 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/corrida_mototaxista_nav"
+    app:startDestination="@id/listaCorridasFragment">
+
+    <fragment
+        android:id="@+id/listaCorridasFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.ListaCorridasFragment"
+        android:label="Lista de Corridas" />
+
+    <fragment
+        android:id="@+id/selecionaCorridaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.SelecionaCorridaFragment"
+        android:label="Seleciona Corrida" />
+
+    <fragment
+        android:id="@+id/selecionaEntregaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.SelecionaEntregaFragment"
+        android:label="Seleciona Entrega" />
+</navigation>

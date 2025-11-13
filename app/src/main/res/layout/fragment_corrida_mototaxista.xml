@@ -75,10 +75,13 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <!-- CONTEÚDO DINÂMICO -->
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/bottomSheetContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:navGraph="@navigation/corrida_mototaxista_nav"
+            app:defaultNavHost="false"/>
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
