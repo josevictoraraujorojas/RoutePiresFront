@@ -44,15 +44,8 @@
         android:name="com.example.routepiresfront.ui.comum.AvaliacaoFragment"
         android:label="AvaliacaoFragment" />
     <fragment
-        android:id="@+id/aguardandoInicioCorridaFragment"
-        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioCorridaFragment"
-        android:label="AguardandoInicioCorridaFragment" >
-        <action
-            android:id="@+id/action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment"
-            app:destination="@id/corridaAndamentoFragment" />
+        android:id="@+id/corridaMototaxistaFragment2"
+        android:name="com.example.routepiresfront.ui.mototaxista.CorridaMototaxistaFragment"
+        android:label="CorridaMototaxistaFragment" >
     </fragment>
-    <fragment
-        android:id="@+id/corridaAndamentoFragment"
-        android:name="com.example.routepiresfront.ui.mototaxista.CorridaAndamentoFragment"
-        android:label="CorridaAndamentoFragment" />
 </navigation>

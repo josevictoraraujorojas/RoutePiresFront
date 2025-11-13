@@ -88,9 +88,6 @@ class AguardandoInicioCorridaFragment : Fragment(), OnMapReadyCallback {
         binding.btnIniciarCorrida.setOnClickListener {
             Toast.makeText(requireContext(), "Iniciando corrida...", Toast.LENGTH_SHORT).show()
             // Aqui você navegaria para o fragmento de corrida em andamento
-            findNavController().navigate(
-                R.id.action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment
-            )
             // findNavController().navigate(R.id.action_aguardandoInicioCorrida_to_corridaEmAndamento)
         }
 
