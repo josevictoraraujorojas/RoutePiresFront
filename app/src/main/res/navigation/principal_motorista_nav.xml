@@ -48,4 +48,8 @@
         android:name="com.example.routepiresfront.ui.mototaxista.CorridaMototaxistaFragment"
         android:label="CorridaMototaxistaFragment" >
     </fragment>
+    <fragment
+        android:id="@+id/negociacaoFragment"
+        android:name="com.example.routepiresfront.ui.comum.NegociacaoFragment"
+        android:label="NegociacaoFragment" />
 </navigation>

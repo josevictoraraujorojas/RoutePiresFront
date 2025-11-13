@@ -1,4 +1,4 @@
-package com.example.routepiresfront
+package com.example.routepiresfront.ui.comum
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routepiresfront.R
 
 /**
  * Adaptador responsavel por vincular os itens de negociacao ao RecyclerView.

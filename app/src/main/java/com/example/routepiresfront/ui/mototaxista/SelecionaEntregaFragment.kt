@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentSelecionaEntregaBinding
 
@@ -21,6 +22,13 @@ class SelecionaEntregaFragment : Fragment() {
 
         binding.btnCancelarNegociacao.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        // Botão iniciar negociação
+        binding.btnAceitarNegociacao.setOnClickListener {
+            // Pega o NavController do NavHostFragment principal
+            val navController = requireActivity().findNavController(R.id.nav_principal)
+            navController.navigate(R.id.negociacaoFragment)
         }
 
         return binding.root
