@@ -55,32 +55,6 @@ class CorridaMototaxistaFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * Mostra detalhes da corrida ou entrega
-     */
-    fun mostrarDetalhesCorrida(passageiro: Passageiro) {
-        val destinationId = when (passageiro.tipo) {
-            "corrida" -> R.id.selecionaCorridaFragment
-            "entrega" -> R.id.selecionaEntregaFragment
-            else -> null
-        }
-
-        destinationId?.let {
-            bottomSheetNavController.navigate(it)
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-    }
-
-    fun toggleBottomSheet() {
-        if (::bottomSheetBehavior.isInitialized) {
-            bottomSheetBehavior.state =
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
-                    BottomSheetBehavior.STATE_COLLAPSED
-                else
-                    BottomSheetBehavior.STATE_EXPANDED
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

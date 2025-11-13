@@ -17,4 +17,12 @@
         android:id="@+id/selecionaEntregaFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.SelecionaEntregaFragment"
         android:label="Seleciona Entrega" />
+    <fragment
+        android:id="@+id/aguardandoInicioCorridaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioCorridaFragment"
+        android:label="AguardandoInicioCorridaFragment" />
+    <fragment
+        android:id="@+id/aguardandoInicioEntregaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioEntregaFragment"
+        android:label="AguardandoInicioEntregaFragment" />
 </navigation>

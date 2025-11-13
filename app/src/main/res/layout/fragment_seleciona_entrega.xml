@@ -80,8 +80,6 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:padding="8dp">
 
@@ -109,8 +107,6 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:padding="8dp">
 

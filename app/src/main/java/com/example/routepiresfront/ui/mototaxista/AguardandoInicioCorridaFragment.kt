@@ -6,27 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentAguardandoInicioCorridaBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AguardandoInicioCorridaFragment : Fragment(), OnMapReadyCallback {
+class AguardandoInicioCorridaFragment : Fragment() {
 
     private var _binding: FragmentAguardandoInicioCorridaBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var map: GoogleMap
 
     private var nomePassageiro: String = "Karen Roe"
     private var avaliacaoPassageiro: Float = 4.8f
@@ -63,7 +53,6 @@ class AguardandoInicioCorridaFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync(this)
 
         setupUI()
 
@@ -72,22 +61,22 @@ class AguardandoInicioCorridaFragment : Fragment(), OnMapReadyCallback {
 
     private fun setupUI() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        binding.tvDataHora.text = dateFormat.format(Date())
-
-        binding.tvPontosParada.text = "$pontosParada Ponto${if (pontosParada > 1) "s" else ""} de parada"
+//        binding.tvDataHora.text = dateFormat.format(Date())
+//
+//        binding.tvPontosParada.text = "$pontosParada Ponto${if (pontosParada > 1) "s" else ""} de parada"
 
         binding.tvNomePassageiro.text = nomePassageiro
         binding.tvAvaliacaoPassageiro.text = String.format("%.1f", avaliacaoPassageiro)
     }
 
     private fun setupListeners() {
-        binding.btnVoltar.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
 
         binding.btnIniciarCorrida.setOnClickListener {
             Toast.makeText(requireContext(), "Iniciando corrida...", Toast.LENGTH_SHORT).show()
             // Aqui você navegaria para o fragmento de corrida em andamento
+//            findNavController().navigate(
+////                R.id.action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment
+//            )
             // findNavController().navigate(R.id.action_aguardandoInicioCorrida_to_corridaEmAndamento)
         }
 
@@ -97,57 +86,7 @@ class AguardandoInicioCorridaFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
 
-        try {
-            map.addMarker(
-                MarkerOptions()
-                    .position(pontoPartida)
-                    .title("Ponto de Partida")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-            )
-
-            pontosIntermediarios.forEachIndexed { index, latLng ->
-                map.addMarker(
-                    MarkerOptions()
-                        .position(latLng)
-                        .title("Parada ${index + 1}")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                )
-            }
-
-            map.addMarker(
-                MarkerOptions()
-                    .position(pontoDestino)
-                    .title("Destino")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            )
-
-            // Desenha a rota (linha simples - em produção use Directions API)
-            val polylineOptions = PolylineOptions()
-                .add(pontoPartida)
-            pontosIntermediarios.forEach { polylineOptions.add(it) }
-            polylineOptions.add(pontoDestino)
-            polylineOptions.color(resources.getColor(R.color.blue, null))
-            polylineOptions.width(10f)
-            map.addPolyline(polylineOptions)
-
-            // Ajusta a câmera para mostrar toda a rota
-            val boundsBuilder = LatLngBounds.Builder()
-            boundsBuilder.include(pontoPartida)
-            pontosIntermediarios.forEach { boundsBuilder.include(it) }
-            boundsBuilder.include(pontoDestino)
-
-            val bounds = boundsBuilder.build()
-            val padding = 150
-            map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(requireContext(), "Erro ao carregar o mapa", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

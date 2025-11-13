@@ -23,30 +23,10 @@ class SelecionaEntregaFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        binding.btnFragil.setOnClickListener {
-            selecionarTipoEntrega(true)
-        }
-
-        binding.btnComum.setOnClickListener {
-            selecionarTipoEntrega(false)
-        }
-
         return binding.root
     }
 
-    private fun selecionarTipoEntrega(fragil: Boolean) {
-        if (fragil) {
-            binding.iconFragil.setBackgroundResource(R.drawable.circle_background)
-            binding.iconComum.setBackgroundResource(R.drawable.circle_gray)
-            binding.tvFragil.setTextColor(Color.BLACK)
-            binding.tvComum.setTextColor(Color.parseColor("#9E9E9E"))
-        } else {
-            binding.iconFragil.setBackgroundResource(R.drawable.circle_gray)
-            binding.iconComum.setBackgroundResource(R.drawable.circle_background)
-            binding.tvFragil.setTextColor(Color.parseColor("#9E9E9E"))
-            binding.tvComum.setTextColor(Color.BLACK)
-        }
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -8,24 +8,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentAguardandoInicioEntregaBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AguardandoInicioEntregaFragment : Fragment(), OnMapReadyCallback {
+class AguardandoInicioEntregaFragment : Fragment() {
 
     private var _binding: FragmentAguardandoInicioEntregaBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var map: GoogleMap
 
     private var nomeSolicitante: String = "Karen Roe"
     private var avaliacaoSolicitante: Float = 4.8f
@@ -65,9 +56,6 @@ class AguardandoInicioEntregaFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
         setupUI()
 
         setupListeners()
@@ -75,9 +63,9 @@ class AguardandoInicioEntregaFragment : Fragment(), OnMapReadyCallback {
 
     private fun setupUI() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        binding.tvDataHora.text = dateFormat.format(Date())
-
-        binding.tvPontosEntrega.text = "$pontosEntrega Ponto${if (pontosEntrega > 1) "s" else ""} de entrega"
+//        binding.tvDataHora.text = dateFormat.format(Date())
+//
+//        binding.tvPontosEntrega.text = "$pontosEntrega Ponto${if (pontosEntrega > 1) "s" else ""} de entrega"
 
         binding.tvDescricaoEntrega.text = descricaoEntrega
 
@@ -89,9 +77,6 @@ class AguardandoInicioEntregaFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setupListeners() {
-        binding.btnVoltar.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
 
         binding.btnIniciarEntrega.setOnClickListener {
             Toast.makeText(requireContext(), "Iniciando entrega...", Toast.LENGTH_SHORT).show()
@@ -102,45 +87,6 @@ class AguardandoInicioEntregaFragment : Fragment(), OnMapReadyCallback {
         binding.btnCancelarEntrega.setOnClickListener {
             Toast.makeText(requireContext(), "Cancelando entrega...", Toast.LENGTH_SHORT).show()
             parentFragmentManager.popBackStack()
-        }
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-
-        try {
-            map.addMarker(
-                MarkerOptions()
-                    .position(pontoPartida)
-                    .title("Ponto de Coleta")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-            )
-
-            map.addMarker(
-                MarkerOptions()
-                    .position(pontoDestino)
-                    .title("Ponto de Entrega")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            )
-
-            val polylineOptions = PolylineOptions()
-                .add(pontoPartida)
-                .add(pontoDestino)
-                .color(resources.getColor(R.color.blue, null))
-                .width(10f)
-            map.addPolyline(polylineOptions)
-
-            val boundsBuilder = LatLngBounds.Builder()
-            boundsBuilder.include(pontoPartida)
-            boundsBuilder.include(pontoDestino)
-
-            val bounds = boundsBuilder.build()
-            val padding = 150 // padding em pixels
-            map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(requireContext(), "Erro ao carregar o mapa", Toast.LENGTH_SHORT).show()
         }
     }
 
