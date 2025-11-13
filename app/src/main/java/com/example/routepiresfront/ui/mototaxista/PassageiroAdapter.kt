@@ -9,7 +9,8 @@ import com.example.routepiresfront.databinding.ItemPassageiroBinding
 data class Passageiro(
     val nome: String,
     val nota: Float,
-    val imagemRes: Int // pode ser um recurso local ou futuramente uma URL
+    val imagemRes: Int,
+    val tipo: String // "corrida" ou "entrega"
 )
 
 class PassageiroAdapter(

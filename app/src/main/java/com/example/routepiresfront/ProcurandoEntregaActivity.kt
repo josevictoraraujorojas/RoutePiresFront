@@ -14,7 +14,7 @@ class ProcurandoEntregaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_procurando_entrega)
+        setContentView(R.layout.fragment_seleciona_entrega)
 
         inicializarViews()
         configurarDados()

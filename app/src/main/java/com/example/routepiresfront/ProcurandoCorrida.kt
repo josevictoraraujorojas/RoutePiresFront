@@ -13,7 +13,7 @@ class ProcurandoCorrida : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_procurando_corrida)
+        setContentView(R.layout.fragment_seleciona_corrida)
 
         inicializarViews()
         configurarDados()

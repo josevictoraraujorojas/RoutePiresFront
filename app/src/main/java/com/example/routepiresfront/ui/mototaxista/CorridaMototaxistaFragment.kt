@@ -36,11 +36,11 @@ class CorridaMototaxistaFragment : Fragment() {
         // Configura o BottomSheet
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior.peekHeight =
-            resources.getDimensionPixelSize(R.dimen.bottom_sheet_peek_height) // altura mínima (metade da tela)
+            resources.getDimensionPixelSize(R.dimen.bottom_sheet_peek_height)
         bottomSheetBehavior.isHideable = false
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED // começa metade da tela
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-        // Adiciona o fragmento da lista dentro do BottomSheet após 2 segundos
+        // Exibe a lista de corridas após 2 segundos
         Handler(Looper.getMainLooper()).postDelayed({
             childFragmentManager.beginTransaction()
                 .replace(R.id.bottomSheetContainer, ListaCorridasFragment())
@@ -50,14 +50,33 @@ class CorridaMototaxistaFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Mostra o layout de detalhes da corrida ou entrega, conforme o tipo.
+     */
+    fun mostrarDetalhesCorrida(passageiro: Passageiro) {
+        val fragment = when (passageiro.tipo) {
+            "corrida" -> SelecionaCorridaFragment()
+            "entrega" -> SelecionaEntregaFragment()
+            else -> null
+        }
+
+        fragment?.let {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.bottomSheetContainer, it)
+                .addToBackStack(null)
+                .commit()
+
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
+
     fun toggleBottomSheet() {
         if (::bottomSheetBehavior.isInitialized) {
             bottomSheetBehavior.state =
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
                     BottomSheetBehavior.STATE_COLLAPSED
-                } else {
+                else
                     BottomSheetBehavior.STATE_EXPANDED
-                }
         }
     }
 

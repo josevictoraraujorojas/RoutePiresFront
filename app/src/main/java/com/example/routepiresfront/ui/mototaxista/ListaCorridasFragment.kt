@@ -21,25 +21,17 @@ class ListaCorridasFragment : Fragment() {
         _binding = FragmentListaCorridasBinding.inflate(inflater, container, false)
 
         val passageiros = listOf(
-            Passageiro("João Silva", 4.8f, R.drawable.ic_user_avatar),
-            Passageiro("Maria Souza", 5.0f, R.drawable.ic_user_avatar),
-            Passageiro("Carlos Lima", 4.5f, R.drawable.ic_user_avatar)
+            Passageiro("João Silva", 4.8f, R.drawable.ic_user_avatar, "corrida"),
+            Passageiro("Maria Souza", 5.0f, R.drawable.ic_user_avatar, "entrega"),
+            Passageiro("Carlos Lima", 4.5f, R.drawable.ic_user_avatar, "corrida")
         )
 
-        val adapter = PassageiroAdapter(passageiros) {
-            // ação ao clicar no passageiro
+        val adapter = PassageiroAdapter(passageiros) { passageiro ->
+            (parentFragment as? CorridaMototaxistaFragment)?.mostrarDetalhesCorrida(passageiro)
         }
 
         binding.recyclerPassageiros.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerPassageiros.adapter = adapter
-
-        // Botão de expandir/recolher o BottomSheet
-        binding.expandIcon.setOnClickListener {
-            val parent = parentFragment
-            if (parent is CorridaMototaxistaFragment) {
-                parent.toggleBottomSheet()
-            }
-        }
 
         return binding.root
     }
