@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_corrida"
+    app:startDestination="@id/selecionarLocalFragment">
+
+    <fragment
+        android:id="@+id/selecionarLocalFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.SelecionarLocalFragment"
+        android:label="SelecionarLocalFragment" >
+        <action
+            android:id="@+id/action_selecionarLocalFragment_to_criacaoCorridaFragment"
+            app:destination="@id/criacaoCorridaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/criacaoCorridaFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.CriacaoCorridaFragment"
+        android:label="CriacaoCorridaFragment" >
+        <action
+            android:id="@+id/action_criacaoCorridaFragment_to_buscaMotoristaFragment"
+            app:destination="@id/buscaMotoristaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buscaMotoristaFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.BuscaMotoristaFragment"
+        android:label="BuscaMotoristaFragment" />
+
+    <fragment
+        android:id="@+id/mototaxistaCaminhoFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.MototaxistaCaminhoFragment"
+        android:label="MototaxistaCaminhoFragment" />
+
+    <!-- 🚨 Aqui está a Global Action -->
+    <action
+        android:id="@+id/action_global_mototaxistaCaminhoFragment"
+        app:destination="@id/mototaxistaCaminhoFragment" />
+
+</navigation>

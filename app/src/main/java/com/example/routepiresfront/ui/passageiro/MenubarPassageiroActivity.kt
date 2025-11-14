@@ -1,9 +1,9 @@
 package com.example.routepiresfront.ui.passageiro
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.ActivityMenubarPassageiroBinding
 
@@ -11,46 +11,54 @@ class MenubarPassageiroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenubarPassageiroBinding
 
+    private var currentNavId = R.id.bottom_corrida
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenubarPassageiroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtém o NavHostFragment
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_principal) as NavHostFragment
+        setupBottomNav()
 
-        // Obtém o navController
-        val navController = navHostFragment.navController
+        // Deixa a aba Corrida visível inicialmente
+        showNavHost(R.id.bottom_corrida)
+    }
 
-        // Liga o BottomNavigationView ao Navigation Component
-        binding.menuInferior.setupWithNavController(navController)
+    private fun setupBottomNav() {
 
-        // Mantém o ícone correto selecionado para fragmentos filhos
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
-                // Configuração / Perfil
-                R.id.configuracaoPassageiroFragment,
-                R.id.editarPerfilFragment2,
-                R.id.historicoCorridasFragment2,
-                R.id.notificacaoFragment2 -> {
-                    binding.menuInferior.menu.findItem(R.id.configuracaoPassageiroFragment).isChecked = true
-                }
+        binding.menuInferior.setOnItemSelectedListener { item ->
 
-                R.id.negociacaoFragment2,
-                R.id.chatFragment2,
-                R.id.denunciaFragment2 -> {
-                    binding.menuInferior.menu.findItem(R.id.negociacaoFragment2).isChecked = true
-                }
+            if (currentNavId == item.itemId) return@setOnItemSelectedListener true
 
-                // Selecionar Local / Criar Corrida / Buscar Motorista
-                R.id.selecionarLocalFragment,
-                R.id.criacaoCorridaFragment,
-                R.id.buscaMotoristaFragment,
-                R.id.mototaxistaCaminhoFragment-> {
-                    binding.menuInferior.menu.findItem(R.id.selecionarLocalFragment).isChecked = true
-                }
-            }
+            currentNavId = item.itemId
+            showNavHost(item.itemId)
+
+            true
+        }
+    }
+
+    private fun showNavHost(itemId: Int) {
+
+        val hosts = listOf(
+            R.id.nav_host_corrida,
+            R.id.nav_host_avaliacao,
+            R.id.nav_host_negociacao,
+            R.id.nav_host_configuracao
+        )
+
+        hosts.forEach { id ->
+            findViewById<View>(id).visibility =
+                if (id == navHostForMenu(itemId)) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun navHostForMenu(itemId: Int): Int {
+        return when (itemId) {
+            R.id.bottom_corrida -> R.id.nav_host_corrida
+            R.id.bottom_avaliacao -> R.id.nav_host_avaliacao
+            R.id.bottom_negociacao -> R.id.nav_host_negociacao
+            R.id.bottom_configuracao -> R.id.nav_host_configuracao
+            else -> R.id.nav_host_corrida
         }
     }
 }

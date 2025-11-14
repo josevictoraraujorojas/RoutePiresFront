@@ -12,6 +12,7 @@ import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentChatBinding
 import com.example.routepiresfront.model.Mensagem
 import com.example.routepiresfront.ui.comum.adapter.MensagensAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ChatFragment : Fragment() {
 
@@ -72,11 +73,18 @@ class ChatFragment : Fragment() {
         // Botão aceitar corrida (aqui você pode adicionar navegação se necessário)
         binding.buttonAceitarCorrida.setOnClickListener {
 
-//            findNavController().navigate(R.id.action_chatFragment_to_corridaAndamentoFragment)
-            findNavController().navigate(R.id.action_chatFragment2_to_mototaxistaCaminhoFragment
-            )
+            // 1️⃣ Trocar para a aba "Corrida"
+            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
+            bottom.selectedItemId = R.id.bottom_corrida
 
+            // 2️⃣ Obter NavController da aba Corrida
+            val corridaNav = requireActivity()
+                .supportFragmentManager
+                .findFragmentById(R.id.nav_host_corrida)
+                ?.findNavController()
 
+            // 3️⃣ Navegar dentro do fluxo da aba Corrida
+            corridaNav?.navigate(R.id.action_global_mototaxistaCaminhoFragment)
         }
     }
 
@@ -87,15 +95,13 @@ class ChatFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        // Botão Cancelar
         dialogView.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
             dialog.dismiss()
         }
 
-        // Botão Confirmar
         dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
-            findNavController().navigate(R.id.action_chatFragment2_to_denunciaFragment2)
             dialog.dismiss()
+            // Aqui você adiciona a lógica de denúncia depois se quiser
         }
 
         dialog.show()

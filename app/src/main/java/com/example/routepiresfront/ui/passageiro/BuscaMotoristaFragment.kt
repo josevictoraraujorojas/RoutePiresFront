@@ -19,6 +19,13 @@ class BuscaMotoristaFragment : Fragment() {
     private var _binding: FragmentBuscaMotoristaBinding? = null
     private val binding get() = _binding!!
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val mostrarResultadoRunnable = Runnable {
+        if (_binding != null) {  // evita crash se fragment destruiu
+            mostrarResultados()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,10 +39,7 @@ class BuscaMotoristaFragment : Fragment() {
 
         startAnimations()
 
-        // Simula o tempo de busca (ex: 4 segundos)
-        Handler(Looper.getMainLooper()).postDelayed({
-            mostrarResultados()
-        }, 4000)
+        handler.postDelayed(mostrarResultadoRunnable, 4000)
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -51,25 +55,24 @@ class BuscaMotoristaFragment : Fragment() {
     }
 
     private fun stopAnimations() {
-        binding.searchIcon.clearAnimation()
-        binding.procurandoCorridaButton.clearAnimation()
+        if (_binding != null) {
+            binding.searchIcon.clearAnimation()
+            binding.procurandoCorridaButton.clearAnimation()
+        }
     }
 
     private fun mostrarResultados() {
         stopAnimations()
 
-        // Esconde as animações e mostra o RecyclerView
         binding.layoutAnimacoes.visibility = View.GONE
         binding.recyclerViewMototaxistas.visibility = View.VISIBLE
 
-        // Dados de exemplo (você pode depois puxar da API)
         val mototaxistas = listOf(
             Mototaxista("João Silva", 4.8f, R.drawable.ic_launcher_foreground),
             Mototaxista("Carlos Souza", 4.5f, R.drawable.ic_launcher_foreground),
             Mototaxista("Marcos Lima", 4.9f, R.drawable.ic_launcher_foreground)
         )
 
-        // Configura o RecyclerView
         val adapter = MototaxistaAdapter(mototaxistas)
         binding.recyclerViewMototaxistas.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMototaxistas.adapter = adapter
@@ -78,6 +81,7 @@ class BuscaMotoristaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         stopAnimations()
+        handler.removeCallbacks(mostrarResultadoRunnable)
         _binding = null
     }
 }
