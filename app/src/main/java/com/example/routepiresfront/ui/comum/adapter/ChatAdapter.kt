@@ -1,4 +1,4 @@
-package com.example.routepiresfront.chat
+package com.example.routepiresfront.ui.comum.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
+import com.example.routepiresfront.model.Mensagem
 
 class ChatAdapter(private val mensagens: List<Mensagem>) :
     RecyclerView.Adapter<ChatAdapter.MensagemViewHolder>() {
@@ -15,7 +16,7 @@ class ChatAdapter(private val mensagens: List<Mensagem>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MensagemViewHolder {
-        val layoutId = if (viewType == Mensagem.TIPO_ENVIADA) {
+        val layoutId = if (viewType == Mensagem.Companion.TIPO_ENVIADA) {
             R.layout.item_mensagem_enviada
         } else {
             R.layout.item_mensagem_recebida

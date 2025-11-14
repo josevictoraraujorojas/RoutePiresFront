@@ -1,4 +1,4 @@
-package com.example.routepiresfront.chat
+package com.example.routepiresfront.model
 
 data class Mensagem(
     val texto: String,

@@ -1,4 +1,4 @@
-package com.example.routepiresfront.chat
+package com.example.routepiresfront.ui.comum
 
 import android.graphics.Rect
 import android.view.View

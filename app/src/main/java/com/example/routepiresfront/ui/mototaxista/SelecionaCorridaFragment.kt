@@ -28,7 +28,7 @@ class SelecionaCorridaFragment : Fragment() {
         binding.btnIniciarNegociacao.setOnClickListener {
             // Pega o NavController do NavHostFragment principal
             val navController = requireActivity().findNavController(R.id.nav_principal)
-            navController.navigate(R.id.negociacaoFragment)
+            navController.navigate(R.id.chatFragment)
         }
 
         return binding.root

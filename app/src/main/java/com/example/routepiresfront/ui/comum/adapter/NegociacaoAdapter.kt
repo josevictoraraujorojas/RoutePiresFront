@@ -1,4 +1,4 @@
-package com.example.routepiresfront.ui.comum
+package com.example.routepiresfront.ui.comum.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +8,18 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
+import com.example.routepiresfront.model.Negociacao
 
 /**
  * Adaptador responsavel por vincular os itens de negociacao ao RecyclerView.
+ * Recebe um callback que será chamado ao clicar em um item.
  */
 class NegociacaoAdapter(
-    private val negociacoes: List<Negociacao>
+    private val negociacoes: List<Negociacao>,
+    private val onItemClick: (Negociacao) -> Unit // callback de clique
 ) : RecyclerView.Adapter<NegociacaoAdapter.ItemNegociacaoViewHolder>() {
 
     class ItemNegociacaoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Views principais do item de lista.
         val imagemAvatar: ImageView = itemView.findViewById(R.id.imageAvatar)
         val textoNome: TextView = itemView.findViewById(R.id.textNome)
         val textoMensagem: TextView = itemView.findViewById(R.id.textMensagem)
@@ -36,10 +38,14 @@ class NegociacaoAdapter(
         holder.textoMensagem.text = negociacao.mensagem
         holder.imagemAvatar.setImageResource(R.drawable.ic_avatar_placeholder)
 
-        // Mostra ou oculta o selo de mensagens nao lidas.
         holder.seloQuantidade.isVisible = negociacao.quantidadeNaoLida > 0
         if (negociacao.quantidadeNaoLida > 0) {
             holder.seloQuantidade.text = negociacao.quantidadeNaoLida.toString()
+        }
+
+        // Clique no item chama o callback
+        holder.itemView.setOnClickListener {
+            onItemClick(negociacao)
         }
     }
 

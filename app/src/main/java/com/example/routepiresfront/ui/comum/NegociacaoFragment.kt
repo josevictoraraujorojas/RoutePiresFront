@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentNegociacaoBinding
+import com.example.routepiresfront.model.Negociacao
+import com.example.routepiresfront.ui.comum.adapter.NegociacaoAdapter
 
-/**
- * Fragmento responsavel por exibir a tela de negociacoes com a lista de conversas.
- */
 class NegociacaoFragment : Fragment() {
 
     private var _binding: FragmentNegociacaoBinding? = null
@@ -37,7 +37,6 @@ class NegociacaoFragment : Fragment() {
     }
 
     private fun configurarCabecalho() {
-        // Mensagens temporarias ate que as funcionalidades sejam implementadas.
         binding.textEditar.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -55,66 +54,24 @@ class NegociacaoFragment : Fragment() {
     }
 
     private fun configurarListaNegociacoes() {
-        // Lista estatica apenas para representar o layout enquanto a API nao estiver integrada.
         val negociacoes = listOf(
-            Negociacao(
-                nome = "Haley James",
-                mensagem = "Seu mototaxi esta a caminho e chega em 2 minutos.",
-                quantidadeNaoLida = 9
-            ),
-            Negociacao(
-                nome = "Nathan Scott",
-                mensagem = "Consegue me levar do centro ate a rodoviaria as 14h?",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Brooke Davis",
-                mensagem = "Preciso de duas corridas seguidas hoje a noite, consegue?",
-                quantidadeNaoLida = 2
-            ),
-            Negociacao(
-                nome = "Jamie Scott",
-                mensagem = "Pode me buscar na escola e deixar na academia?",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Marvin McFadden",
-                mensagem = "Qual o valor da corrida ate o aeroporto amanhã cedo?",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Antwon Taylor",
-                mensagem = "Vou precisar que espere 5 minutos no endereco, tudo bem?",
-                quantidadeNaoLida = 1
-            ),
-            Negociacao(
-                nome = "Jake Jagielski",
-                mensagem = "Da pra levar uma prancha pequena? Quero ir ate a praia.",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Peyton Sawyer",
-                mensagem = "Voce tem capacete extra tamanho pequeno disponivel?",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Lucas Scott",
-                mensagem = "Tem como fazer uma corrida rapida para o Rivercourt agora?",
-                quantidadeNaoLida = 3
-            ),
-            Negociacao(
-                nome = "Skills Taylor",
-                mensagem = "Daria para agendar corrida corporativa para tres funcionarios?",
-                quantidadeNaoLida = 0
-            ),
-            Negociacao(
-                nome = "Quentin Fields",
-                mensagem = "Consegue enviar o comprovante da corrida de ontem?",
-                quantidadeNaoLida = 1
-            )
+            Negociacao("Haley James", "Seu mototaxi está a caminho e chega em 2 minutos.", 9),
+            Negociacao("Nathan Scott", "Consegue me levar do centro até a rodoviária às 14h?", 0),
+            Negociacao("Brooke Davis", "Preciso de duas corridas seguidas hoje à noite, consegue?", 2),
+            Negociacao("Jamie Scott", "Pode me buscar na escola e deixar na academia?", 0),
+            Negociacao("Marvin McFadden", "Qual o valor da corrida até o aeroporto amanhã cedo?", 0),
+            Negociacao("Antwon Taylor", "Vou precisar que espere 5 minutos no endereço, tudo bem?", 1),
+            Negociacao("Jake Jagielski", "Dá pra levar uma prancha pequena? Quero ir até a praia.", 0),
+            Negociacao("Peyton Sawyer", "Você tem capacete extra tamanho pequeno disponível?", 0),
+            Negociacao("Lucas Scott", "Tem como fazer uma corrida rápida para o Rivercourt agora?", 3),
+            Negociacao("Skills Taylor", "Daria para agendar corrida corporativa para três funcionários?", 0),
+            Negociacao("Quentin Fields", "Consegue enviar o comprovante da corrida de ontem?", 1)
         )
 
-        val adaptador = NegociacaoAdapter(negociacoes)
+        val adaptador = NegociacaoAdapter(negociacoes) { negociacao ->
+            findNavController().navigate(R.id.action_negociacaoFragment_to_chatFragment)
+        }
+
         binding.recyclerNegociacoes.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerNegociacoes.adapter = adaptador
     }

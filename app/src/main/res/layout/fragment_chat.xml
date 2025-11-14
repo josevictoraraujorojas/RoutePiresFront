@@ -73,7 +73,8 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_border_blue"
             android:text="Recusar Corrida"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_aceitar_corrida"
@@ -83,7 +84,8 @@
             android:layout_weight="1"
             android:background="@drawable/bg_botao_arredondado"
             android:text="Aceitar Corrida"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

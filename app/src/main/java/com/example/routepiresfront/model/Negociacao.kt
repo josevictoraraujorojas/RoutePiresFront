@@ -1,4 +1,4 @@
-package com.example.routepiresfront.ui.comum
+package com.example.routepiresfront.model
 
 /**
  * Representa uma conversa de negociacao exibida na lista.

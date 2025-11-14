@@ -12,22 +12,11 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Botão Voltar -->
-        <ImageButton
-            android:id="@+id/btnVoltar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_voltar_custom"
-            android:contentDescription="Voltar"
-            app:tint="#007AFF"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
+
 
         <!-- Título e subtítulo -->
         <LinearLayout
             android:orientation="vertical"
-            android:layout_toEndOf="@id/btnVoltar"
             android:layout_marginStart="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
