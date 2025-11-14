@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routepiresfront.R
 import com.example.routepiresfront.ui.mototaxista.CadastroMototaxistaActivity
+import com.example.routepiresfront.ui.mototaxista.MenubarMototaxistaActivity
 import com.example.routepiresfront.ui.passageiro.CadastroPassageiroActivity
 import com.example.routepiresfront.ui.passageiro.MenubarPassageiroActivity
 import com.google.android.material.button.MaterialButton
@@ -133,9 +134,9 @@ class LoginActivity : AppCompatActivity() {
 //            etPassword.requestFocus()
 //            return
 //        }
-        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
+//        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
 
-        //startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
+        startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
     }
 
     private fun loginWithGoogle() {

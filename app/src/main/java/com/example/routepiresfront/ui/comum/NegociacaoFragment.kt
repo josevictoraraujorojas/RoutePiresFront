@@ -69,10 +69,23 @@ class NegociacaoFragment : Fragment() {
         )
 
         val adaptador = NegociacaoAdapter(negociacoes) { negociacao ->
-//            findNavController().navigate(R.id.action_negociacaoFragment_to_chatFragment)
+            // 1️⃣ Obter o NavController do NavHost da aba Negociação
+            val navController = requireActivity()
+                .supportFragmentManager
+                .findFragmentById(R.id.nav_host_negociacao_moto)  // <- id do NavHostFragment da aba
+                ?.findNavController()
 
-            findNavController().navigate(R.id.action_negociacaoFragment2_to_chatFragment2)
+            // 2️⃣ Navegar usando a action declarada no nav graph da aba
+            navController?.navigate(R.id.action_negociacao_para_chat)
 
+//            // 1️⃣ Obter o NavController do NavHost da aba Negociação
+//            val navController = requireActivity()
+//                .supportFragmentManager
+//                .findFragmentById(R.id.nav_host_container)  // <- id do NavHostFragment da aba
+//                ?.findNavController()
+//
+//            // 2️⃣ Navegar usando a action declarada no nav graph da aba
+//            navController?.navigate(R.id.action_negociacaoFragment2_to_chatFragment2)
         }
 
         binding.recyclerNegociacoes.layoutManager = LinearLayoutManager(requireContext())

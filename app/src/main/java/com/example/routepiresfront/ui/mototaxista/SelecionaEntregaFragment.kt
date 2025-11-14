@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentSelecionaEntregaBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SelecionaEntregaFragment : Fragment() {
     private var _binding: FragmentSelecionaEntregaBinding? = null
@@ -24,11 +26,21 @@ class SelecionaEntregaFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
+
         // Botão iniciar negociação
         binding.btnAceitarNegociacao.setOnClickListener {
-            // Pega o NavController do NavHostFragment principal
-            val navController = requireActivity().findNavController(R.id.nav_principal)
-            navController.navigate(R.id.chatFragment)
+            // 1️⃣ Troca para a aba "Negociação" (ou Chat)
+            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
+            bottom.selectedItemId = R.id.bottom_negociacao // ID da aba de negociação
+
+            // 2️⃣ Pega o NavController do NavHost da aba de negociação
+            val navController = requireActivity()
+                .supportFragmentManager
+                .findFragmentById(R.id.nav_host_negociacao_moto)  // <- NavHost da aba de negociação
+                ?.findNavController()
+
+            // 3️⃣ Navega para o ChatFragment2 dentro do NavHost da aba
+            navController?.navigate(R.id.chatFragment2)
         }
 
         return binding.root

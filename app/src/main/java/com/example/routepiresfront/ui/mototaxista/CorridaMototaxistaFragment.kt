@@ -45,14 +45,33 @@ class CorridaMototaxistaFragment : Fragment() {
             .findFragmentById(R.id.bottomSheetContainer) as NavHostFragment
         bottomSheetNavController = navHostFragment.navController
 
-        // Exibe lista de corridas após 2 segundos
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (bottomSheetNavController.currentDestination?.id != R.id.listaCorridasFragment) {
-                bottomSheetNavController.navigate(R.id.listaCorridasFragment)
-            }
-        }, 2000)
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Checa argumento para decidir se abre direto o iniciar corrida
+        val abrirIniciarCorrida = arguments?.getBoolean("abrirIniciarCorrida") ?: false
+
+        // Delay curto para garantir que o NavHost do BottomSheet esteja pronto
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (abrirIniciarCorrida) {
+                // Navega direto para "Aguardando Início Corrida"
+                bottomSheetNavController.navigate(
+                    R.id.aguardandoInicioCorridaFragment
+                )
+            } else {
+                // Navega para a lista de corridas normalmente
+                bottomSheetNavController.navigate(
+                    R.id.listaCorridasFragment
+                )
+            }
+        }, 200) // delay reduzido, suficiente para inicializar NavHost
+    }
+    fun abrirBottomSheetCorrida() {
+        bottomSheetNavController.navigate(R.id.aguardandoInicioCorridaFragment)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onDestroyView() {

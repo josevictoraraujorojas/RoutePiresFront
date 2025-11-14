@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentChatBinding
 import com.example.routepiresfront.model.Mensagem
 import com.example.routepiresfront.ui.comum.adapter.MensagensAdapter
+import com.example.routepiresfront.ui.mototaxista.CorridaMototaxistaFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ChatFragment : Fragment() {
@@ -71,44 +74,62 @@ class ChatFragment : Fragment() {
         }
 
         // Botão aceitar corrida (aqui você pode adicionar navegação se necessário)
+//        binding.buttonAceitarCorrida.setOnClickListener {
+
+//            // 1️⃣ Trocar para a aba "Corrida"
+//            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
+//            bottom.selectedItemId = R.id.bottom_corrida
+//
+//            // 2️⃣ Obter NavController da aba Corrida
+//            val corridaNav = requireActivity()
+//                .supportFragmentManager
+//                .findFragmentById(R.id.nav_host_corrida)
+//                ?.findNavController()
+//
+//            // 3️⃣ Navegar dentro do fluxo da aba Corrida
+//            corridaNav?.navigate(R.id.action_global_mototaxistaCaminhoFragment)
+
+//
+//        }
+
         binding.buttonAceitarCorrida.setOnClickListener {
-
-            // 1️⃣ Trocar para a aba "Corrida"
+            // 1️⃣ Seleciona a aba Corrida
             val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
-            bottom.selectedItemId = R.id.bottom_corrida
+            bottom.selectedItemId = R.id.bottom_home
 
-            // 2️⃣ Obter NavController da aba Corrida
+            // 2️⃣ Envia sinal para CorridaMototaxistaFragment abrir o BottomSheet em "Aguardando Início Corrida"
             val corridaNav = requireActivity()
                 .supportFragmentManager
-                .findFragmentById(R.id.nav_host_corrida)
+                .findFragmentById(R.id.nav_host_home_moto)
                 ?.findNavController()
 
-            // 3️⃣ Navegar dentro do fluxo da aba Corrida
-            corridaNav?.navigate(R.id.action_global_mototaxistaCaminhoFragment)
+            corridaNav?.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
+        }
+
+    }
+
+        private fun mostrarPopupDenuncia() {
+            val dialogView = layoutInflater.inflate(R.layout.dialog_denuncia, null)
+
+            val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .create()
+
+            dialogView.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
+                dialog.dismiss()
+                // Aqui você adiciona a lógica de denúncia depois se quiser
+            }
+
+            dialog.show()
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
         }
     }
 
-    private fun mostrarPopupDenuncia() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_denuncia, null)
-
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
-
-        dialogView.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
-            dialog.dismiss()
-            // Aqui você adiciona a lógica de denúncia depois se quiser
-        }
-
-        dialog.show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}

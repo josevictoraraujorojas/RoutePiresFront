@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentAguardandoInicioCorridaBinding
 import com.google.android.gms.maps.SupportMapFragment
@@ -77,7 +78,7 @@ class AguardandoInicioCorridaFragment : Fragment() {
 //            findNavController().navigate(
 ////                R.id.action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment
 //            )
-            // findNavController().navigate(R.id.action_aguardandoInicioCorrida_to_corridaEmAndamento)
+             findNavController().navigate(R.id.action_aguardandoInicioCorridaFragment2_to_corridaAndamentoFragment)
         }
 
         binding.btnCancelarCorrida.setOnClickListener {
