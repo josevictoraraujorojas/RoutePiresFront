@@ -31,7 +31,8 @@
 
         <activity android:name=".ui.mototaxista.CadastroMototaxistaActivity"/>
         <activity android:name=".ui.passageiro.CadastroPassageiroActivity"/>
-        <activity android:name=".ui.comum.MenubarActivity"/>
+        <activity android:name=".ui.passageiro.MenubarPassageiroActivity"/>
+        <activity android:name=".ui.mototaxista.MenubarMototaxistaActivity"/>
 
 
 

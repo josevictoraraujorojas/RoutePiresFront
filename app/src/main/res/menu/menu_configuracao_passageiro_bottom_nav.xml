@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_avaliacao"
         android:title="@string/menu_avaliacoes" />
     <item
-        android:id="@+id/navigation_negociacao"
+        android:id="@+id/negociacaoFragment2"
         android:icon="@drawable/ic_mensagem"
         android:title="@string/menu_negociacao" />
     <item

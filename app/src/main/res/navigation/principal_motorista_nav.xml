@@ -63,10 +63,17 @@
         <action
             android:id="@+id/action_chatFragment_to_corridaAndamentoFragment"
             app:destination="@id/corridaAndamentoFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_denunciaFragment"
+            app:destination="@id/denunciaFragment" />
     </fragment>
     <fragment
         android:id="@+id/corridaAndamentoFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.CorridaAndamentoFragment"
         android:label="CorridaAndamentoFragment" />
+    <fragment
+        android:id="@+id/denunciaFragment"
+        android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
+        android:label="DenunciaFragment" />
 
 </navigation>

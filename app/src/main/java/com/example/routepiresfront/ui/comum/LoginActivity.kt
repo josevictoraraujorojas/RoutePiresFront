@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.routepiresfront.R
 import com.example.routepiresfront.ui.mototaxista.CadastroMototaxistaActivity
 import com.example.routepiresfront.ui.passageiro.CadastroPassageiroActivity
+import com.example.routepiresfront.ui.passageiro.MenubarPassageiroActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
@@ -132,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
 //            etPassword.requestFocus()
 //            return
 //        }
-        startActivity(Intent(this, MenubarActivity::class.java))
+        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
     }
 
     private fun loginWithGoogle() {

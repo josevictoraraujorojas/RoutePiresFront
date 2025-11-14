@@ -5,6 +5,9 @@
     android:id="@+id/principal_passageiro_nav"
     app:startDestination="@id/selecionarLocalFragment">
 
+    <action
+        android:id="@+id/action_negociacaoFragment_to_chatFragment"
+        app:destination="@id/chatFragment" />
     <fragment
         android:id="@+id/configuracaoPassageiroFragment"
         android:name="com.example.routepiresfront.ui.passageiro.ConfiguracaoPassageiroFragment"
@@ -57,4 +60,24 @@
         android:id="@+id/avaliacaoFragment"
         android:name="com.example.routepiresfront.ui.comum.AvaliacaoFragment"
         android:label="AvaliacaoFragment" />
+    <fragment
+        android:id="@+id/negociacaoFragment2"
+        android:name="com.example.routepiresfront.ui.comum.NegociacaoFragment"
+        android:label="NegociacaoFragment" >
+        <action
+            android:id="@+id/action_negociacaoFragment2_to_chatFragment2"
+            app:destination="@id/chatFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.routepiresfront.chat.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment2_to_denunciaFragment2"
+            app:destination="@id/denunciaFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/denunciaFragment2"
+        android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
+        android:label="DenunciaFragment" />
 </navigation>

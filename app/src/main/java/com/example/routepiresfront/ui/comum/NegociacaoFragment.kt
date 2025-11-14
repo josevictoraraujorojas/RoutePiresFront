@@ -69,7 +69,10 @@ class NegociacaoFragment : Fragment() {
         )
 
         val adaptador = NegociacaoAdapter(negociacoes) { negociacao ->
-            findNavController().navigate(R.id.action_negociacaoFragment_to_chatFragment)
+//            findNavController().navigate(R.id.action_negociacaoFragment_to_chatFragment)
+
+            findNavController().navigate(R.id.action_negociacaoFragment2_to_chatFragment2)
+
         }
 
         binding.recyclerNegociacoes.layoutManager = LinearLayoutManager(requireContext())
