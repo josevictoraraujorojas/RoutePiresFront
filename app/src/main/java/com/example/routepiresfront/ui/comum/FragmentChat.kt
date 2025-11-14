@@ -73,7 +73,8 @@ class ChatFragment : Fragment() {
         binding.buttonAceitarCorrida.setOnClickListener {
 
 //            findNavController().navigate(R.id.action_chatFragment_to_corridaAndamentoFragment)
-            findNavController().navigate(R.id.action_chatFragment2_to_denunciaFragment2)
+            findNavController().navigate(R.id.action_chatFragment2_to_mototaxistaCaminhoFragment
+            )
 
 
         }

@@ -75,9 +75,16 @@
         <action
             android:id="@+id/action_chatFragment2_to_denunciaFragment2"
             app:destination="@id/denunciaFragment2" />
+        <action
+            android:id="@+id/action_chatFragment2_to_mototaxistaCaminhoFragment"
+            app:destination="@id/mototaxistaCaminhoFragment" />
     </fragment>
     <fragment
         android:id="@+id/denunciaFragment2"
         android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
         android:label="DenunciaFragment" />
+    <fragment
+        android:id="@+id/mototaxistaCaminhoFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.MototaxistaCaminhoFragment"
+        android:label="MototaxistaCaminhoFragment" />
 </navigation>

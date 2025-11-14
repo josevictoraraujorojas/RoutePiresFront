@@ -134,6 +134,8 @@ class LoginActivity : AppCompatActivity() {
 //            return
 //        }
         startActivity(Intent(this, MenubarPassageiroActivity::class.java))
+
+        //startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
     }
 
     private fun loginWithGoogle() {

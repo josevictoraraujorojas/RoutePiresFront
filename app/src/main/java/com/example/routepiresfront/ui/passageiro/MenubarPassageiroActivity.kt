@@ -37,10 +37,17 @@ class MenubarPassageiroActivity : AppCompatActivity() {
                     binding.menuInferior.menu.findItem(R.id.configuracaoPassageiroFragment).isChecked = true
                 }
 
+                R.id.negociacaoFragment2,
+                R.id.chatFragment2,
+                R.id.denunciaFragment2 -> {
+                    binding.menuInferior.menu.findItem(R.id.negociacaoFragment2).isChecked = true
+                }
+
                 // Selecionar Local / Criar Corrida / Buscar Motorista
                 R.id.selecionarLocalFragment,
                 R.id.criacaoCorridaFragment,
-                R.id.buscaMotoristaFragment -> {
+                R.id.buscaMotoristaFragment,
+                R.id.mototaxistaCaminhoFragment-> {
                     binding.menuInferior.menu.findItem(R.id.selecionarLocalFragment).isChecked = true
                 }
             }
