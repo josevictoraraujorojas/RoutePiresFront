@@ -97,7 +97,7 @@ class ChatFragment : Fragment() {
             val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
             bottom.selectedItemId = R.id.bottom_home
 
-            // 2️⃣ Envia sinal para CorridaMototaxistaFragment abrir o BottomSheet em "Aguardando Início Corrida"
+            // 2️⃣ Envia sinal para CorridaMototaxistaFragment abrir o agurandoiniciocorrida
             val corridaNav = requireActivity()
                 .supportFragmentManager
                 .findFragmentById(R.id.nav_host_home_moto)
@@ -120,8 +120,9 @@ class ChatFragment : Fragment() {
             }
 
             dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
+                findNavController().navigate(R.id.action_chat_para_denuncia)
                 dialog.dismiss()
-                // Aqui você adiciona a lógica de denúncia depois se quiser
+
             }
 
             dialog.show()
