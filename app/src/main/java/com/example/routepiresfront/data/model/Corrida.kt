@@ -1,4 +1,4 @@
-package com.example.routepiresfront.model
+package com.example.routepiresfront.data.model
 
 data class Corrida(
     val nome: String,

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentNegociacaoBinding
-import com.example.routepiresfront.model.Negociacao
+import com.example.routepiresfront.data.model.Negociacao
 import com.example.routepiresfront.ui.comum.adapter.NegociacaoAdapter
 
 class NegociacaoFragment : Fragment() {

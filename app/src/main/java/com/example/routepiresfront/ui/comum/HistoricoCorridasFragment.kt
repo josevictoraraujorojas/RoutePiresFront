@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
-import com.example.routepiresfront.model.Corrida
+import com.example.routepiresfront.data.model.Corrida
 
 class HistoricoCorridasFragment : Fragment() {
 

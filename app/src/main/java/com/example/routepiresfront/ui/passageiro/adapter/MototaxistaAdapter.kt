@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.ui.passageiro.EscolhaMototaxistaFragment
 import com.example.routepiresfront.databinding.ItemMototaxistaBinding
-import com.example.routepiresfront.model.Mototaxista
+import com.example.routepiresfront.data.model.Mototaxista
 
 class MototaxistaAdapter(private val lista: List<Mototaxista>) :
     RecyclerView.Adapter<MototaxistaAdapter.MototaxistaViewHolder>() {

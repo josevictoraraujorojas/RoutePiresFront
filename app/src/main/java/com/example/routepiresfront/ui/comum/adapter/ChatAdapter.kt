@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
-import com.example.routepiresfront.model.Mensagem
+import com.example.routepiresfront.data.model.Mensagem
 
 class ChatAdapter(private val mensagens: List<Mensagem>) :
     RecyclerView.Adapter<ChatAdapter.MensagemViewHolder>() {

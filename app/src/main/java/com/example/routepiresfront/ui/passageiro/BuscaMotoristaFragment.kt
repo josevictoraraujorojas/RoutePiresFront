@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
-import com.example.routepiresfront.model.Mototaxista
+import com.example.routepiresfront.data.model.Mototaxista
 import com.example.routepiresfront.ui.passageiro.adapter.MototaxistaAdapter
 import com.example.routepiresfront.databinding.FragmentBuscaMotoristaBinding
 

@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
-import com.example.routepiresfront.model.Corrida
+import com.example.routepiresfront.data.model.Corrida
 
 class CorridaAdapter(private val lista: List<Corrida>) :
     RecyclerView.Adapter<CorridaAdapter.CorridaViewHolder>() {

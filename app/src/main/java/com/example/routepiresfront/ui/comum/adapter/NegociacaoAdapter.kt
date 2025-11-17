@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
-import com.example.routepiresfront.model.Negociacao
+import com.example.routepiresfront.data.model.Negociacao
 
 /**
  * Adaptador responsavel por vincular os itens de negociacao ao RecyclerView.
