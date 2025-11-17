@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.databinding.FragmentCorridaAndamentoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.example.routepiresfront.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
 
@@ -48,7 +50,17 @@ class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
 
         // Botão finalizar corrida
         binding.btnFinalizar.setOnClickListener {
-            // Ação futura para finalizar a corrida
+            findNavController().navigate(R.id.action_corridaAndamentoFragment_to_corridaMototaxistaFragment)
+
+            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
+            bottom.selectedItemId = R.id.bottom_avaliacao
+
+            val avaliacaoNav = requireActivity()
+                .supportFragmentManager
+                .findFragmentById(R.id.nav_host_avaliacao_moto)
+                ?.findNavController()
+
+            avaliacaoNav?.navigate(R.id.action_global_avaliacaoFragment2)
         }
     }
 

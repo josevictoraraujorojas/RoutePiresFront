@@ -79,6 +79,7 @@ class AguardandoInicioCorridaFragment : Fragment() {
 ////                R.id.action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment
 //            )
              findNavController().navigate(R.id.action_aguardandoInicioCorridaFragment2_to_corridaAndamentoFragment)
+
         }
 
         binding.btnCancelarCorrida.setOnClickListener {

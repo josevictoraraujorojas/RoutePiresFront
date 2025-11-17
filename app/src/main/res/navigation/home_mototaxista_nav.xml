@@ -25,7 +25,11 @@
     <fragment
         android:id="@+id/corridaAndamentoFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.CorridaAndamentoFragment"
-        android:label="CorridaAndamentoFragment" />
+        android:label="CorridaAndamentoFragment" >
+        <action
+            android:id="@+id/action_corridaAndamentoFragment_to_corridaMototaxistaFragment"
+            app:destination="@id/corridaMototaxistaFragment" />
+    </fragment>
 
 
 </navigation>
