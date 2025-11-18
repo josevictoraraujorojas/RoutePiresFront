@@ -11,7 +11,6 @@ import com.example.routepiresfront.R
 import com.example.routepiresfront.ui.mototaxista.CadastroMototaxistaActivity
 import com.example.routepiresfront.ui.mototaxista.MenubarMototaxistaActivity
 import com.example.routepiresfront.ui.passageiro.CadastroPassageiroActivity
-import com.example.routepiresfront.ui.passageiro.MenubarPassageiroActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 

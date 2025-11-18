@@ -60,7 +60,8 @@ class CadastroMototaxistaActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_cadastro) as NavHostFragment
+        return navHostFragment.navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

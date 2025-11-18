@@ -9,15 +9,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
+import com.example.routepiresfront.data.remote.RetrofitProvider
+import com.example.routepiresfront.data.repository.MototaxistaRepository
 import com.example.routepiresfront.databinding.FragmentPrimeiroCadastroMototaxistaBinding
+import com.example.routepiresfront.viewmodel.CadastroMototaxistaViewModel
+import com.example.routepiresfront.viewmodel.MyViewModelFactory
 
 class PrimeiroCadastroMototaxistaFragment : Fragment() {
 
     private var _binding: FragmentPrimeiroCadastroMototaxistaBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: CadastroMototaxistaViewModel by activityViewModels {
+        MyViewModelFactory(MototaxistaRepository(RetrofitProvider.createApi()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,18 +63,40 @@ class PrimeiroCadastroMototaxistaFragment : Fragment() {
         binding.txtTermosCompletos.text = spannable
         binding.txtTermosCompletos.movementMethod = LinkMovementMethod.getInstance()
 
-        // Botão continuar → navega com Navigation Component
+        binding.editNome.doAfterTextChanged {
+            viewModel.updateForm { copy(nomeCompleto = it.toString()) }
+        }
+
+        binding.editEmail.doAfterTextChanged {
+            viewModel.updateForm { copy(email = it.toString()) }
+        }
+
+        binding.editTelefone.doAfterTextChanged {
+            viewModel.updateForm { copy(telefone = it.toString()) }
+        }
+
+        binding.editSenha.doAfterTextChanged {
+            viewModel.updateForm { copy(senha = it.toString()) }
+        }
+
+        binding.editSenhaConfirmacao.doAfterTextChanged {
+            viewModel.updateForm { copy(confirmaSenha = it.toString()) }
+        }
+
+        // --- 3) Aqui fica a validação e navegação ---
         binding.button.setOnClickListener {
+
             if (!binding.chkTermos.isChecked) {
-                Toast.makeText(
-                    requireContext(),
-                    "Você deve aceitar os termos de uso",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+                Toast.makeText(requireContext(), "Você deve aceitar os termos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (viewModel.form.value.isFirstStepValid()) {
                 findNavController().navigate(
                     R.id.action_primeiroCadastroMototaxistaFragment_to_segundoCadastroMototaxista
                 )
+            } else {
+                Toast.makeText(requireContext(), "Preencha os dados corretamente", Toast.LENGTH_SHORT).show()
             }
         }
     }
