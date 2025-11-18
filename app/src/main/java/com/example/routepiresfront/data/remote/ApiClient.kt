@@ -29,4 +29,5 @@ object ApiClient {
             .build()
     }
 
+    fun loginService(): LoginService = instance.create(LoginService::class.java)
 }
