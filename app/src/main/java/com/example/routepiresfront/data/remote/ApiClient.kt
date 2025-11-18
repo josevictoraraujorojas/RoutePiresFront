@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    // Emulador Android → backend rodando no PC
+    // Emulador Android → backend rodando no PC (segue recomendação da Aula 13)
     private const val BASE_URL = "http://10.0.2.2:8080/"
 
     // Se usar celular físico → use o IP da máquina:
@@ -29,4 +29,6 @@ object ApiClient {
             .build()
     }
 
+    // Expondo o service pronto para uso nos repositórios/ViewModels
+    val service: ApiService by lazy { instance.create(ApiService::class.java) }
 }
