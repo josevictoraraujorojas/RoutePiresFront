@@ -21,7 +21,7 @@ object ApiClient {
         .addInterceptor(logging) // loga requisições/respostas
         .build()
 
-    val instance: Retrofit by lazy {
+    private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
@@ -29,5 +29,15 @@ object ApiClient {
             .build()
     }
 
-    fun loginService(): LoginService = instance.create(LoginService::class.java)
+    fun loginService(): LoginService {
+        return retrofit.create(LoginService::class.java)
+    }
+
+    fun mototaxistaPerfilService(): MototaxistaPerfilService {
+        return retrofit.create(MototaxistaPerfilService::class.java)
+    }
+
+    fun passageiroPerfilService(): PassageiroPerfilService {
+        return retrofit.create(PassageiroPerfilService::class.java)
+    }
 }

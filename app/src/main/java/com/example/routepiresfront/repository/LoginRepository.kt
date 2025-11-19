@@ -1,4 +1,4 @@
-package com.example.routepiresfront.data.repository
+package com.example.routepiresfront.repository
 
 import retrofit2.Response
 import com.example.routepiresfront.data.model.LoginDTOCreate
