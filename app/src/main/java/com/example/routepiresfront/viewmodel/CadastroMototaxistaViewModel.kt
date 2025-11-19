@@ -25,11 +25,12 @@ sealed class CadastroUiState {
 
 // Form state
 data class CadastroFormState(
-    val nomeCompleto: String = "",
+    val nome: String = "",
     val email: String = "",
     val telefone: String = "",
     val senha: String = "",
     val confirmaSenha: String = "",
+    val fotoUrl: String = "",
     val cnh: String = "",
     val validadeCnh: String = "", // string input
     val placa: String = "",
@@ -41,7 +42,7 @@ data class CadastroFormState(
     val longitude: Double? = null
 ) {
     fun isFirstStepValid() =
-        nomeCompleto.isNotBlank() && email.isNotBlank() && telefone.isNotBlank() &&
+        nome.isNotBlank() && email.isNotBlank() && telefone.isNotBlank() &&
                 senha.length >= 6 && senha == confirmaSenha
 
     fun isSecondStepValid() = cnh.isNotBlank() && validadeCnh.isNotBlank()
@@ -92,10 +93,11 @@ class CadastroMototaxistaViewModel(private val repo: MototaxistaRepository) : Vi
         } else null
 
         val dto = MototaxistaCreate(
-            nomeCompleto = f.nomeCompleto.trim(),
+            nome = f.nome.trim(),
             email = f.email.trim(),
             telefone = f.telefone.trim(),
             senha = f.senha,
+            fotoUrl = foto,
             cnh = f.cnh.trim(),
             disponivel = true,
             localizacaoAtual = local,

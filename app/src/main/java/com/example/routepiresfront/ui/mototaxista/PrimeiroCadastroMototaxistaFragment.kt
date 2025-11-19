@@ -64,7 +64,7 @@ class PrimeiroCadastroMototaxistaFragment : Fragment() {
         binding.txtTermosCompletos.movementMethod = LinkMovementMethod.getInstance()
 
         binding.editNome.doAfterTextChanged {
-            viewModel.updateForm { copy(nomeCompleto = it.toString()) }
+            viewModel.updateForm { copy(nome = it.toString()) }
         }
 
         binding.editEmail.doAfterTextChanged {

@@ -13,7 +13,7 @@ legacySupportV4 = "1.0.0"
 
 # Atualizados (MVVM)
 lifecycleLivedataKtx = "2.8.7"
-lifecycleViewmodelKtx = "2.8.7"
+lifecycleViewmodelKtx = "2.9.4"
 fragmentKtx = "1.8.5"
 
 navigationFragmentKtx = "2.9.5"

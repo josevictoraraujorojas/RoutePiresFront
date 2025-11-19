@@ -58,7 +58,7 @@ dependencies {
     // Lifecycle - MVVM
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
 
     // Retrofit + Converter (Gson or Moshi)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
