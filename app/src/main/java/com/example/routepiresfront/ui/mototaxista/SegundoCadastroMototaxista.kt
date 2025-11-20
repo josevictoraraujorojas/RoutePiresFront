@@ -19,7 +19,6 @@ import com.example.routepiresfront.viewmodel.MyViewModelFactory
 class SegundoCadastroMototaxista : Fragment() {
 
     private var _binding: FragmentSegundoCadastroMototaxistaBinding? = null
-
     private val binding get() = _binding!!
 
     private val viewModel: CadastroMototaxistaViewModel by activityViewModels {
@@ -34,7 +33,6 @@ class SegundoCadastroMototaxista : Fragment() {
         return binding.root
     }
 
-    // Configura as interações da view após ela ser criada.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,6 +45,12 @@ class SegundoCadastroMototaxista : Fragment() {
                 return@setOnClickListener
             }
 
+            // Verificar se pelo menos 1 serviço foi selecionado
+            if (viewModel.form.value.servicos.isEmpty()) {
+                Toast.makeText(requireContext(), "Selecione pelo menos um serviço oferecido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             findNavController().navigate(
                 R.id.action_segundoCadastroMototaxista_to_terceiroCadastroMototaxistaFragment
             )
@@ -55,16 +59,30 @@ class SegundoCadastroMototaxista : Fragment() {
 
     private fun configurarInputs() = with(binding) {
 
+        // Atualiza CNH
         editCNH.doAfterTextChanged {
             viewModel.updateForm { copy(cnh = it.toString()) }
         }
 
+        // Atualiza validade da CNH
         editDataValidade.doAfterTextChanged {
-            viewModel.updateForm { copy(validadeCnh = it.toString()) }
+            viewModel.updateForm { copy(dataValidade = it.toString()) }
+        }
+
+        // Serviços oferecidos
+        checkTransporte.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.toggleServico("TRANSPORTE_PASSAGEIRO", isChecked)
+        }
+
+        checkFrete.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.toggleServico("FRETE", isChecked)
+        }
+
+        checkEntrega.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.toggleServico("ENTREGA_RAPIDA", isChecked)
         }
     }
 
-    // Limpa a referência do binding quando a view é destruída para evitar vazamentos de memória.
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

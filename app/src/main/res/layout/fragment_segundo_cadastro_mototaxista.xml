@@ -7,6 +7,7 @@
     android:padding="16dp"
     tools:context=".ui.mototaxista.SegundoCadastroMototaxista">
 
+    <!-- CNH -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Validade CNH -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,6 +69,36 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- Serviços oferecidos -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Serviços oferecidos"
+        android:textSize="12sp"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="#2F3036"
+        android:layout_marginBottom="8dp"/>
+
+    <CheckBox
+        android:id="@+id/checkTransporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transporte de Passageiro" />
+
+    <CheckBox
+        android:id="@+id/checkFrete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frete" />
+
+    <CheckBox
+        android:id="@+id/checkEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entrega Rápida"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Botão -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"

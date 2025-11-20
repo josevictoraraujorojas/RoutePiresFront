@@ -13,6 +13,8 @@ data class MototaxistaCreate(
     val senha: String,
     @SerializedName("fotoUrl")
     val fotoUrl: String? = null,
+    @SerializedName("dataValidade")
+    val dataValidade: String? = null,
     // CNH
     @SerializedName("cnh")
     val cnh: String,

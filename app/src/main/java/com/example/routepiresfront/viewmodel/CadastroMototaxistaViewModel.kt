@@ -32,7 +32,8 @@ data class CadastroFormState(
     val confirmaSenha: String = "",
     val fotoUrl: String = "",
     val cnh: String = "",
-    val validadeCnh: String = "", // string input
+    val dataValidade: String = "",
+    val servicos: MutableSet<String> = mutableSetOf(),
     val placa: String = "",
     val renavam: String = "",
     val modeloMoto: String = "",
@@ -45,7 +46,7 @@ data class CadastroFormState(
         nome.isNotBlank() && email.isNotBlank() && telefone.isNotBlank() &&
                 senha.length >= 6 && senha == confirmaSenha
 
-    fun isSecondStepValid() = cnh.isNotBlank() && validadeCnh.isNotBlank()
+    fun isSecondStepValid() = cnh.isNotBlank() && dataValidade.isNotBlank()
 
     fun isThirdStepValid() =
         placa.isNotBlank() && renavam.isNotBlank() && modeloMoto.isNotBlank() && anoMoto.toIntOrNull() != null
@@ -61,6 +62,12 @@ class CadastroMototaxistaViewModel(private val repo: MototaxistaRepository) : Vi
 
     fun updateForm(update: CadastroFormState.() -> CadastroFormState) {
         _form.value = _form.value.update()
+    }
+
+    fun toggleServico(servico: String, selecionado: Boolean) {
+        val atual = _form.value.servicos.toMutableSet()
+        if (selecionado) atual.add(servico) else atual.remove(servico)
+        _form.value = _form.value.copy(servicos = atual)
     }
 
     fun submitCadastro() {
@@ -99,10 +106,11 @@ class CadastroMototaxistaViewModel(private val repo: MototaxistaRepository) : Vi
             senha = f.senha,
             fotoUrl = foto,
             cnh = f.cnh.trim(),
+            dataValidade = f.dataValidade,
             disponivel = true,
             localizacaoAtual = local,
             veiculo = veiculo,
-            servicosOferecidos = null
+            servicosOferecidos = f.servicos.toList()
         )
 
         viewModelScope.launch {
