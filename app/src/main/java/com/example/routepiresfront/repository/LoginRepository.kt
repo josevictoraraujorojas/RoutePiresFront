@@ -1,8 +1,8 @@
 package com.example.routepiresfront.repository
 
 import retrofit2.Response
-import com.example.routepiresfront.data.model.LoginDTOCreate
-import com.example.routepiresfront.data.model.LoginDTOResponse
+import com.example.routepiresfront.data.model.LoginDTO
+import com.example.routepiresfront.data.model.UsuarioDTOResponse
 import com.example.routepiresfront.data.remote.ApiClient
 import com.example.routepiresfront.data.remote.LoginService
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 class LoginRepository {
     private val api: LoginService = ApiClient.loginService()
 
-    suspend fun login(dto: LoginDTOCreate): Result<LoginDTOResponse> = withContext(Dispatchers.IO) {
+    suspend fun login(dto: LoginDTO): Result<UsuarioDTOResponse> = withContext(Dispatchers.IO) {
         safeCall { api.login(dto) }
     }
 
