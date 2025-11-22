@@ -31,7 +31,9 @@ class CorridaAdapter(private var lista: List<CorridaDTOResponse>) :
         val corrida = lista[position]
         // O DTO não tem o nome do outro usuário, então usamos um placeholder
         holder.nome.text = "Corrida #${position + 1}"
-        holder.dataHora.text = corrida.dataInicio?.let { formatDateTime(it) } ?: "Data não disponível"
+        // Prioriza `dataHoraFim` (campo do BD), senão usa `dataFim`, senão `dataInicio`
+        val dateToShow = corrida.dataHoraFim ?: corrida.dataFim ?: corrida.dataInicio
+        holder.dataHora.text = dateToShow?.let { formatDateTime(it) } ?: "Data não disponível"
         holder.status.text = corrida.status?.replaceFirstChar { it.titlecase(Locale.getDefault()) } ?: "Status desconhecido"
     }
 
@@ -45,9 +47,25 @@ class CorridaAdapter(private var lista: List<CorridaDTOResponse>) :
     // Formata a data para um formato mais amigável
     private fun formatDateTime(dateTimeString: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            // Aceita várias variações ISO (com ou sem millis, com Z, etc.)
+            val patterns = listOf(
+                "yyyy-MM-dd'T'HH:mm:ss'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss",
+                "yyyy-MM-dd HH:mm:ss"
+            )
+            var parsed: java.util.Date? = null
+            for (p in patterns) {
+                try {
+                    val sdf = SimpleDateFormat(p, Locale.getDefault())
+                    sdf.timeZone = java.util.TimeZone.getTimeZone("UTC") // Define UTC para o parser
+                    parsed = sdf.parse(dateTimeString)
+                    if (parsed != null) break
+                } catch (_: Exception) {}
+            }
             val outputFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-            inputFormat.parse(dateTimeString)?.let { outputFormat.format(it) } ?: dateTimeString
+            outputFormat.timeZone = java.util.TimeZone.getDefault() // Converte para o fuso horário local
+            parsed?.let { outputFormat.format(it) } ?: dateTimeString
         } catch (e: Exception) {
             dateTimeString // Retorna a string original se o parse falhar
         }

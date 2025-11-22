@@ -6,6 +6,7 @@ data class CorridaDTOResponse(
     val mototaxistaId: String? = null,
     val dataInicio: String? = null,
     val dataFim: String? = null,
+    val dataHoraFim: String? = null, // Novo campo conforme o banco: dataHoraFim (padrão usado no backend)
     val localPartida: String? = null,
     val localDestino: String? = null,
     val valor: Float? = null,

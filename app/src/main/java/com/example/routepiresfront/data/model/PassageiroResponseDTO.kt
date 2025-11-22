@@ -3,6 +3,7 @@ package com.example.routepiresfront.data.model
 data class PassageiroResponseDTO(
     val id: String? = null,
     val nome: String? = null,
+    val email: String? = null,
     val telefone: String? = null,
     val dataCadastro: String? = null, // ISO 8601 format
     val tipo: String? = null, // "PASSAGEIRO"

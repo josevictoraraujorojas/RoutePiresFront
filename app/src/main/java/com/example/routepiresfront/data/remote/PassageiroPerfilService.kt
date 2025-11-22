@@ -1,14 +1,12 @@
 package com.example.routepiresfront.data.remote
 
 import com.example.routepiresfront.data.model.CorridaDTOResponse
-import com.example.routepiresfront.data.model.MototaxistaDTOProfile
+import com.example.routepiresfront.data.model.MototaxistaDTOResponse
 import com.example.routepiresfront.data.model.NotificacaoDTOResponse
-import com.example.routepiresfront.data.model.PassageiroProfileDTO
 import com.example.routepiresfront.data.model.PassageiroResponseDTO
 import com.example.routepiresfront.data.model.PassageiroUpdateDTO
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -26,7 +24,7 @@ interface PassageiroPerfilService {
     @GET("passageiros/{id}")
     suspend fun getPerfilPassageiro(
         @Path("id") id: String
-    ): Response<PassageiroProfileDTO>  // ✅ Mudado para Profile
+    ): Response<PassageiroResponseDTO>  // ✅ Mudado para Profile
 
     // ===== HISTÓRICO DE CORRIDAS =====
     @GET("passageiros/{id}/historico-corridas")
@@ -56,5 +54,5 @@ interface PassageiroPerfilService {
     @GET("passageiros/mototaxista/{mototaxistaId}/perfil")
     suspend fun viewMototaxistaProfile(
         @Path("mototaxistaId") mototaxistaId: String
-    ): Response<MototaxistaDTOProfile>
+    ): Response<MototaxistaDTOResponse>
 }

@@ -10,14 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
 import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
-import com.example.routepiresfront.viewModel.MototaxistaPerfilViewModel
+import com.example.routepiresfront.viewModel.PassageiroPerfilViewModel
+import android.util.Log
 
 class HistoricoCorridasFragment : Fragment() {
 
     private var _binding: FragmentHistoricoCorridasBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MototaxistaPerfilViewModel by activityViewModels()
+    // Observamos apenas o ViewModel do passageiro enquanto o endpoint do mototaxista estiver indisponível
+    private val passViewModel: PassageiroPerfilViewModel by activityViewModels()
     private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,23 +35,45 @@ class HistoricoCorridasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = CorridaAdapter(emptyList()) // Começa com a lista vazia
-        binding.recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerCorridas.adapter = adapter
+            val adapter = CorridaAdapter(emptyList()) // Começa com a lista vazia
+            binding.recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerCorridas.adapter = adapter
 
-        binding.btnVoltar.setOnClickListener {
-            findNavController().navigateUp()
-        }
+            binding.btnVoltar.setOnClickListener {
+                findNavController().navigateUp()
+            }
 
-        // Observa o histórico de corridas e atualiza o adapter
-        viewModel.historico.observe(viewLifecycleOwner) { corridas ->
-            adapter.updateCorridas(corridas) // O Adapter precisa de um método para atualizar a lista
-        }
+            // Observa somente o ViewModel do passageiro enquanto o endpoint do mototaxista estiver indisponível
+            fun handleReceivedList(corridas: List<com.example.routepiresfront.data.model.CorridaDTOResponse>?) {
+                val size = corridas?.size ?: 0
+                Log.d("HistoricoFragment", "corridas passageiro recebidas: size=$size")
+                if (corridas == null || corridas.isEmpty()) {
+                    binding.tvEmptyHistorico.visibility = View.VISIBLE
+                    binding.recyclerCorridas.visibility = View.GONE
+                } else {
+                    binding.tvEmptyHistorico.visibility = View.GONE
+                    binding.recyclerCorridas.visibility = View.VISIBLE
+                    adapter.updateCorridas(corridas)
+                }
+            }
 
-        // Carrega o histórico de corridas usando o ID do usuário
-        userId?.let {
-            viewModel.carregarHistorico(it)
-        }
+            passViewModel.historico.observe(viewLifecycleOwner) { corridas ->
+                Log.d("HistoricoFragment", "corridas passageiro emitidas: size=${corridas?.size}")
+                handleReceivedList(corridas)
+            }
+
+            passViewModel.error.observe(viewLifecycleOwner) { err ->
+                err?.let {
+                    Log.e("HistoricoFragment", "Erro passageiro ao obter histórico: $it")
+                    try { android.widget.Toast.makeText(requireContext(), "Erro ao obter histórico: $it", android.widget.Toast.LENGTH_LONG).show() } catch (_: Exception) {}
+                }
+            }
+
+            // Solicita carregamento apenas do histórico do passageiro (mototaxista temporariamente sem endpoint)
+            userId?.let {
+                Log.d("HistoricoFragment", "carregarHistorico passageiro para userId=$it")
+                passViewModel.carregarHistorico(it)
+            }
     }
 
     override fun onDestroyView() {
