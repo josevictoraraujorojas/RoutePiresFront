@@ -23,8 +23,9 @@ class LoginRepository {
 
                 // --- Tratamento correto para 204 No Content ---
                 if (response.code() == 204) {
+                    // Retorna null para manter o comportamento consistente com outros repositórios
                     @Suppress("UNCHECKED_CAST")
-                    return@safeCall Result.success(Unit as T)
+                    return@safeCall Result.success(null as T)
                 }
 
                 val body = response.body()
