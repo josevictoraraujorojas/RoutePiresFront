@@ -51,6 +51,7 @@ class MototaxistaPerfilRepository {
     // ===== HISTÓRICO DE CORRIDAS =====
     suspend fun getHistoricoCorridas(id: String): Result<List<CorridaDTOResponse>> =
         withContext(Dispatchers.IO) {
+            // Restaurado para o comportamento original: delega para safeCall e retorna o resultado direto.
             safeCall { api.getHistoricoCorridas(id) }
         }
 
@@ -84,9 +85,10 @@ class MototaxistaPerfilRepository {
             if (response.isSuccessful) {
                 // Tratamento para 204 No Content
                 if (response.code() == 204) {
-                    @Suppress("UNCHECKED_CAST")
+                    // No Content: retorna null para que o chamador possa decidir o que fazer
                     Log.d("MototaxistaRepo", "Resposta 204 No Content")
-                    return Result.success(Unit as T)
+                    @Suppress("UNCHECKED_CAST")
+                    return Result.success(null as T)
                 }
 
                 val body = response.body()
