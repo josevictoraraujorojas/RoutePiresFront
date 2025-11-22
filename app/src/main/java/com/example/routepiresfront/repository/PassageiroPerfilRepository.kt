@@ -1,9 +1,8 @@
 package com.example.routepiresfront.repository
 
 import com.example.routepiresfront.data.model.CorridaDTOResponse
-import com.example.routepiresfront.data.model.MototaxistaDTOProfile
+import com.example.routepiresfront.data.model.MototaxistaDTOResponse
 import com.example.routepiresfront.data.model.NotificacaoDTOResponse
-import com.example.routepiresfront.data.model.PassageiroProfileDTO
 import com.example.routepiresfront.data.model.PassageiroResponseDTO
 import com.example.routepiresfront.data.model.PassageiroUpdateDTO
 import com.example.routepiresfront.data.remote.ApiClient
@@ -24,7 +23,7 @@ class PassageiroPerfilRepository {
                 safeCall { api.updatePerfil(id, dto) }
             }
 
-        suspend fun getPerfilPassageiro(id: String): Result<PassageiroProfileDTO> =  // ✅ Profile
+        suspend fun getPerfilPassageiro(id: String): Result<PassageiroResponseDTO> =  // ✅ Profile
             withContext(Dispatchers.IO) {
                 safeCall { api.getPerfilPassageiro(id) }
             }
@@ -58,7 +57,7 @@ class PassageiroPerfilRepository {
         // ===== VISUALIZAR PERFIL MOTOTAXISTA =====
         suspend fun viewMototaxistaProfile(
             mototaxistaId: String
-        ): Result<MototaxistaDTOProfile> =
+        ): Result<MototaxistaDTOResponse> =
             withContext(Dispatchers.IO) {
                 safeCall { api.viewMototaxistaProfile(mototaxistaId) }
             }

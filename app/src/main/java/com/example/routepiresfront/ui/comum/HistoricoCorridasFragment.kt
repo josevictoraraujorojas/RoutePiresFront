@@ -5,44 +5,55 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
-import com.example.routepiresfront.data.model.Corrida
+import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
+import com.example.routepiresfront.viewModel.MototaxistaPerfilViewModel
 
 class HistoricoCorridasFragment : Fragment() {
 
-    private lateinit var recyclerCorridas: RecyclerView
-    private lateinit var adapter: CorridaAdapter
-    private lateinit var binding: FragmentHistoricoCorridasBinding
+    private var _binding: FragmentHistoricoCorridasBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentHistoricoCorridasBinding.inflate(inflater, container, false)
+    private val viewModel: MototaxistaPerfilViewModel by activityViewModels()
+    private var userId: String? = null
 
-        recyclerCorridas = binding.recyclerCorridas
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        userId = arguments?.getString("USER_ID") ?: activity?.intent?.getStringExtra("USER_ID")
+    }
 
-        // ✅ Botão voltar com Navigation Component
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentHistoricoCorridasBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = CorridaAdapter(emptyList()) // Começa com a lista vazia
+        binding.recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerCorridas.adapter = adapter
+
         binding.btnVoltar.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        val listaCorridas = listOf(
-            Corrida("João", "20/03/2025 08:30", "Cancelado"),
-            Corrida("Jose", "19/03/2025 08:20", "Finalizado"),
-            Corrida("Rodrigo", "14/03/2025 10:30", "Finalizado"),
-            Corrida("Otavio", "20/03/2025", "Cancelado"),
-            Corrida("Luan", "20/03/2025", "Cancelado")
-        )
+        // Observa o histórico de corridas e atualiza o adapter
+        viewModel.historico.observe(viewLifecycleOwner) { corridas ->
+            adapter.updateCorridas(corridas) // O Adapter precisa de um método para atualizar a lista
+        }
 
-        adapter = CorridaAdapter(listaCorridas)
-        recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
-        recyclerCorridas.adapter = adapter
+        // Carrega o histórico de corridas usando o ID do usuário
+        userId?.let {
+            viewModel.carregarHistorico(it)
+        }
+    }
 
-        return binding.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

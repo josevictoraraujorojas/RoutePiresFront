@@ -22,7 +22,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Configura Data Binding com o layout criado
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -78,11 +77,13 @@ class LoginActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.loginResult.observe(this) { result ->
             result.onSuccess { usuario ->
-                if (usuario.tipo == "MOTOTAXISTA") {
-                    startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
+                val intent = if (usuario.tipo == "MOTOTAXISTA") {
+                    Intent(this, MenubarMototaxistaActivity::class.java)
                 } else {
-                    startActivity(Intent(this, MenubarPassageiroActivity::class.java))
+                    Intent(this, MenubarPassageiroActivity::class.java)
                 }
+                intent.putExtra("USER_ID", usuario.id)
+                startActivity(intent)
                 finish()
             }.onFailure {
                 Toast.makeText(this, "Erro ao fazer login", Toast.LENGTH_SHORT).show()

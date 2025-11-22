@@ -7,9 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
-import com.example.routepiresfront.data.model.Corrida
+import com.example.routepiresfront.data.model.CorridaDTOResponse
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class CorridaAdapter(private val lista: List<Corrida>) :
+class CorridaAdapter(private var lista: List<CorridaDTOResponse>) :
     RecyclerView.Adapter<CorridaAdapter.CorridaViewHolder>() {
 
     class CorridaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,10 +29,27 @@ class CorridaAdapter(private val lista: List<Corrida>) :
 
     override fun onBindViewHolder(holder: CorridaViewHolder, position: Int) {
         val corrida = lista[position]
-        holder.nome.text = corrida.nome
-        holder.dataHora.text = corrida.dataHora
-        holder.status.text = corrida.status
+        // O DTO não tem o nome do outro usuário, então usamos um placeholder
+        holder.nome.text = "Corrida #${position + 1}"
+        holder.dataHora.text = corrida.dataInicio?.let { formatDateTime(it) } ?: "Data não disponível"
+        holder.status.text = corrida.status?.replaceFirstChar { it.titlecase(Locale.getDefault()) } ?: "Status desconhecido"
     }
 
     override fun getItemCount(): Int = lista.size
+
+    fun updateCorridas(novasCorridas: List<CorridaDTOResponse>) {
+        this.lista = novasCorridas
+        notifyDataSetChanged()
+    }
+
+    // Formata a data para um formato mais amigável
+    private fun formatDateTime(dateTimeString: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            inputFormat.parse(dateTimeString)?.let { outputFormat.format(it) } ?: dateTimeString
+        } catch (e: Exception) {
+            dateTimeString // Retorna a string original se o parse falhar
+        }
+    }
 }
