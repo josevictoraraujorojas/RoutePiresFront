@@ -25,6 +25,7 @@
     <string name="configuracao_motorista_apelido">@mototaxi</string>
     <string name="configuracao_passageiro_nome">Lucas</string>
     <string name="configuracao_passageiro_apelido">@passageiro</string>
+    <string name="configuracao_passageiro_email">passageiro@exemplo.com</string>
     <string name="configuracao_avatar_descricao">Foto do perfil</string>
     <string name="configuracao_acao_editar">Editar perfil</string>
     <string name="configuracao_disponibilidade">Disponibilidade:</string>
