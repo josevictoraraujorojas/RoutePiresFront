@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.routepiresfront.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MenubarMototaxistaActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
-
     private lateinit var navHostHome: FragmentContainerView
     private lateinit var navHostNegociacao: FragmentContainerView
     private lateinit var navHostAvaliacao: FragmentContainerView
@@ -22,17 +20,33 @@ class MenubarMototaxistaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menubar_mototaxista)
 
-        // Inicializa views
         bottomNavigationView = findViewById(R.id.menuInferior)
         navHostHome = findViewById(R.id.nav_host_home_moto)
         navHostNegociacao = findViewById(R.id.nav_host_negociacao_moto)
         navHostAvaliacao = findViewById(R.id.nav_host_avaliacao_moto)
         navHostConfiguracao = findViewById(R.id.nav_host_configuracao_moto)
 
-        // Mostrar a aba inicial (Home)
+        val userId = intent.getStringExtra("USER_ID")
+        val bundle = Bundle().apply {
+            putString("USER_ID", userId) // Passa o ID para todos os grafos
+        }
+
+        // Encontra os NavHostFragments e define o grafo de navegação para cada um com o USER_ID
+        val homeNavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_home_moto) as NavHostFragment
+        homeNavHostFragment.navController.setGraph(R.navigation.home_mototaxista_nav, bundle)
+
+        val negociacaoNavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_negociacao_moto) as NavHostFragment
+        negociacaoNavHostFragment.navController.setGraph(R.navigation.negociacao_mototaxista_nav, bundle)
+
+        val avaliacaoNavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_avaliacao_moto) as NavHostFragment
+        avaliacaoNavHostFragment.navController.setGraph(R.navigation.avaliacao_mototaxista_nav, bundle)
+
+        val configuracaoNavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_configuracao_moto) as NavHostFragment
+        configuracaoNavHostFragment.navController.setGraph(R.navigation.configuracao_mototaxista_nav, bundle)
+
+        // Lógica para mostrar/esconder as abas
         mostrarAba(navHostHome)
 
-        // Configura BottomNavigationView
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_home -> mostrarAba(navHostHome)
@@ -44,37 +58,8 @@ class MenubarMototaxistaActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Exibe apenas a aba passada e esconde as demais
-     */
-    private fun mostrarAba(aba: FragmentContainerView) {
+    private fun mostrarAba(aba: View) {
         val todasAbas = listOf(navHostHome, navHostNegociacao, navHostAvaliacao, navHostConfiguracao)
-        for (navHost in todasAbas) {
-            navHost.visibility = if (navHost == aba) View.VISIBLE else View.GONE
-        }
-    }
-
-    fun abrirCorridaSelecionada(idCorrida: String) {
-        // Garante que a aba Corrida está selecionada
-        val bottom = findViewById<BottomNavigationView>(R.id.menuInferior)
-        bottom.selectedItemId = R.id.bottom_corrida
-
-        // Encontra o fragmento CorridaMototaxistaFragment
-        val corridaFragment = supportFragmentManager.findFragmentById(R.id.corrida_mototaxista_nav)
-            ?.childFragmentManager
-            ?.fragments
-            ?.firstOrNull { it is CorridaMototaxistaFragment } as? CorridaMototaxistaFragment
-
-        // Abre o BottomSheet passando o ID da corrida
-        corridaFragment?.abrirBottomSheetCorrida()
-    }
-
-
-    /**
-     * Função utilitária para navegar dentro de uma aba específica
-     */
-    fun navegarNaAba(navHost: FragmentContainerView, destinoId: Int) {
-        val navController = supportFragmentManager.findFragmentById(navHost.id)?.findNavController()
-        navController?.navigate(destinoId)
+        todasAbas.forEach { it.visibility = if (it == aba) View.VISIBLE else View.GONE }
     }
 }
