@@ -81,6 +81,7 @@ dependencies {
 
     // Extra UI libs
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("io.coil-kt:coil:2.5.0") // Adicionado
 
     // Testes
     testImplementation(libs.junit)
