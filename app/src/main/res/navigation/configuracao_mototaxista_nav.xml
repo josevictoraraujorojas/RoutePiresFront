@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/configuracap_motorista_nav"
+    android:id="@+id/configuracao_mototaxista_nav"
     app:startDestination="@id/configuracaoMotoristaFragment">
 
     <fragment
@@ -10,6 +10,10 @@
         android:name="com.example.routepiresfront.ui.mototaxista.ConfiguracaoMotoristaFragment"
         android:label="fragment_configuracao_motorista"
         tools:layout="@layout/fragment_configuracao_motorista" >
+        <argument
+            android:name="USER_ID"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_configuracaoMotoristaFragment_to_editarPerfilFragment"
             app:destination="@id/editarPerfilFragment" />
@@ -23,21 +27,45 @@
             android:id="@+id/action_configuracaoMotoristaFragment_to_notificacaoFragment"
             app:destination="@id/notificacaoFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/editarPerfilFragment"
         android:name="com.example.routepiresfront.ui.comum.EditarPerfilFragment"
-        android:label="EditarPerfilFragment" />
+        android:label="EditarPerfilFragment" >
+        <argument
+            android:name="USER_ID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
     <fragment
         android:id="@+id/perfilVeiculoOuPlacaFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.PerfilVeiculoOuPlacaFragment"
-        android:label="PerfilVeiculoOuPlacaFragment" />
+        android:label="PerfilVeiculoOuPlacaFragment" >
+        <argument
+            android:name="USER_ID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
     <fragment
         android:id="@+id/historicoCorridasFragment"
         android:name="com.example.routepiresfront.ui.comum.HistoricoCorridasFragment"
-        android:label="HistoricoCorridasFragment" />
+        android:label="HistoricoCorridasFragment" >
+        <argument
+            android:name="USER_ID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
     <fragment
         android:id="@+id/notificacaoFragment"
         android:name="com.example.routepiresfront.ui.comum.NotificacaoFragment"
-        android:label="NotificacaoFragment" />
+        android:label="NotificacaoFragment" >
+        <argument
+            android:name="USER_ID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

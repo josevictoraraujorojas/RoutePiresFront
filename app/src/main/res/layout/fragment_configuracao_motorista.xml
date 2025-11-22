@@ -78,7 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="@string/configuracao_motorista_nome"
+                    android:text=""
+                    tools:text="@string/configuracao_motorista_nome"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -88,7 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/configuracao_motorista_apelido"
+                    android:text=""
+                    tools:text="@string/configuracao_motorista_apelido"
                     android:textColor="@color/profile_handle_color"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -113,7 +115,7 @@
                     android:id="@+id/swDisponibilidade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:showText="false"
                     app:thumbTint="@color/switch_thumb_color"
                     app:trackTint="@color/switch_track_color" />
