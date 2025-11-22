@@ -42,5 +42,15 @@
         android:paddingHorizontal="8dp"
         android:scrollbars="vertical"/>
 
+    <TextView
+        android:id="@+id/tvEmptyHistorico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nenhuma corrida encontrada"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:visibility="gone"
+        android:padding="16dp" />
+
 
 </LinearLayout>

@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/editarPerfilFragment2"
-        android:name="com.example.routepiresfront.ui.comum.EditarPerfilFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.EditarPerfilPassageiroFragment"
         android:label="EditarPerfilFragment" />
 
     <fragment
