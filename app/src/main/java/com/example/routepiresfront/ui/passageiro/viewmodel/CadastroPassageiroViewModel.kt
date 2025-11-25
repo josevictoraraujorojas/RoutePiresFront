@@ -1,6 +1,7 @@
 package com.example.routepiresfront.ui.passageiro.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,13 +19,96 @@ class CadastroPassageiroViewModel(
     private val repository: PassageiroRepository = PassageiroRepository()
 ) : ViewModel() {
 
+    // Estado do formulário exposto ao Data Binding
+    val nome = MutableLiveData("")
+    val email = MutableLiveData("")
+    val telefone = MutableLiveData("")
+    val senha = MutableLiveData("")
+    val confirmarSenha = MutableLiveData("")
+    val aceitouTermos = MutableLiveData(false)
+    val carregando = MutableLiveData(false)
+
+    private val _mensagem = MutableLiveData<String?>()
+    val mensagem: LiveData<String?> = _mensagem
+
     private val _estadoCadastro = MutableLiveData<Resultado<PassageiroResponse>>()
     val estadoCadastro: LiveData<Resultado<PassageiroResponse>> = _estadoCadastro
-
-    fun cadastrar(passageiro: PassageiroCadastroRequest) {
-        viewModelScope.launch {
-            _estadoCadastro.value = Resultado.Carregando
-            _estadoCadastro.value = repository.cadastrarPassageiro(passageiro)
+    val botaoHabilitado: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        value = false
+        fun atualizar() {
+            val camposOk = !nome.value.isNullOrBlank() &&
+                    !email.value.isNullOrBlank() &&
+                    !telefone.value.isNullOrBlank() &&
+                    !senha.value.isNullOrBlank() &&
+                    !confirmarSenha.value.isNullOrBlank()
+            val senhasConferem = senha.value == confirmarSenha.value
+            val termosOk = aceitouTermos.value == true
+            val carregandoAgora = carregando.value == true
+            value = camposOk && senhasConferem && termosOk && !carregandoAgora
         }
+        addSource(nome) { atualizar() }
+        addSource(email) { atualizar() }
+        addSource(telefone) { atualizar() }
+        addSource(senha) { atualizar() }
+        addSource(confirmarSenha) { atualizar() }
+        addSource(aceitouTermos) { atualizar() }
+        addSource(carregando) { atualizar() }
+    }
+
+    /**
+     * Acionado pelo botão (ver binding no XML). Valida e chama o repositório via corrotina.
+     */
+    fun onClickCadastrar() {
+        val nomeVal = nome.value.orEmpty().trim()
+        val emailVal = email.value.orEmpty().trim()
+        val telefoneVal = telefone.value.orEmpty().trim()
+        val senhaVal = senha.value.orEmpty()
+        val confirmarSenhaVal = confirmarSenha.value.orEmpty()
+
+        when {
+            nomeVal.isBlank() || emailVal.isBlank() || telefoneVal.isBlank() ||
+                    senhaVal.isBlank() || confirmarSenhaVal.isBlank() -> {
+                _mensagem.value = "Preencha todos os campos"
+                return
+            }
+
+            senhaVal != confirmarSenhaVal -> {
+                _mensagem.value = "As senhas não coincidem"
+                return
+            }
+
+            aceitouTermos.value != true -> {
+                _mensagem.value = "Você deve aceitar os termos de uso"
+                return
+            }
+        }
+
+        val passageiro = PassageiroCadastroRequest(
+            nome = nomeVal,
+            telefone = telefoneVal,
+            senha = senhaVal
+            // email ainda não faz parte do DTO do backend, fica guardado apenas na tela
+        )
+        cadastrar(passageiro)
+    }
+
+    private fun cadastrar(passageiro: PassageiroCadastroRequest) {
+        viewModelScope.launch {
+            carregando.value = true
+            _estadoCadastro.value = Resultado.Carregando
+            val resultado = repository.cadastrarPassageiro(passageiro)
+            _estadoCadastro.value = resultado
+
+            when (resultado) {
+                is Resultado.Sucesso -> _mensagem.value = "Cadastro concluído com sucesso!"
+                is Resultado.Erro -> _mensagem.value = resultado.mensagem
+                Resultado.Carregando -> {} // já tratado
+            }
+            carregando.value = false
+        }
+    }
+
+    fun limparMensagem() {
+        _mensagem.value = null
     }
 }

@@ -136,7 +136,8 @@ class LoginActivity : AppCompatActivity() {
 //        }
 //        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
 
-        startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
+        // Fluxo padrão agora abre como passageiro (pode alternar para mototaxista se quiser testar)
+        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
     }
 
     private fun loginWithGoogle() {

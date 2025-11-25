@@ -17,6 +17,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["MAPS_API_KEY"] = project.findProperty("MAPS_API_KEY") ?: ""
         buildConfigField("String", "MAPS_API_KEY", "\"${project.findProperty("MAPS_API_KEY") ?: ""}\"")
+        // Permite apontar para IP local sem editar código. Padrão: emulador (10.0.2.2). Evite "localhost" no emulador.
+        buildConfigField(
+            "String",
+            "API_BASE_URL",
+            "\"${project.findProperty("API_BASE_URL") ?: "http://10.0.2.2:8080/"}\""
+        )
     }
 
     buildTypes {

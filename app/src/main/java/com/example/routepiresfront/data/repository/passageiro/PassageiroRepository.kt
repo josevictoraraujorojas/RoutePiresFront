@@ -52,10 +52,11 @@ class PassageiroRepository(
                     Resultado.Erro("Resposta sem corpo (HTTP ${resposta.code()})")
                 }
             } else {
-                Resultado.Erro("Erro de API (HTTP ${resposta.code()})")
+                val erro = resposta.errorBody()?.string()
+                Resultado.Erro("Erro de API (HTTP ${resposta.code()}) ${erro.orEmpty()}")
             }
         } catch (e: Exception) {
-            Resultado.Erro("Falha ao comunicar com o servidor", e)
+            Resultado.Erro("Falha ao comunicar com o servidor: ${e.localizedMessage}", e)
         }
     }
 }
