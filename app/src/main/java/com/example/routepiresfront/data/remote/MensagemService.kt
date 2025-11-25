@@ -13,6 +13,12 @@ interface MensagemService {
         @Body dto: MensagenDTOCreate
     ): Response<MensagemDTOResponse>
 
+    @GET("chat/{chatId}/nao-lidas/{userId}")
+    suspend fun contarNaoLidas(
+        @Path("chatId") chatId: String?,
+        @Path("userId") userId: String
+    ): Response<Int>
+
     @PUT("mensagem/{id}")
     suspend fun updateMensagem(
         @Path("id") id: String,

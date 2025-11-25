@@ -18,6 +18,12 @@ class MensagemRepository(
             api.createMensagem(dto)
         }
 
+    // Contar mensagens não lidas
+    suspend fun contarNaoLidas(chatId: String?, userId: String): Response<Int> =
+        withContext(Dispatchers.IO) {
+            api.contarNaoLidas(chatId, userId)
+        }
+
     // Atualizar mensagem
     suspend fun updateMensagem(id: String, dto: MensagemDTOUpdate): Response<MensagemDTOResponse> =
         withContext(Dispatchers.IO) {

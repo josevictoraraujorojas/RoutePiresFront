@@ -27,12 +27,13 @@ class NegociacaoViewModel(
     private val _erro = MutableLiveData<String?>()
     val erro: LiveData<String?> = _erro
 
-    // copia para filtro local
+    // Cópia para filtro local
     private var negociacoesOriginais: List<Negociacao> = emptyList()
 
     /**
      * Carrega chats do backend via ChatRepository e converte para model Negociacao.
      * Busca a última mensagem real via MensagemRepository.
+     * Conta mensagens não lidas por chat.
      */
     fun carregarNegociacoes() {
         viewModelScope.launch {
@@ -49,27 +50,33 @@ class NegociacaoViewModel(
                     val lista = mutableListOf<Negociacao>()
 
                     for (chat in chats) {
+
                         val outroId = chat.participantes?.firstOrNull { it != userId } ?: "Desconhecido"
                         val nomeReal = usuarioRepository.getNomeById(outroId) ?: outroId
 
-                        // 🔥 pega o último ID da lista de mensagens
+                        // 🔥 último ID da lista
                         val ultimaMensagemId = chat.mensagens?.lastOrNull()
 
-                        // 🔥 busca a mensagem real pelo repository
+                        // 🔥 buscar o conteúdo real da última mensagem
                         val ultimaMensagem = if (ultimaMensagemId != null) {
                             withContext(Dispatchers.IO) {
                                 val msgResponse = mensagemRepository.getMensagemById(ultimaMensagemId)
-                                if (msgResponse.isSuccessful) {
-                                    msgResponse.body()?.conteudo ?: ""
-                                } else ""
+                                if (msgResponse.isSuccessful) msgResponse.body()?.conteudo ?: ""
+                                else ""
                             }
                         } else ""
+
+                        // 🔥 contar mensagens não lidas
+                        val quantidadeNaoLida = withContext(Dispatchers.IO) {
+                            val countResponse = mensagemRepository.contarNaoLidas(chat.id, userId)
+                            if (countResponse.isSuccessful) countResponse.body() ?: 0 else 0
+                        }
 
                         lista.add(
                             Negociacao(
                                 nome = nomeReal,
                                 mensagem = ultimaMensagem,
-                                quantidadeNaoLida = 0
+                                quantidadeNaoLida = quantidadeNaoLida
                             )
                         )
                     }
