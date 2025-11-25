@@ -5,11 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
+import br.gov.ifgoiano.routepiresfront.repository.MensagemRepository
 import com.example.routepiresfront.data.model.Negociacao
+import com.example.routepiresfront.repository.UsuarioRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NegociacaoViewModel(
-    private val repository: ChatRepository
+    private val chatRepository: ChatRepository,
+    private val usuarioRepository: UsuarioRepository,
+    private val mensagemRepository: MensagemRepository
 ) : ViewModel() {
 
     private val _negociacoes = MutableLiveData<List<Negociacao>>(emptyList())
@@ -26,40 +32,58 @@ class NegociacaoViewModel(
 
     /**
      * Carrega chats do backend via ChatRepository e converte para model Negociacao.
+     * Busca a última mensagem real via MensagemRepository.
      */
     fun carregarNegociacoes() {
         viewModelScope.launch {
             _loading.value = true
             _erro.value = null
 
+            val userId = "cUKwPBdlmMt95OJuMleA" // ID do usuário logado
+
             try {
-                val response = repository.getAllChats()
+                val response = chatRepository.getChatsByUsuarioId(userId)
+
                 if (response.isSuccessful) {
                     val chats = response.body().orEmpty()
+                    val lista = mutableListOf<Negociacao>()
 
-                    // Mapeia ChatDTOResponse -> Negociacao
-                    val lista = chats.map { chat ->
-                        // Escolhe um nome representativo: primeiro participante ou "Desconhecido"
-                        val nome = chat.participantes?.firstOrNull() ?: "Desconhecido"
+                    for (chat in chats) {
+                        val outroId = chat.participantes?.firstOrNull { it != userId } ?: "Desconhecido"
+                        val nomeReal = usuarioRepository.getNomeById(outroId) ?: outroId
 
-                        // pega última mensagem textual se existir (ChatDTOResponse.mensagens é List<String> no seu model)
-                        val ultimaMensagem = chat.mensagens?.lastOrNull() ?: ""
+                        // 🔥 pega o último ID da lista de mensagens
+                        val ultimaMensagemId = chat.mensagens?.lastOrNull()
 
-                        // quantidade de não lidas: não disponível no DTO, usa 0 (ou adapte se tiver)
-                        val naoLidas = 0
+                        // 🔥 busca a mensagem real pelo repository
+                        val ultimaMensagem = if (ultimaMensagemId != null) {
+                            withContext(Dispatchers.IO) {
+                                val msgResponse = mensagemRepository.getMensagemById(ultimaMensagemId)
+                                if (msgResponse.isSuccessful) {
+                                    msgResponse.body()?.conteudo ?: ""
+                                } else ""
+                            }
+                        } else ""
 
-                        Negociacao(
-                            nome = nome,
-                            mensagem = ultimaMensagem,
-                            quantidadeNaoLida = naoLidas
+                        lista.add(
+                            Negociacao(
+                                nome = nomeReal,
+                                mensagem = ultimaMensagem,
+                                quantidadeNaoLida = 0
+                            )
                         )
                     }
 
                     negociacoesOriginais = lista
                     _negociacoes.postValue(lista)
+
+                } else if (response.code() == 404) {
+                    negociacoesOriginais = emptyList()
+                    _negociacoes.postValue(emptyList())
                 } else {
                     _erro.postValue("Erro ao carregar negociações (código ${response.code()})")
                 }
+
             } catch (e: Exception) {
                 _erro.postValue(e.message ?: "Erro desconhecido")
             } finally {

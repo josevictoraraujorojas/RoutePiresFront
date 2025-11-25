@@ -14,6 +14,12 @@ interface ChatService {
         @Body dto: ChatDTOCreate
     ): Response<ChatDTOResponse>
 
+    @GET("chat/usuario/{id}")
+    suspend fun getChatsByUsuarioId(
+        @Path("id") id: String
+    ): Response<List<ChatDTOResponse>>
+
+
     @PUT("chat/{id}")
     suspend fun updateChat(
         @Path("id") id: String,

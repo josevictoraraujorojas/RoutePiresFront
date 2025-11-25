@@ -19,6 +19,11 @@ class ChatRepository(
             api.createChat(dto)
         }
 
+    suspend fun getChatsByUsuarioId(idUsuario: String): Response<List<ChatDTOResponse>> =
+        withContext(Dispatchers.IO) {
+            api.getChatsByUsuarioId(idUsuario)
+        }
+
     // Atualizar chat
     suspend fun updateChat(id: String, dto: ChatDTOUpdate): Response<ChatDTOResponse> =
         withContext(Dispatchers.IO) {

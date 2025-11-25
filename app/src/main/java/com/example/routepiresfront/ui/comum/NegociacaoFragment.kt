@@ -17,8 +17,13 @@ import com.example.routepiresfront.ui.comum.adapter.NegociacaoAdapter
 import com.example.routepiresfront.ui.comum.viewmodel.NegociacaoViewModel
 import com.example.routepiresfront.ui.comum.viewmodel.NegociacaoViewModelFactory
 import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
+import br.gov.ifgoiano.routepiresfront.repository.MensagemRepository
 import com.example.routepiresfront.data.remote.ApiClient
 import br.gov.ifgoiano.routepires.data.remote.ChatService
+import com.example.routepiresfront.data.remote.MensagemService
+import com.example.routepiresfront.repository.UsuarioRepository
+import com.example.routepiresfront.data.remote.MototaxistaService
+import com.example.routepiresfront.data.remote.PassageiroService
 
 class NegociacaoFragment : Fragment() {
 
@@ -35,7 +40,6 @@ class NegociacaoFragment : Fragment() {
     ): View {
         _binding = FragmentNegociacaoBinding.inflate(inflater, container, false)
 
-        // NECESSÁRIO para funcionar DataBinding no XML
         binding.lifecycleOwner = viewLifecycleOwner
 
         configurarViewModel()
@@ -81,19 +85,35 @@ class NegociacaoFragment : Fragment() {
     }
 
     private fun configurarViewModel() {
-        val api = ApiClient.getService(ChatService::class.java)
-        val repository = ChatRepository(api)
-        val factory = NegociacaoViewModelFactory(repository)
+        // ================================
+        // 🔥 Criando os serviços da API
+        // ================================
+        val chatApi = ApiClient.getService(ChatService::class.java)
+        val mototaxistaApi = ApiClient.getService(MototaxistaService::class.java)
+        val passageiroApi = ApiClient.getService(PassageiroService::class.java)
+        val mensagemApi = ApiClient.getService(MensagemService::class.java) // ✅ novo
 
-        viewModel = ViewModelProvider(this, factory).get(NegociacaoViewModel::class.java)
+        // ================================
+        // 🔥 Criando os repositórios
+        // ================================
+        val chatRepository = ChatRepository(chatApi)
+        val usuarioRepository = UsuarioRepository(mototaxistaApi, passageiroApi)
+        val mensagemRepository = MensagemRepository(mensagemApi) // ✅ novo
 
-        // 🔥 ESSENCIAL PARA FUNCIONAR O DATABINDING DO XML
+        // ================================
+        // 🔥 Factory com três repositórios
+        // ================================
+        val factory = NegociacaoViewModelFactory(chatRepository, usuarioRepository, mensagemRepository)
+
+        viewModel = ViewModelProvider(this, factory)[NegociacaoViewModel::class.java]
         binding.viewModel = viewModel
 
-        // Observers
+        // OBSERVER
         viewModel.negociacoes.observe(viewLifecycleOwner) { lista ->
             adaptador.atualizar(lista)
-            if (lista.isEmpty()) {
+
+            val termoBusca = binding.editSearch.text.toString().trim()
+            if (lista.isEmpty() && termoBusca.isNotEmpty()) {
                 Toast.makeText(requireContext(), "Nenhuma negociação encontrada", Toast.LENGTH_SHORT).show()
             }
         }
