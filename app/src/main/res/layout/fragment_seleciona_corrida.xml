@@ -1,135 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Card Corrida -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardCorrida"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel" />
+        <variable
+            name="corrida"
+            type="com.example.routepiresfront.data.model.Corrida" />
+    </data>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <!-- Card Corrida -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCorrida"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Título Corrida -->
-            <TextView
-                android:id="@+id/tvCorrida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Corrida"
-                android:textSize="20sp"
-                android:textColor="#000000"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="20dp" />
-
-            <!-- Label PASSAGEIRO -->
-            <TextView
-                android:id="@+id/tvPassageiroLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PASSAGEIRO"
-                android:textSize="10sp"
-                android:textColor="#9E9E9E"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Container Passageiro -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="24dp">
+                android:orientation="vertical"
+                android:padding="24dp">
 
-                <ImageView
-                    android:id="@+id/avatarPassageiro"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_user_avatar"
-                    android:contentDescription="Foto do passageiro" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <!-- Título Corrida -->
+                <TextView
+                    android:id="@+id/tvCorrida"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:text="Corrida"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="20dp" />
 
-                    <TextView
-                        android:id="@+id/tvNomePassageiro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Karen Roe"
-                        android:textSize="16sp"
-                        android:textColor="#000000"
-                        android:fontFamily="sans-serif" />
+                <!-- Label PASSAGEIRO -->
+                <TextView
+                    android:id="@+id/tvPassageiroLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PASSAGEIRO"
+                    android:textSize="10sp"
+                    android:textColor="#9E9E9E"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Container Passageiro -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <ImageView
+                        android:id="@+id/avatarPassageiro"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_user_avatar"
+                        android:contentDescription="Foto do passageiro" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="2dp">
-
-                        <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:src="@drawable/ic_star"
-                            android:layout_marginEnd="4dp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
 
                         <TextView
-                            android:id="@+id/tvRating"
+                            android:id="@+id/tvNomePassageiro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4.8"
-                            android:textSize="14sp"
-                            android:textColor="#000000" />
+                            android:text="@{corrida.passageiro.nome ?? `Passageiro`}"
+                            android:textSize="16sp"
+                            android:textColor="#000000"
+                            android:fontFamily="sans-serif" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="2dp">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:src="@drawable/ic_star"
+                                android:layout_marginEnd="4dp" />
+
+                            <TextView
+                                android:id="@+id/tvRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{String.format(`%.1f`, corrida.passageiro.avaliacao)}"
+                                android:textSize="14sp"
+                                android:textColor="#000000" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+                <!-- Endereços -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TRAJETO"
+                    android:textSize="10sp"
+                    android:textColor="#9E9E9E"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvOrigem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{corrida.pontoPartida.endereco ?? `Origem não informada`}"
+                    android:textSize="14sp"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tvDestino"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{corrida.pontoDestino.endereco ?? `Destino não informado`}"
+                    android:textSize="14sp"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Valor estimado -->
+                <TextView
+                    android:id="@+id/tvValor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(`R$ %.2f`, corrida.valorEstimado ?? 0.0)}"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Botão Iniciar Negociação -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnIniciarNegociacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Iniciar Negociação"
+                    android:textColor="#007AFF"
+                    android:textSize="16sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_outline_blue"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Botão Cancelar Negociação -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancelarNegociacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Cancelar Negociação"
+                    android:textColor="#FF6B4A"
+                    android:textSize="16sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_outline_red"
+                    android:fontFamily="sans-serif-medium" />
+
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <!-- Botão Iniciar Negociação -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnIniciarNegociacao"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="Iniciar Negociação"
-                android:textColor="#007AFF"
-                android:textSize="16sp"
-                android:textAllCaps="false"
-                android:background="@drawable/btn_outline_blue"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="12dp" />
-
-            <!-- Botão Cancelar Negociação -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCancelarNegociacao"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="Cancelar Negociação"
-                android:textColor="#FF6B4A"
-                android:textSize="16sp"
-                android:textAllCaps="false"
-                android:background="@drawable/btn_outline_red"
-                android:fontFamily="sans-serif-medium" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

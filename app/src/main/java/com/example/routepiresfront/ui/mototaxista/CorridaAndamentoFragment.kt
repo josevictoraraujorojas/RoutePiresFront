@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.databinding.FragmentCorridaAndamentoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.example.routepiresfront.R
+import com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
@@ -22,11 +26,9 @@ class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentCorridaAndamentoBinding? = null
     private val binding get() = _binding!!
 
-    private var googleMap: GoogleMap? = null
+    private val viewModel: CorridaMototaxistaViewModel by activityViewModels()
 
-    // Exemplo de coordenadas (poderão vir da API ou GPS do motorista)
-    private val motoristaLocation = LatLng(-16.678, -49.626) // exemplo: Pires do Rio
-    private val destinoLocation = LatLng(-16.675, -49.620)
+    private var googleMap: GoogleMap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,19 +50,48 @@ class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
             }
         mapFragment.getMapAsync(this)
 
+        setupObservers()
+        setupListeners()
+    }
+
+    private fun setupObservers() {
+        // Observa corrida atual para atualizar mapa
+        viewModel.corridaAtual.observe(viewLifecycleOwner) { corrida ->
+            corrida?.let {
+                updateMap(it.pontoPartida?.let { origem ->
+                    LatLng(origem.latitude, origem.longitude)
+                }, it.pontoDestino?.let { destino ->
+                    LatLng(destino.latitude, destino.longitude)
+                })
+            }
+        }
+
+        // Observa navegação para avaliação
+        viewModel.navegarParaAvaliacao.observe(viewLifecycleOwner) { navegar ->
+            if (navegar) {
+                navegarParaAvaliacao()
+                viewModel.resetarNavegacao()
+            }
+        }
+
+        // Observa erros
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                viewModel.limparErro()
+            }
+        }
+
+        // Observa loading
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnFinalizar.isEnabled = !isLoading
+        }
+    }
+
+    private fun setupListeners() {
         // Botão finalizar corrida
         binding.btnFinalizar.setOnClickListener {
-            findNavController().navigate(R.id.action_corridaAndamentoFragment_to_corridaMototaxistaFragment)
-
-            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
-            bottom.selectedItemId = R.id.bottom_avaliacao
-
-            val avaliacaoNav = requireActivity()
-                .supportFragmentManager
-                .findFragmentById(R.id.nav_host_avaliacao_moto)
-                ?.findNavController()
-
-            avaliacaoNav?.navigate(R.id.action_global_avaliacaoFragment2)
+            viewModel.finalizarCorrida()
         }
     }
 
@@ -75,32 +106,64 @@ class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
             // isMyLocationEnabled = true
         }
 
-        // Adiciona marcadores
-        googleMap?.addMarker(
-            MarkerOptions()
-                .position(motoristaLocation)
-                .title("Motorista")
-        )
-        googleMap?.addMarker(
-            MarkerOptions()
-                .position(destinoLocation)
-                .title("Destino")
-        )
+        // Atualiza mapa com dados da corrida atual
+        viewModel.corridaAtual.value?.let { corrida ->
+            updateMap(
+                corrida.pontoPartida?.let { LatLng(it.latitude, it.longitude) },
+                corrida.pontoDestino?.let { LatLng(it.latitude, it.longitude) }
+            )
+        }
+    }
 
-        // Centraliza câmera entre os pontos
-        val centro = LatLng(
-            (motoristaLocation.latitude + destinoLocation.latitude) / 2,
-            (motoristaLocation.longitude + destinoLocation.longitude) / 2
-        )
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(centro, 15f))
+    private fun updateMap(origem: LatLng?, destino: LatLng?) {
+        if (origem == null || destino == null) return
 
-        // Exemplo de linha entre motorista e destino
-        googleMap?.addPolyline(
-            PolylineOptions()
-                .add(motoristaLocation, destinoLocation)
-                .width(6f)
-                .color(resources.getColor(R.color.blue, null))
-        )
+        googleMap?.apply {
+            clear()
+
+            // Adiciona marcadores
+            addMarker(
+                MarkerOptions()
+                    .position(origem)
+                    .title("Motorista")
+            )
+            addMarker(
+                MarkerOptions()
+                    .position(destino)
+                    .title("Destino")
+            )
+
+            // Centraliza câmera entre os pontos
+            val centro = LatLng(
+                (origem.latitude + destino.latitude) / 2,
+                (origem.longitude + destino.longitude) / 2
+            )
+            moveCamera(CameraUpdateFactory.newLatLngZoom(centro, 15f))
+
+            // Exemplo de linha entre motorista e destino
+            addPolyline(
+                PolylineOptions()
+                    .add(origem, destino)
+                    .width(6f)
+                    .color(R.color.primary)
+            )
+        }
+
+        // Simula atualização de localização (em produção, usar LocationManager)
+        // viewModel.atualizarLocalizacao(origem.latitude, origem.longitude)
+    }
+
+    private fun navegarParaAvaliacao() {
+        findNavController().navigate(R.id.action_corridaAndamentoFragment_to_corridaMototaxistaFragment)
+
+        val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
+        bottom.selectedItemId = R.id.bottom_avaliacao
+
+        val navHostFragment = requireActivity()
+            .supportFragmentManager
+            .findFragmentById(R.id.nav_host_avaliacao_moto) as? NavHostFragment
+
+        navHostFragment?.navController?.navigate(R.id.action_global_avaliacaoFragment2)
     }
 
     override fun onDestroyView() {

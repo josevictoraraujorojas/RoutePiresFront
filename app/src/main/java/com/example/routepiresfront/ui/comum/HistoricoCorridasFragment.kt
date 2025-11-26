@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
 import com.example.routepiresfront.data.model.Corrida
+import com.example.routepiresfront.data.model.Passageiro
+import com.example.routepiresfront.data.model.Localizacao
+import com.example.routepiresfront.data.model.StatusCorrida
 
 class HistoricoCorridasFragment : Fragment() {
 
@@ -31,12 +34,58 @@ class HistoricoCorridasFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        // Mock data usando novo modelo
         val listaCorridas = listOf(
-            Corrida("João", "20/03/2025 08:30", "Cancelado"),
-            Corrida("Jose", "19/03/2025 08:20", "Finalizado"),
-            Corrida("Rodrigo", "14/03/2025 10:30", "Finalizado"),
-            Corrida("Otavio", "20/03/2025", "Cancelado"),
-            Corrida("Luan", "20/03/2025", "Cancelado")
+            Corrida(
+                id = 1,
+                passageiro = Passageiro(id = 1, nome = "João Silva", avaliacao = 4.5f),
+                status = StatusCorrida.CANCELADA,
+                valorEstimado = 25.50,
+                distanciaKm = 5.2,
+                dataHoraCriacao = "2025-03-20T08:30:00",
+                pontoPartida = Localizacao(endereco = "Rua A, 123"),
+                pontoDestino = Localizacao(endereco = "Av. B, 456")
+            ),
+            Corrida(
+                id = 2,
+                passageiro = Passageiro(id = 2, nome = "Jose Santos", avaliacao = 5.0f),
+                status = StatusCorrida.FINALIZADA,
+                valorEstimado = 18.00,
+                distanciaKm = 3.5,
+                dataHoraCriacao = "2025-03-19T08:20:00",
+                pontoPartida = Localizacao(endereco = "Centro"),
+                pontoDestino = Localizacao(endereco = "Bairro Sul")
+            ),
+            Corrida(
+                id = 3,
+                passageiro = Passageiro(id = 3, nome = "Rodrigo Lima", avaliacao = 4.8f),
+                status = StatusCorrida.FINALIZADA,
+                valorEstimado = 32.00,
+                distanciaKm = 8.1,
+                dataHoraCriacao = "2025-03-14T10:30:00",
+                pontoPartida = Localizacao(endereco = "Zona Norte"),
+                pontoDestino = Localizacao(endereco = "Aeroporto")
+            ),
+            Corrida(
+                id = 4,
+                passageiro = Passageiro(id = 4, nome = "Otavio Costa", avaliacao = 4.2f),
+                status = StatusCorrida.CANCELADA,
+                valorEstimado = 15.00,
+                distanciaKm = 2.8,
+                dataHoraCriacao = "2025-03-20T14:00:00",
+                pontoPartida = Localizacao(endereco = "Shopping"),
+                pontoDestino = Localizacao(endereco = "Residencial")
+            ),
+            Corrida(
+                id = 5,
+                passageiro = Passageiro(id = 5, nome = "Luan Campos", avaliacao = 4.9f),
+                status = StatusCorrida.CANCELADA,
+                valorEstimado = 22.50,
+                distanciaKm = 4.5,
+                dataHoraCriacao = "2025-03-20T16:30:00",
+                pontoPartida = Localizacao(endereco = "Universidade"),
+                pontoDestino = Localizacao(endereco = "Casa")
+            )
         )
 
         adapter = CorridaAdapter(listaCorridas)
@@ -46,3 +95,4 @@ class HistoricoCorridasFragment : Fragment() {
         return binding.root
     }
 }
+

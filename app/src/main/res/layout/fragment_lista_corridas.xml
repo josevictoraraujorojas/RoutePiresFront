@@ -1,36 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:paddingStart="24dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="24dp"
-    android:paddingBottom="32dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel" />
+    </data>
 
-    <!-- Ícone de expandir/recolher -->
-    <ImageView
-        android:id="@+id/expandIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_chevron_down"
-        android:contentDescription="@string/procurando_corrida" />
-
-    <!-- Lista de passageiros -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerPassageiros"
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="32dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="12dp"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/item_passageiro" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <!-- Ícone de expandir/recolher -->
+        <ImageView
+            android:id="@+id/expandIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_chevron_down"
+            android:contentDescription="@string/procurando_corrida" />
+
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <!-- Lista de corridas -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerPassageiros"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_corrida" />
+
+        <!-- Mensagem vazia -->
+        <TextView
+            android:id="@+id/tvListaVazia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:text="Nenhuma corrida disponível no momento"
+            android:textSize="16sp"
+            android:textColor="#757575"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</layout>
+

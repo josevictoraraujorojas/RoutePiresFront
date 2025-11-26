@@ -6,40 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentAguardandoInicioCorridaBinding
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel
 
 class AguardandoInicioCorridaFragment : Fragment() {
 
     private var _binding: FragmentAguardandoInicioCorridaBinding? = null
     private val binding get() = _binding!!
 
-    private var nomePassageiro: String = "Karen Roe"
-    private var avaliacaoPassageiro: Float = 4.8f
-    private var pontosParada: Int = 2
-    private lateinit var pontoPartida: LatLng
-    private lateinit var pontoDestino: LatLng
-    private val pontosIntermediarios = mutableListOf<LatLng>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Aqui você pode receber os dados via arguments
-        // arguments?.let {
-        //     nomePassageiro = it.getString("NOME_PASSAGEIRO") ?: "Karen Roe"
-        //     avaliacaoPassageiro = it.getFloat("AVALIACAO_PASSAGEIRO", 4.8f)
-        //     pontosParada = it.getInt("PONTOS_PARADA", 2)
-        // }
-
-        pontoPartida = LatLng(-17.304889, -48.279548)
-        pontoDestino = LatLng(-17.305980, -48.283300)
-        pontosIntermediarios.add(LatLng(-17.305200, -48.281000))
-    }
+    private val viewModel: CorridaMototaxistaViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,44 +25,56 @@ class AguardandoInicioCorridaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAguardandoInicioCorridaBinding.inflate(inflater, container, false)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-
-        setupUI()
-
+        setupObservers()
         setupListeners()
     }
 
-    private fun setupUI() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-//        binding.tvDataHora.text = dateFormat.format(Date())
-//
-//        binding.tvPontosParada.text = "$pontosParada Ponto${if (pontosParada > 1) "s" else ""} de parada"
+    private fun setupObservers() {
+        viewModel.corridaAtual.observe(viewLifecycleOwner) { corrida ->
+            corrida?.let {
+                binding.corrida = it
+            }
+        }
 
-        binding.tvNomePassageiro.text = nomePassageiro
-        binding.tvAvaliacaoPassageiro.text = String.format("%.1f", avaliacaoPassageiro)
+        viewModel.navegarParaAndamento.observe(viewLifecycleOwner) {
+            findNavController().navigate(
+                R.id.action_aguardandoInicioCorridaFragment2_to_corridaAndamentoFragment
+            )
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                viewModel.clearErrorMessage()
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnIniciarCorrida.isEnabled = !isLoading
+            binding.btnCancelarCorrida.isEnabled = !isLoading
+        }
+
+        viewModel.fecharFluxoCorrida.observe(viewLifecycleOwner) {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupListeners() {
-
         binding.btnIniciarCorrida.setOnClickListener {
-            Toast.makeText(requireContext(), "Iniciando corrida...", Toast.LENGTH_SHORT).show()
-            // Aqui você navegaria para o fragmento de corrida em andamento
-//            findNavController().navigate(
-////                R.id.action_aguardandoInicioCorridaFragment_to_corridaAndamentoFragment
-//            )
-             findNavController().navigate(R.id.action_aguardandoInicioCorridaFragment2_to_corridaAndamentoFragment)
-
+            viewModel.iniciarCorrida()
         }
-
         binding.btnCancelarCorrida.setOnClickListener {
-            Toast.makeText(requireContext(), "Cancelando corrida...", Toast.LENGTH_SHORT).show()
-            parentFragmentManager.popBackStack()
+            viewModel.cancelarCorrida("Cancelado pelo mototaxista antes de iniciar")
         }
     }
 
