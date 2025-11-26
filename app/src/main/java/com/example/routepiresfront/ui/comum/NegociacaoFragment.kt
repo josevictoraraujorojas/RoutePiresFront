@@ -72,12 +72,10 @@ class NegociacaoFragment : Fragment() {
 
     private fun configurarRecycler() {
         adaptador = NegociacaoAdapter(emptyList()) { negociacao ->
-            val navController = requireActivity()
-                .supportFragmentManager
-                .findFragmentById(R.id.nav_host_negociacao_moto)
-                ?.findNavController()
+            val action = NegociacaoFragmentDirections
+                .actionNegociacaoParaChat(negociacao)
 
-            navController?.navigate(R.id.action_negociacao_para_chat)
+            findNavController().navigate(action)
         }
 
         binding.recyclerNegociacoes.layoutManager = LinearLayoutManager(requireContext())

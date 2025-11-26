@@ -1,6 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    kotlin("android")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin") version "2.7.2"
 }
 
 android {
@@ -46,7 +48,6 @@ android {
 }
 
 dependencies {
-
     // AndroidX base
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

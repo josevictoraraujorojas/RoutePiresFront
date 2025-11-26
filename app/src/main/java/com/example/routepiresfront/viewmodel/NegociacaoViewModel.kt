@@ -76,7 +76,9 @@ class NegociacaoViewModel(
                             Negociacao(
                                 nome = nomeReal,
                                 mensagem = ultimaMensagem,
-                                quantidadeNaoLida = quantidadeNaoLida
+                                quantidadeNaoLida = quantidadeNaoLida,
+                                chat = chat,
+                                usarioLogado = userId
                             )
                         )
                     }

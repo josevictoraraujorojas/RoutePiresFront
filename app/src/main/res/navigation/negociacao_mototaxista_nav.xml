@@ -18,10 +18,15 @@
         android:name="com.example.routepiresfront.chat.ChatFragment"
         android:label="Chat">
 
+        <argument
+            android:name="negociacao"
+            app:argType="com.example.routepiresfront.data.model.Negociacao" />
+
         <action
             android:id="@+id/action_chat_para_denuncia"
             app:destination="@id/denunciaFragment2" />
     </fragment>
+
 
     <fragment
         android:id="@+id/denunciaFragment2"
