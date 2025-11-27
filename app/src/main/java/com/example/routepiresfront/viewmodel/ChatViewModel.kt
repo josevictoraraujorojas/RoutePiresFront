@@ -1,115 +1,139 @@
-package com.example.routepiresfront.viewmodel
+package com.example.routepiresfront.ui.chat
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.gov.ifgoiano.routepiresfront.data.model.MensagenDTOCreate
 import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
 import br.gov.ifgoiano.routepiresfront.repository.MensagemRepository
-import com.example.routepiresfront.data.model.Mensagem
-import com.example.routepiresfront.data.model.Negociacao
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.example.routepiresfront.data.model.MensagemDTOResponse
+import br.gov.ifgoiano.routepiresfront.data.model.MensagenDTOCreate
+import br.gov.ifgoiano.routepiresfront.data.model.MensagemDTOUpdate
+import com.example.routepiresfront.data.model.StatusMensagem
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class ChatViewModel(
     private val chatRepository: ChatRepository,
     private val mensagemRepository: MensagemRepository
 ) : ViewModel() {
 
-    private var negociacao: Negociacao? = null
+    // Usuário logado e id do chat
+    private lateinit var idUsuarioLogado: String
+    private lateinit var chatIdInterno: String
 
-    private val _mensagens = MutableStateFlow<List<Mensagem>>(emptyList())
-    val mensagens: StateFlow<List<Mensagem>> get() = _mensagens
+    // *** Accessors seguros ***
+    val chatId: String get() = chatIdInterno
+    val usuarioId: String get() = idUsuarioLogado
 
-    val mensagemDigitada = MutableStateFlow("")
+    // LiveData mensagens
+    private val _mensagens = MutableLiveData<List<MensagemDTOResponse>>()
+    val mensagens: LiveData<List<MensagemDTOResponse>> get() = _mensagens
 
-    private val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    // Estado
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
 
-    fun iniciarChat(negociacao: Negociacao) {
-        this.negociacao = negociacao
+    private val _erro = MutableLiveData<String?>()
+    val erro: LiveData<String?> get() = _erro
+
+    /**
+     * Inicializar dados vindos por Safe Args.
+     */
+    fun inicializar(chatId: String, usuarioId: String) {
+        this.chatIdInterno = chatId
+        this.idUsuarioLogado = usuarioId
+
         carregarMensagens()
+        marcarComoLidas()
     }
 
-    private fun carregarMensagens() {
-        val chatId = negociacao?.chat?.id ?: return
-
+    /**
+     * Carregar mensagens do chat.
+     */
+    fun carregarMensagens() {
         viewModelScope.launch {
             try {
-                val responseChat = chatRepository.getChatById(chatId)
+                _loading.value = true
 
-                if (!responseChat.isSuccessful) return@launch
+                val resp = chatRepository.getMensagensByChatId(chatId)
 
-                val chat = responseChat.body()
-                if (chat == null || chat.mensagens.isNullOrEmpty()) {
-                    _mensagens.value = emptyList()
-                    return@launch
+                if (resp.isSuccessful) {
+                    val lista = resp.body().orEmpty()
+
+                    // Ordena pela data (ordem natural)
+                    _mensagens.value = lista.sortedBy { it.horarioEnvio }
+                } else {
+                    _erro.value = "Erro ao buscar mensagens (${resp.code()})"
                 }
-
-                val listaFinal = mutableListOf<Mensagem>()
-
-                // PARA CADA ID → BUSCAR NO FIREBASE VIA API
-                for (idMsg in chat.mensagens!!) {
-
-                    val respMsg = mensagemRepository.getMensagemById(idMsg)
-
-                    if (respMsg.isSuccessful) {
-                        val dto = respMsg.body() ?: continue
-
-                        val tipo = if (dto.remetente == negociacao?.usarioLogado)
-                            Mensagem.TIPO_ENVIADA
-                        else
-                            Mensagem.TIPO_RECEBIDA
-
-                        listaFinal += Mensagem(
-                            texto = dto.conteudo ?: "",
-                            hora = dto.horarioEnvio?.let { sdf.format(it) } ?: "--:--",
-                            tipo = tipo
-                        )
-                    }
-                }
-
-                // Atualiza a UI
-                _mensagens.value = listaFinal.reversed() // para aparecer do mais novo pro mais antigo
-
-            } catch (_: Exception) {}
+            } catch (e: Exception) {
+                _erro.value = e.message
+            } finally {
+                _loading.value = false
+            }
         }
     }
 
-    fun enviarMensagem() {
-        val texto = mensagemDigitada.value.trim()
-        val negociacaoAtual = negociacao ?: return
-        val chatId = negociacaoAtual.chat.id ?: return
-        if (texto.isEmpty()) return
+    /**
+     * Enviar mensagem.
+     */
+    fun enviarMensagem(texto: String, destinatarioId: String) {
+        if (texto.isBlank()) return
 
         viewModelScope.launch {
             try {
-
                 val dto = MensagenDTOCreate(
-                    remetente = negociacaoAtual.usarioLogado,
-                    destinatario = negociacaoAtual.chat.participantes?.firstOrNull { it != negociacaoAtual.usarioLogado }
-                        ?: "",
+                    remetente = usuarioId,
+                    destinatario = destinatarioId,
                     conteudo = texto,
                     chat = chatId
                 )
 
-                val response = mensagemRepository.createMensagem(dto)
+                val resp = mensagemRepository.createMensagem(dto)
 
-                if (response.isSuccessful) {
+                if (resp.isSuccessful) {
+                    carregarMensagens()
+                } else {
+                    _erro.value = "Erro ao enviar mensagem (${resp.code()})"
+                }
+            } catch (e: Exception) {
+                _erro.value = e.message
+            }
+        }
+    }
 
-                    val novaMsg = Mensagem(
-                        texto = texto,
-                        hora = sdf.format(System.currentTimeMillis()),
-                        tipo = Mensagem.TIPO_ENVIADA
+    /**
+     * Marca todas mensagens destinadas ao usuário logado como lidas.
+     */
+    fun marcarComoLidas() {
+        viewModelScope.launch {
+            try {
+                val resp = chatRepository.getMensagensByChatId(chatId).body().orEmpty()
+
+                val mensagensNaoLidas = resp.filter {
+                    it.destinatario == usuarioId && it.status != StatusMensagem.VISUALIZADA
+                }
+
+                mensagensNaoLidas.forEach { msg ->
+                    mensagemRepository.updateMensagem(
+                        msg.id!!,
+                        MensagemDTOUpdate(status = StatusMensagem.VISUALIZADA)
                     )
-
-                    // Adiciona imediatamente na UI
-                    _mensagens.value = listOf(novaMsg) + _mensagens.value
-
-                    mensagemDigitada.value = ""
                 }
             } catch (_: Exception) { }
+        }
+    }
+
+    /**
+     * Conta mensagens não lidas para exibir badge.
+     */
+    fun contarNaoLidas(callback: (Int) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val resp = mensagemRepository.contarNaoLidas(chatId, usuarioId)
+                callback(resp.body() ?: 0)
+            } catch (_: Exception) {
+                callback(0)
+            }
         }
     }
 }
