@@ -1,6 +1,7 @@
 package com.example.routepiresfront.data.repository
 
 import com.example.routepiresfront.data.model.MototaxistaCreate
+import com.example.routepiresfront.data.model.MototaxistaUpdate
 import com.example.routepiresfront.data.remote.MototaxistaApi
 import com.example.routepiresfront.data.remote.responses.MototaxistaResponse
 import kotlinx.coroutines.Dispatchers
@@ -43,4 +44,21 @@ class MototaxistaRepository(private val api: MototaxistaApi) {
             Result.failure(e)
         }
     }
+
+    suspend fun editar(id: String, dados: MototaxistaUpdate): Result<MototaxistaResponse> =
+        withContext(Dispatchers.IO) {
+            try {
+                val resp = api.editar(id, dados)
+                if (resp.isSuccessful) {
+                    val body = resp.body()
+                    if (body != null) Result.success(body)
+                    else Result.failure(Exception("Resposta vazia"))
+                } else {
+                    val msg = resp.errorBody()?.string() ?: "Erro ${resp.code()}"
+                    Result.failure(Exception(msg))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
 }

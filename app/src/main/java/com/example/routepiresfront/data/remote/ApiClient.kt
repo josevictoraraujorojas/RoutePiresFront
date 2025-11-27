@@ -28,5 +28,8 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+    val mototaxistaApi: MototaxistaApi by lazy {
+        instance.create(MototaxistaApi::class.java)
+    }
 
 }
