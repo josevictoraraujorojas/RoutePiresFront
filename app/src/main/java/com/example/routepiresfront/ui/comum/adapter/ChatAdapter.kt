@@ -70,7 +70,7 @@ class ChatAdapter(
 
         fun bind(msg: MensagemDTOResponse) {
             binding.textoMensagem.text = msg.conteudo
-            binding.horaMensagem.text = formatarHora(msg.horarioEnvio)
+            binding.horaMensagem.text = formatarDataHora(msg.horarioEnvio)
         }
     }
 
@@ -80,17 +80,17 @@ class ChatAdapter(
 
         fun bind(msg: MensagemDTOResponse) {
             binding.textoMensagem.text = msg.conteudo
-            binding.horaMensagem.text = formatarHora(msg.horarioEnvio)
+            binding.horaMensagem.text = formatarDataHora(msg.horarioEnvio)
         }
     }
 
 }
 
 /**
- * Formata Date → HH:mm
+ * Formata Date → dd/MM/yyyy HH:mm
  */
-private fun formatarHora(date: Date?): String {
+private fun formatarDataHora(date: Date?): String {
     if (date == null) return ""
-    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     return sdf.format(date)
 }

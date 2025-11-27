@@ -19,7 +19,7 @@ class MensagensAdapter(
 
         fun bind(mensagem: Mensagem) {
             textoMensagem.text = mensagem.texto
-            horaMensagem.text = mensagem.hora
+            horaMensagem.text = mensagem.horaData
         }
     }
 

@@ -2,7 +2,7 @@ package com.example.routepiresfront.data.model
 
 data class Mensagem(
     val texto: String,
-    val hora: String,
+    val horaData: String,
     val tipo: Int
 ) {
     companion object {

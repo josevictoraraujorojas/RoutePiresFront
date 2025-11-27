@@ -15,7 +15,7 @@ import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentChatBinding
 import com.example.routepiresfront.ui.chat.ChatAdapter
 import com.example.routepiresfront.ui.chat.ChatViewModel
-import com.example.routepiresfront.ui.chat.ChatViewModelFactory
+import com.example.routepiresfront.viewmodel.ChatViewModelFactory
 import br.gov.ifgoiano.routepires.data.remote.ChatService
 import com.example.routepiresfront.data.remote.MensagemService
 import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
@@ -163,7 +163,14 @@ class ChatFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
-            findNavController().navigate(R.id.action_chat_para_denuncia)
+            val usuarioLogado = args.negociacao.usarioLogado
+            val usuarioDenunciado = args.negociacao.chat.participantes?.firstOrNull { it != usuarioLogado } ?: ""
+
+            val action = ChatFragmentDirections.actionChatParaDenuncia(
+                usuarioLogadoId = usuarioLogado,
+                usuarioDenunciadoId = usuarioDenunciado
+            )
+            findNavController().navigate(action)
             dialog.dismiss()
         }
 
