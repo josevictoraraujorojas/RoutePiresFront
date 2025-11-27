@@ -1,40 +1,96 @@
-package com.example.routepiresfront.ui.comum.adapter
+package com.example.routepiresfront.ui.chat
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
-import com.example.routepiresfront.data.model.Mensagem
+import com.example.routepiresfront.data.model.MensagemDTOResponse
+import com.example.routepiresfront.databinding.ItemMensagemEnviadaBinding
+import com.example.routepiresfront.databinding.ItemMensagemRecebidaBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ChatAdapter(private val mensagens: List<Mensagem>) :
-    RecyclerView.Adapter<ChatAdapter.MensagemViewHolder>() {
+class ChatAdapter(
+    private val userIdLogado: String
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val mensagens = mutableListOf<MensagemDTOResponse>()
+
+    companion object {
+        private const val TIPO_ENVIADA = 1
+        private const val TIPO_RECEBIDA = 2
+    }
+
+    fun atualizarMensagens(lista: List<MensagemDTOResponse>) {
+        mensagens.clear()
+        mensagens.addAll(lista)
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int {
-        return mensagens[position].tipo
-    }
+        val msg = mensagens[position]
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MensagemViewHolder {
-        val layoutId = if (viewType == Mensagem.Companion.TIPO_ENVIADA) {
-            R.layout.item_mensagem_enviada
+        return if (msg.remetente == userIdLogado) {
+            TIPO_ENVIADA
         } else {
-            R.layout.item_mensagem_recebida
+            TIPO_RECEBIDA
         }
-        val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
-        return MensagemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
-        val mensagem = mensagens[position]
-        holder.textoMensagem.text = mensagem.texto
-        holder.horaMensagem.text = mensagem.hora
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+
+        return when (viewType) {
+            TIPO_ENVIADA -> {
+                val binding = ItemMensagemEnviadaBinding.inflate(inflater, parent, false)
+                MensagemEnviadaViewHolder(binding)
+            }
+
+            else -> {
+                val binding = ItemMensagemRecebidaBinding.inflate(inflater, parent, false)
+                MensagemRecebidaViewHolder(binding)
+            }
+        }
     }
 
-    override fun getItemCount() = mensagens.size
+    override fun getItemCount(): Int = mensagens.size
 
-    class MensagemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textoMensagem: TextView = view.findViewById(R.id.texto_mensagem)
-        val horaMensagem: TextView = view.findViewById(R.id.hora_mensagem)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val msg = mensagens[position]
+
+        when (holder) {
+            is MensagemEnviadaViewHolder -> holder.bind(msg)
+            is MensagemRecebidaViewHolder -> holder.bind(msg)
+        }
     }
+
+    class MensagemEnviadaViewHolder(
+        private val binding: ItemMensagemEnviadaBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(msg: MensagemDTOResponse) {
+            binding.textoMensagem.text = msg.conteudo
+            binding.horaMensagem.text = formatarHora(msg.horarioEnvio)
+        }
+    }
+
+    class MensagemRecebidaViewHolder(
+        private val binding: ItemMensagemRecebidaBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(msg: MensagemDTOResponse) {
+            binding.textoMensagem.text = msg.conteudo
+            binding.horaMensagem.text = formatarHora(msg.horarioEnvio)
+        }
+    }
+
+}
+
+/**
+ * Formata Date → HH:mm
+ */
+private fun formatarHora(date: Date?): String {
+    if (date == null) return ""
+    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return sdf.format(date)
 }
