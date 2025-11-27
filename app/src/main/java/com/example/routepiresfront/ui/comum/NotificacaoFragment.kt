@@ -25,7 +25,6 @@ class NotificacaoFragment : Fragment() {
 
         recyclerNotificacao = binding.recyclerCorridas
 
-        // ✅ Botão voltar com Navigation Component
         binding.btnVoltar.setOnClickListener {
             findNavController().navigateUp()
         }

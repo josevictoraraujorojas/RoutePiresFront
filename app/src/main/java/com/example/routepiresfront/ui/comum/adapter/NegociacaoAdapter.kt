@@ -12,7 +12,7 @@ import com.example.routepiresfront.data.model.Negociacao
 
 class NegociacaoAdapter(
     private var negociacoes: List<Negociacao>,
-    private val onItemClick: (Negociacao) -> Unit // callback de clique
+    private val onItemClick: (Negociacao) -> Unit
 ) : RecyclerView.Adapter<NegociacaoAdapter.ItemNegociacaoViewHolder>() {
 
     fun atualizar(novaLista: List<Negociacao>) {
@@ -44,7 +44,7 @@ class NegociacaoAdapter(
             holder.seloQuantidade.text = negociacao.quantidadeNaoLida.toString()
         }
 
-        // Clique no item chama o callback
+
         holder.itemView.setOnClickListener {
             onItemClick(negociacao)
         }

@@ -34,7 +34,7 @@ class AvaliacaoFragment : Fragment() {
 
         observarViewModel()
 
-        // 🔥 ATUALIZA O VIEWMODEL QUANDO O USUÁRIO TOCAR NO RATING
+
         binding.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
             viewModel.nota.value = rating.toInt()
         }

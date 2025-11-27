@@ -83,24 +83,18 @@ class NegociacaoFragment : Fragment() {
     }
 
     private fun configurarViewModel() {
-        // ================================
-        // 🔥 Criando os serviços da API
-        // ================================
+
         val chatApi = ApiClient.getService(ChatService::class.java)
         val mototaxistaApi = ApiClient.getService(MototaxistaService::class.java)
         val passageiroApi = ApiClient.getService(PassageiroService::class.java)
-        val mensagemApi = ApiClient.getService(MensagemService::class.java) // ✅ novo
+        val mensagemApi = ApiClient.getService(MensagemService::class.java)
 
-        // ================================
-        // 🔥 Criando os repositórios
-        // ================================
+
         val chatRepository = ChatRepository(chatApi)
         val usuarioRepository = UsuarioRepository(mototaxistaApi, passageiroApi)
-        val mensagemRepository = MensagemRepository(mensagemApi) // ✅ novo
+        val mensagemRepository = MensagemRepository(mensagemApi)
 
-        // ================================
-        // 🔥 Factory com três repositórios
-        // ================================
+
         val factory = NegociacaoViewModelFactory(chatRepository, usuarioRepository, mensagemRepository)
 
         viewModel = ViewModelProvider(this, factory)[NegociacaoViewModel::class.java]

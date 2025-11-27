@@ -36,10 +36,10 @@ class DenunciaFragment : Fragment() {
 
         val denunciaApi = ApiClient.getService(DenunciaService::class.java)
 
-        // 👉 Recupera argumentos
+
         val args = DenunciaFragmentArgs.fromBundle(requireArguments())
 
-        // 👉 Cria repository + factory
+
         val denunciaRepository = DenunciaRepository(denunciaApi)
         val factory = DenunciaViewModelFactory(
             denunciaRepository,
@@ -47,14 +47,14 @@ class DenunciaFragment : Fragment() {
             args.usuarioDenunciadoId
         )
 
-        // 👉 Cria o ViewModel
+
         viewModel = ViewModelProvider(this, factory)[DenunciaViewModel::class.java]
 
-        // 👉 Liga o ViewModel ao layout
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        // 👉 Observa o sucesso da denúncia
+
         viewModel.sucesso.observe(viewLifecycleOwner) { ok ->
             if (ok == true) {
                 Toast.makeText(requireContext(), "Denúncia enviada com sucesso!", Toast.LENGTH_SHORT).show()
@@ -62,7 +62,7 @@ class DenunciaFragment : Fragment() {
             }
         }
 
-        // 👉 Observa erros
+
         viewModel.erro.observe(viewLifecycleOwner) { msg ->
             msg?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
@@ -70,19 +70,16 @@ class DenunciaFragment : Fragment() {
             }
         }
 
-        // 👉 Botão voltar
+
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // 👉 Observa o loading (opcional: para ProgressBar se você adicionar no layout)
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            // Por exemplo: binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+
         }
 
-        // Os EditTexts já estão conectados ao ViewModel via Data Binding:
-        // edtMotivoDenuncia -> viewModel.motivo
-        // edtDescricaooDenuncia -> viewModel.descricao
     }
 
     override fun onDestroyView() {

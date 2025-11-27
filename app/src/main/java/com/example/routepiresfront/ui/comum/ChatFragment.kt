@@ -67,12 +67,11 @@ class ChatFragment : Fragment() {
         val chatId = negociacao.chat.id
         val usuarioLogado = negociacao.usarioLogado
 
-        // destinatario (outro participante)
+        // destinatario
         val destinatarioId = negociacao.chat.participantes?.firstOrNull { it != usuarioLogado } ?: ""
 
         // configura cabeçalho
         binding.chatToolbar.textViewName.text = negociacao.nome
-        // se você tiver nota no chat, ajuste; aqui deixo defaults
         binding.chatToolbar.ratingBar.rating = 0f
         binding.chatToolbar.textViewRatingValue.text = ""
 
@@ -95,16 +94,14 @@ class ChatFragment : Fragment() {
         binding.recyclerViewChat.layoutManager = layoutManager
         binding.recyclerViewChat.adapter = adapter
 
-        // inicializa ViewModel (carrega mensagens e marca lidas)
+        // inicializa ViewModel
         if (chatId != null) {
             viewModel.inicializar(chatId, usuarioLogado)
         } else {
-            // caso chatId nulo, você pode criar chat ou mostrar erro
-            // por enquanto apenas retorna
             return
         }
 
-        // observa mensagens e atualiza adapter
+
         viewModel.mensagens.observe(viewLifecycleOwner) { lista ->
             adapter.atualizarMensagens(lista)
 
@@ -116,19 +113,19 @@ class ChatFragment : Fragment() {
             }
         }
 
-        // erros
+
         viewModel.erro.observe(viewLifecycleOwner) { err ->
             err?.let {
-                // opcional: mostrar Toast/snackbar
+
             }
         }
 
-        // botão recusar
+
         binding.buttonRecusarCorrida.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // botão aceitar: exemplo já do seu app
+
         binding.buttonAceitarCorrida.setOnClickListener {
             val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
             bottom.selectedItemId = R.id.bottom_home
@@ -141,7 +138,7 @@ class ChatFragment : Fragment() {
             corridaNav?.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
         }
 
-        // enviar mensagem (usa destinatarioId calculado)
+
         binding.buttonEnviar.setOnClickListener {
             val texto = binding.editTextMensagem.text.toString().trim()
             if (texto.isNotEmpty()) {
