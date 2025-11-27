@@ -12,6 +12,8 @@ import com.example.routepiresfront.R
 import com.example.routepiresfront.ui.comum.SairDialogFragment
 import com.example.routepiresfront.databinding.FragmentConfiguracaoPassageiroBinding
 import com.example.routepiresfront.ui.passageiro.viewmodel.ConfiguracaoPassageiroViewModel
+import com.example.routepiresfront.core.SessionManager
+import androidx.core.os.bundleOf
 
 class ConfiguracaoPassageiroFragment : Fragment() {
 
@@ -19,10 +21,10 @@ class ConfiguracaoPassageiroFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ConfiguracaoPassageiroViewModel by viewModels()
 
-    // Em um app real esse ID viria do login/SharedPreferences. Mantemos o mock para a demo.
     private val passageiroId: String by lazy {
         arguments?.getString("passageiroId")?.trim().takeUnless { it.isNullOrEmpty() }
-            ?: "cUKwPBdlmMt95OJuMleA"
+            ?: SessionManager.obterUsuarioId(requireContext())?.trim().takeUnless { it.isNullOrEmpty() }
+            ?: ""
     }
 
     override fun onCreateView(
@@ -38,8 +40,10 @@ class ConfiguracaoPassageiroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Carrega dados iniciais do passageiro ao abrir a tela
-        viewModel.carregarDados(passageiroId)
+        // Carrega dados iniciais do passageiro ao abrir a tela, somente se houver id
+        if (passageiroId.isNotBlank()) {
+            viewModel.carregarDados(passageiroId)
+        }
         observarMensagens()
 
         binding.fabEditarFoto.setOnClickListener {
@@ -51,7 +55,11 @@ class ConfiguracaoPassageiroFragment : Fragment() {
         }
 
         binding.opcaoEditar.setOnClickListener {
-            findNavController().navigate(R.id.action_configuracaoPassageiroFragment_to_editarPerfilFragment2)
+            val args = bundleOf("passageiroId" to passageiroId)
+            findNavController().navigate(
+                R.id.action_configuracaoPassageiroFragment_to_editarPerfilFragment2,
+                args
+            )
         }
 
         binding.opcaoHistorico.setOnClickListener {

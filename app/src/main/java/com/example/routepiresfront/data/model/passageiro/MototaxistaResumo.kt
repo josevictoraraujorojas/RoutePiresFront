@@ -10,5 +10,5 @@ data class MototaxistaResumo(
     val disponivel: Boolean? = null,
     val avaliacaoMedia: Float? = null,
     val servicosOferecidos: List<Servico>? = null,
-    val veiculoDTO: VeiculoPerfil? = null
+    val veiculo: VeiculoPerfil? = null
 )

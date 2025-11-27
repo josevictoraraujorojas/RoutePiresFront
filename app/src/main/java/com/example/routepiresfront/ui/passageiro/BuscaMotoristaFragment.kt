@@ -1,30 +1,28 @@
 package com.example.routepiresfront.ui.passageiro
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
-import com.example.routepiresfront.data.model.Mototaxista
-import com.example.routepiresfront.ui.passageiro.adapter.MototaxistaAdapter
 import com.example.routepiresfront.databinding.FragmentBuscaMotoristaBinding
+import com.example.routepiresfront.core.Resultado
+import com.example.routepiresfront.ui.passageiro.adapter.MototaxistaAdapter
+import com.example.routepiresfront.ui.passageiro.viewmodel.EscolhaMototaxistaViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class BuscaMotoristaFragment : Fragment() {
 
     private var _binding: FragmentBuscaMotoristaBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: EscolhaMototaxistaViewModel by viewModels()
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val mostrarResultadoRunnable = Runnable {
-        if (_binding != null) {  // evita crash se fragment destruiu
-            mostrarResultados()
-        }
-    }
+    private lateinit var adapter: MototaxistaAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +35,26 @@ class BuscaMotoristaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startAnimations()
+        adapter = MototaxistaAdapter(emptyList()) { mototaxista ->
+            val id = mototaxista.id
+            if (id.isNullOrBlank()) {
+                Snackbar.make(binding.root, "Id do mototaxista não encontrado", Snackbar.LENGTH_SHORT)
+                    .show()
+                return@MototaxistaAdapter
+            }
+            EscolhaMototaxistaFragment.newInstance(
+                id,
+                mototaxista.nome,
+                mototaxista.avaliacaoMedia ?: 0f
+            ).show(parentFragmentManager, "EscolhaMototaxistaFragment")
+        }
 
-        handler.postDelayed(mostrarResultadoRunnable, 4000)
+        binding.recyclerViewMototaxistas.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewMototaxistas.adapter = adapter
+
+        startAnimations()
+        viewModel.carregarMototaxistas()
+        observarMototaxistas()
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -47,6 +62,7 @@ class BuscaMotoristaFragment : Fragment() {
     }
 
     private fun startAnimations() {
+        if (_binding == null) return
         val rotateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation)
         binding.searchIcon.startAnimation(rotateAnimation)
 
@@ -61,27 +77,38 @@ class BuscaMotoristaFragment : Fragment() {
         }
     }
 
-    private fun mostrarResultados() {
-        stopAnimations()
+    private fun observarMototaxistas() {
+        viewModel.mototaxistas.observe(viewLifecycleOwner) { resultado ->
+            when (resultado) {
+                Resultado.Carregando -> {
+                    binding.layoutAnimacoes.visibility = View.VISIBLE
+                    binding.recyclerViewMototaxistas.visibility = View.GONE
+                    startAnimations()
+                }
 
-        binding.layoutAnimacoes.visibility = View.GONE
-        binding.recyclerViewMototaxistas.visibility = View.VISIBLE
+                is Resultado.Sucesso -> {
+                    stopAnimations()
+                    binding.layoutAnimacoes.visibility = View.GONE
+                    binding.recyclerViewMototaxistas.visibility = View.VISIBLE
+                    adapter.submitList(resultado.dado)
 
-        val mototaxistas = listOf(
-            Mototaxista("João Silva", 4.8f, R.drawable.ic_launcher_foreground),
-            Mototaxista("Carlos Souza", 4.5f, R.drawable.ic_launcher_foreground),
-            Mototaxista("Marcos Lima", 4.9f, R.drawable.ic_launcher_foreground)
-        )
+                    if (resultado.dado.isEmpty()) {
+                        Snackbar.make(binding.root, "Nenhum mototaxista disponível no momento", Snackbar.LENGTH_LONG).show()
+                    }
+                }
 
-        val adapter = MototaxistaAdapter(mototaxistas)
-        binding.recyclerViewMototaxistas.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewMototaxistas.adapter = adapter
+                is Resultado.Erro -> {
+                    stopAnimations()
+                    binding.layoutAnimacoes.visibility = View.GONE
+                    Snackbar.make(binding.root, resultado.mensagem, Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         stopAnimations()
-        handler.removeCallbacks(mostrarResultadoRunnable)
         _binding = null
     }
 }

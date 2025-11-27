@@ -9,6 +9,7 @@ import java.util.Date
 data class PassageiroResponse(
     val id: String? = null,
     val nome: String? = null,
+    val email: String? = null,
     val telefone: String? = null,
     val dataCadastro: Date? = null,
     val tipo: String? = null,

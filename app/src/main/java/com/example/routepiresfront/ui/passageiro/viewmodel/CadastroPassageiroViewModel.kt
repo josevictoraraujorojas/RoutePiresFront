@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import android.util.Patterns
 import com.example.routepiresfront.core.Resultado
 import com.example.routepiresfront.data.model.passageiro.PassageiroCadastroRequest
 import com.example.routepiresfront.data.model.passageiro.PassageiroResponse
@@ -36,15 +37,14 @@ class CadastroPassageiroViewModel(
     val botaoHabilitado: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         value = false
         fun atualizar() {
-            val camposOk = !nome.value.isNullOrBlank() &&
-                    !email.value.isNullOrBlank() &&
-                    !telefone.value.isNullOrBlank() &&
-                    !senha.value.isNullOrBlank() &&
-                    !confirmarSenha.value.isNullOrBlank()
-            val senhasConferem = senha.value == confirmarSenha.value
+            val camposOk = nome.value.orEmpty().isNotBlank() &&
+                    email.value.orEmpty().isNotBlank() &&
+                    telefone.value.orEmpty().isNotBlank() &&
+                    senha.value.orEmpty().isNotBlank() &&
+                    confirmarSenha.value.orEmpty().isNotBlank()
             val termosOk = aceitouTermos.value == true
             val carregandoAgora = carregando.value == true
-            value = camposOk && senhasConferem && termosOk && !carregandoAgora
+            value = camposOk && termosOk && !carregandoAgora
         }
         addSource(nome) { atualizar() }
         addSource(email) { atualizar() }
@@ -77,6 +77,21 @@ class CadastroPassageiroViewModel(
                 return
             }
 
+            senhaVal.length < 8 || !senhaVal.any { it.isDigit() } || !senhaVal.any { it.isLetter() } -> {
+                _mensagem.value = "A senha deve ter pelo menos 8 caracteres, com letras e números"
+                return
+            }
+
+            !Patterns.EMAIL_ADDRESS.matcher(emailVal).matches() -> {
+                _mensagem.value = "Informe um e-mail válido"
+                return
+            }
+
+            telefoneVal.any { !it.isDigit() } || telefoneVal.length !in 10..15 -> {
+                _mensagem.value = "Telefone deve ter apenas números (10 a 15 dígitos)"
+                return
+            }
+
             aceitouTermos.value != true -> {
                 _mensagem.value = "Você deve aceitar os termos de uso"
                 return
@@ -85,9 +100,9 @@ class CadastroPassageiroViewModel(
 
         val passageiro = PassageiroCadastroRequest(
             nome = nomeVal,
+            email = emailVal,
             telefone = telefoneVal,
             senha = senhaVal
-            // email ainda não faz parte do DTO do backend, fica guardado apenas na tela
         )
         cadastrar(passageiro)
     }

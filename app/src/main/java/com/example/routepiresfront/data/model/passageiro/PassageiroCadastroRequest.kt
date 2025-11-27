@@ -6,6 +6,7 @@ package com.example.routepiresfront.data.model.passageiro
  */
 data class PassageiroCadastroRequest(
     val nome: String? = null,
+    val email: String? = null,
     val telefone: String? = null,
     val senha: String? = null,
     val fotoUrl: String? = null,

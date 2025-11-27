@@ -28,8 +28,13 @@ class SelecaoLocalViewModel(
     private val _paradas = MutableLiveData<List<Localizacao>>(emptyList())
     val paradas: LiveData<List<Localizacao>> = _paradas
 
-    private val _resultadoSolicitacao = MutableLiveData<Resultado<CorridaPassageiroResponse>>()
-    val resultadoSolicitacao: LiveData<Resultado<CorridaPassageiroResponse>> = _resultadoSolicitacao
+    private val _resultadoSolicitacao = MutableLiveData<Resultado<CorridaPassageiroResponse>?>()
+    val resultadoSolicitacao: LiveData<Resultado<CorridaPassageiroResponse>?> = _resultadoSolicitacao
+
+    val carregando = MutableLiveData(false)
+
+    private val _mensagem = MutableLiveData<String?>()
+    val mensagem: LiveData<String?> = _mensagem
 
     fun definirOrigem(localizacao: Localizacao) {
         _origem.value = localizacao
@@ -56,7 +61,10 @@ class SelecaoLocalViewModel(
         val destinoSelecionado = _destino.value
 
         // Não dispara se faltarem pontos básicos
-        if (origemSelecionada == null || destinoSelecionado == null) return
+        if (origemSelecionada == null || destinoSelecionado == null) {
+            _mensagem.value = "Defina origem e destino antes de continuar"
+            return
+        }
 
         val dto = CorridaPassageiroRequest(
             passageiroId = passageiroId,
@@ -69,8 +77,24 @@ class SelecaoLocalViewModel(
         )
 
         viewModelScope.launch {
+            carregando.value = true
             _resultadoSolicitacao.value = Resultado.Carregando
-            _resultadoSolicitacao.value = repository.solicitarCorrida(dto)
+            val resultado = repository.solicitarCorrida(dto)
+            _resultadoSolicitacao.value = resultado
+            _mensagem.value = when (resultado) {
+                is Resultado.Sucesso -> "Corrida solicitada com sucesso!"
+                is Resultado.Erro -> resultado.mensagem
+                Resultado.Carregando -> null
+            }
+            carregando.value = false
         }
+    }
+
+    fun limparMensagem() {
+        _mensagem.value = null
+    }
+
+    fun limparResultado() {
+        _resultadoSolicitacao.value = null
     }
 }

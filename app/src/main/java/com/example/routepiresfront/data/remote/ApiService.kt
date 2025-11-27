@@ -6,11 +6,13 @@ import com.example.routepiresfront.data.model.passageiro.MototaxistaPerfil
 import com.example.routepiresfront.data.model.passageiro.MototaxistaResumo
 import com.example.routepiresfront.data.model.passageiro.PassageiroCadastroRequest
 import com.example.routepiresfront.data.model.passageiro.PassageiroResponse
+import com.example.routepiresfront.data.model.auth.LoginRequest
+import com.example.routepiresfront.data.model.auth.UsuarioResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 
 /**
@@ -18,6 +20,12 @@ import retrofit2.http.Path
  * Tudo em pt-BR e seguindo os DTOs do projeto Java.
  */
 interface ApiService {
+
+    // --- Login --- //
+    @POST("login")
+    suspend fun login(
+        @Body body: LoginRequest
+    ): Response<UsuarioResponse>
 
     // --- Passageiro --- //
     @POST("passageiros")
@@ -30,7 +38,7 @@ interface ApiService {
         @Path("id") id: String
     ): Response<PassageiroResponse>
 
-    @PUT("passageiros/{id}")
+    @PATCH("passageiros/{id}")
     suspend fun atualizarPassageiro(
         @Path("id") id: String,
         @Body body: PassageiroCadastroRequest

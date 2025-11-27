@@ -1,84 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.routepiresfront.ui.passageiro.viewmodel.SelecaoLocalViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvTituloPesquisa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pesquisar Localização"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".ui.passageiro.SelecionarLocalFragment">
 
+            <TextView
+                android:id="@+id/tvTituloPesquisa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Pesquisar Localização"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <SearchView
-            android:id="@+id/searchView"
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edittext_border_blue"
+                android:focusable="true"
+                android:iconifiedByDefault="false"
+                android:queryHint="Pesquisar destino" />
+
+            <TextView
+                android:id="@+id/tvOrigemSelecionada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Origem: não definida"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvDestinoSelecionado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Destino: não definido"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvSelecionarLocalizacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Selecionar Localização"
+                android:textStyle="bold" />
+
+            <fragment
+                android:id="@+id/mapFragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ProgressBar
+                android:id="@+id/pbSolicitacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:visibility="@{viewModel.carregando ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSelecionar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:alpha="@{viewModel.carregando ? 0.6f : 1f}"
+                android:backgroundTint="@color/blue"
+                android:enabled="@{!viewModel.carregando}"
+                android:text="SELECIONAR"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBusca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/edittext_border_blue"
-            android:iconifiedByDefault="false"
-            android:queryHint="Pesquisar destino"
-            android:focusable="true" />
+            android:layout_gravity="top"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="120dp"
+            android:background="#F9F9F9"
+            android:backgroundTint="#F9F9F9"
+            android:backgroundTintMode="src_in"
+            android:clipToOutline="true"
+            android:elevation="12dp"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tvSelecionarLocalizacao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecionar Localização"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="300dp" />
+        </LinearLayout>
 
-        <fragment
-            android:id="@+id/mapFragment"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnSelecionar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SELECIONAR"
-            android:textAllCaps="true"
-            android:backgroundTint="@color/blue"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="8dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutBusca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#F9F9F9"
-        android:visibility="gone"
-        android:elevation="12dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="120dp"
-        android:padding="8dp"
-        android:clipToOutline="true"
-        android:layout_gravity="top"
-        android:backgroundTintMode="src_in"
-        android:backgroundTint="#F9F9F9">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="300dp"/>
-    </LinearLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>
