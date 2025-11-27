@@ -7,6 +7,5 @@ data class VeiculoCreate(
     @SerializedName("modelo") val modelo: String,
     @SerializedName("renavam") val renavam: String,
     @SerializedName("ano") val ano: Int,
-    @SerializedName("capacidade") val capacidade: Int = 1,
     @SerializedName("fotoUrl") val fotoUrl: String
 )

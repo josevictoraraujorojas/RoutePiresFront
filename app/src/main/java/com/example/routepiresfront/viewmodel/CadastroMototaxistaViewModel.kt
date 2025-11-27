@@ -87,7 +87,6 @@ class CadastroMototaxistaViewModel(private val repo: MototaxistaRepository) : Vi
             modelo = f.modeloMoto.trim(),
             renavam = f.renavam.trim(),
             ano = f.anoMoto.toInt(),
-            capacidade = 1,
             fotoUrl = foto
         )
 

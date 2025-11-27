@@ -41,7 +41,7 @@ class EditarPerfilFragment : Fragment() {
         viewModel.carregarDados()
 
         viewModel.mototaxista.observe(viewLifecycleOwner) { user ->
-            binding.editNomeCompleto.setText(user.nomeCompleto)
+            binding.editNomeCompleto.setText(user.nome)
             binding.editEmail.setText(user.email)
             binding.editTelefone.setText(user.telefone)
         }
