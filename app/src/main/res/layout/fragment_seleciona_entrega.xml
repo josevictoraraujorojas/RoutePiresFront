@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardEntrega"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Título Entrega -->
+                <TextView
+                    android:id="@+id/tvEntrega"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Entrega"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- Label SOBRE -->
+                <TextView
+                    android:id="@+id/tvSobreLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOBRE"
+                    android:textSize="10sp"
+                    android:textColor="#9E9E9E"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Descrição -->
+                <TextView
+                    android:id="@+id/tvDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Perfect flat for 4 people. Peaceful and good location, close to bus stops and many restaurants."
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- Tipos de Entrega -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
+
+                    <!-- Frágil -->
+                    <LinearLayout
+                        android:id="@+id/btnFragil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp">
+
+                        <View
+                            android:id="@+id/iconFragil"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_background"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvFragil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Frágil"
+                            android:textSize="13sp"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <!-- Comum -->
+                    <LinearLayout
+                        android:id="@+id/btnComum"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp">
+
+                        <View
+                            android:id="@+id/iconComum"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_gray"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvComum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comum"
+                            android:textSize="13sp"
+                            android:textColor="#9E9E9E" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Peso -->
+                <TextView
+                    android:id="@+id/tvPesoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PESO: 10KG"
+                    android:textSize="11sp"
+                    android:textColor="#9E9E9E"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Solicitante -->
+                <TextView
+                    android:id="@+id/tvSolicitanteLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOLICITANTE"
+                    android:textSize="10sp"
+                    android:textColor="#9E9E9E"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Dados Solicitante -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <ImageView
+                        android:id="@+id/avatarSolicitante"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_user_avatar"
+                        android:contentDescription="Foto do solicitante" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:id="@+id/tvNomeSolicitante"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Karen Roe"
+                            android:textSize="16sp"
+                            android:textColor="#000000" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:src="@drawable/ic_star"
+                                android:layout_marginEnd="4dp" />
+
+                            <TextView
+                                android:id="@+id/tvRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4.8"
+                                android:textSize="14sp"
+                                android:textColor="#000000" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Botões -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAceitarNegociacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Iniciar Negociação"
+                    android:textColor="#007AFF"
+                    android:textSize="16sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_outline_blue"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="12dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancelarNegociacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Cancelar Negociação"
+                    android:textColor="#FF6B4A"
+                    android:textSize="16sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_outline_red"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

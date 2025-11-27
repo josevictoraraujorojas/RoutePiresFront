@@ -1,0 +1,16 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/avaliacao_mototaxista_nav"
+    app:startDestination="@id/avaliacaoFragment2">
+
+    <fragment
+        android:id="@+id/avaliacaoFragment2"
+        android:name="com.example.routepiresfront.ui.comum.AvaliacaoFragment"
+        android:label="Avaliações" />
+
+    <action
+        android:id="@+id/action_global_avaliacaoFragment2"
+        app:destination="@id/avaliacaoFragment2" />
+</navigation>
+
+

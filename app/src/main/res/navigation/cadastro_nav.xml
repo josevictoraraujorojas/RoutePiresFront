@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/primeiroCadastroMototaxistaFragment"
-        android:name="com.example.routepiresfront.PrimeiroCadastroMototaxistaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.PrimeiroCadastroMototaxistaFragment"
         android:label="PrimeiroCadastroMototaxistaFragment" >
         <action
             android:id="@+id/action_primeiroCadastroMototaxistaFragment_to_segundoCadastroMototaxista"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/segundoCadastroMototaxista"
-        android:name="com.example.routepiresfront.SegundoCadastroMototaxista"
+        android:name="com.example.routepiresfront.ui.mototaxista.SegundoCadastroMototaxista"
         android:label="fragment_segundo_cadastro_mototaxista"
         tools:layout="@layout/fragment_segundo_cadastro_mototaxista" >
         <action
@@ -24,6 +24,6 @@
     </fragment>
     <fragment
         android:id="@+id/terceiroCadastroMototaxistaFragment"
-        android:name="com.example.routepiresfront.TerceiroCadastroMototaxistaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.TerceiroCadastroMototaxistaFragment"
         android:label="TerceiroCadastroMototaxistaFragment" />
 </navigation>

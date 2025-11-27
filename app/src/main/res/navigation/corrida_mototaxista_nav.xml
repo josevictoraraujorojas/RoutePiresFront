@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/corrida_mototaxista_nav"
+    app:startDestination="@id/listaCorridasFragment">
+
+    <!-- Lista de Corridas -->
+    <fragment
+        android:id="@+id/listaCorridasFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.ListaCorridasFragment"
+        android:label="Lista de Corridas" >
+
+    </fragment>
+
+    <!-- Seleciona Corrida -->
+    <fragment
+        android:id="@+id/selecionaCorridaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.SelecionaCorridaFragment"
+        android:label="Seleciona Corrida" >
+
+    </fragment>
+
+    <!-- Seleciona Entrega -->
+    <fragment
+        android:id="@+id/selecionaEntregaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.SelecionaEntregaFragment"
+        android:label="Seleciona Entrega" >
+
+    </fragment>
+
+    <!-- Corrida em andamento -->
+    <fragment
+        android:id="@+id/corridaMototaxistaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.CorridaMototaxistaFragment"
+        android:label="CorridaMototaxistaFragment" />
+
+    <!-- Aguardando início da corrida -->
+    <fragment
+        android:id="@+id/aguardandoInicioCorridaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioCorridaFragment"
+        android:label="AguardandoInicioCorridaFragment" />
+
+    <!-- Aguardando início da entrega -->
+    <fragment
+        android:id="@+id/aguardandoInicioEntregaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioEntregaFragment"
+        android:label="AguardandoInicioEntregaFragment" />
+
+    <!-- Ações globais -->
+    <action
+        android:id="@+id/action_global_mototaxistaCaminhoCorridaFragment"
+        app:destination="@id/aguardandoInicioCorridaFragment" />
+
+    <action
+        android:id="@+id/action_global_mototaxistaCaminhoEntregaFragment"
+        app:destination="@id/aguardandoInicioEntregaFragment" />
+
+</navigation>

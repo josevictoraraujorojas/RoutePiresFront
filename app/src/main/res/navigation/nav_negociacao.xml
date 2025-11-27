@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_negociacao"
+    app:startDestination="@id/negociacaoFragment2">
+
+    <fragment
+        android:id="@+id/negociacaoFragment2"
+        android:name="com.example.routepiresfront.ui.comum.NegociacaoFragment"
+        android:label="NegociacaoFragment" >
+        <action
+            android:id="@+id/action_negociacaoFragment2_to_chatFragment2"
+            app:destination="@id/chatFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.routepiresfront.chat.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment2_to_denunciaFragment2"
+            app:destination="@id/denunciaFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/denunciaFragment2"
+        android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
+        android:label="DenunciaFragment" />
+</navigation>

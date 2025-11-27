@@ -1,0 +1,30 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_negociacao_mototaxista"
+    app:startDestination="@id/negociacaoFragment2">
+
+    <fragment
+        android:id="@+id/negociacaoFragment2"
+        android:name="com.example.routepiresfront.ui.comum.NegociacaoFragment"
+        android:label="Negociação">
+
+        <action
+            android:id="@+id/action_negociacao_para_chat"
+            app:destination="@id/chatFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment2"
+        android:name="com.example.routepiresfront.chat.ChatFragment"
+        android:label="Chat">
+
+        <action
+            android:id="@+id/action_chat_para_denuncia"
+            app:destination="@id/denunciaFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/denunciaFragment2"
+        android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
+        android:label="Denúncia" />
+</navigation>

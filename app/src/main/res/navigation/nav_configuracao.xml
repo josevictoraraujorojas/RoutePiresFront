@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_configuracao"
+    app:startDestination="@id/configuracaoPassageiroFragment">
+
+    <fragment
+        android:id="@+id/configuracaoPassageiroFragment"
+        android:name="com.example.routepiresfront.ui.passageiro.ConfiguracaoPassageiroFragment"
+        android:label="ConfiguracaoPassageiroFragment" >
+        <action
+            android:id="@+id/action_configuracaoPassageiroFragment_to_editarPerfilFragment2"
+            app:destination="@id/editarPerfilFragment2" />
+        <action
+            android:id="@+id/action_configuracaoPassageiroFragment_to_historicoCorridasFragment2"
+            app:destination="@id/historicoCorridasFragment2" />
+        <action
+            android:id="@+id/action_configuracaoPassageiroFragment_to_notificacaoFragment2"
+            app:destination="@id/notificacaoFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editarPerfilFragment2"
+        android:name="com.example.routepiresfront.ui.comum.EditarPerfilFragment"
+        android:label="EditarPerfilFragment" />
+
+    <fragment
+        android:id="@+id/historicoCorridasFragment2"
+        android:name="com.example.routepiresfront.ui.comum.HistoricoCorridasFragment"
+        android:label="HistoricoCorridasFragment" />
+
+    <fragment
+        android:id="@+id/notificacaoFragment2"
+        android:name="com.example.routepiresfront.ui.comum.NotificacaoFragment"
+        android:label="NotificacaoFragment" />
+</navigation>
