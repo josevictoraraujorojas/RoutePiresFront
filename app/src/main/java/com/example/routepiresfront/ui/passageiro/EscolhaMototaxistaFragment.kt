@@ -58,7 +58,7 @@ class EscolhaMototaxistaFragment : DialogFragment() {
 
         binding.naoButton.setOnClickListener { dismiss() }
         binding.simButton.setOnClickListener {
-            // Aqui você pode colocar a lógica de "Negociar"
+            retornarEscolha()
             dismiss()
         }
     }
@@ -77,6 +77,9 @@ class EscolhaMototaxistaFragment : DialogFragment() {
     }
 
     companion object {
+        const val REQUEST_KEY = "escolha_mototaxista_request"
+        const val RESULT_ID = "mototaxista_id"
+
         fun newInstance(id: String, nome: String?, avaliacao: Float): EscolhaMototaxistaFragment {
             val fragment = EscolhaMototaxistaFragment()
             val args = Bundle()
@@ -123,5 +126,13 @@ class EscolhaMototaxistaFragment : DialogFragment() {
                 servico.name.lowercase().replace("_", " ")
                     .replaceFirstChar { it.uppercase() }
             } ?: "Serviços não informados"
+    }
+
+    private fun retornarEscolha() {
+        val id = mototaxistaId ?: return
+        parentFragmentManager.setFragmentResult(
+            REQUEST_KEY,
+            Bundle().apply { putString(RESULT_ID, id) }
+        )
     }
 }

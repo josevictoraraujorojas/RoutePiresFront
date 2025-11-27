@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
@@ -32,7 +32,7 @@ class SelecionarLocalFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentSelecaoLocalBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SelecaoLocalViewModel by viewModels()
+    private val viewModel: SelecaoLocalViewModel by activityViewModels()
 
     private lateinit var map: GoogleMap
     private lateinit var adapter: LocalSugestaoAdapter

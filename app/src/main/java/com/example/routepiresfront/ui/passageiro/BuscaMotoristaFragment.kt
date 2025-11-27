@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
@@ -13,15 +14,23 @@ import com.example.routepiresfront.databinding.FragmentBuscaMotoristaBinding
 import com.example.routepiresfront.core.Resultado
 import com.example.routepiresfront.ui.passageiro.adapter.MototaxistaAdapter
 import com.example.routepiresfront.ui.passageiro.viewmodel.EscolhaMototaxistaViewModel
+import com.example.routepiresfront.ui.passageiro.viewmodel.SelecaoLocalViewModel
+import com.example.routepiresfront.core.SessionManager
 import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 
 class BuscaMotoristaFragment : Fragment() {
 
     private var _binding: FragmentBuscaMotoristaBinding? = null
     private val binding get() = _binding!!
     private val viewModel: EscolhaMototaxistaViewModel by viewModels()
+    private val corridaViewModel: SelecaoLocalViewModel by activityViewModels()
 
     private lateinit var adapter: MototaxistaAdapter
+    private val passageiroId: String by lazy {
+        SessionManager.obterUsuarioId(requireContext()).orEmpty()
+    }
 
 
     override fun onCreateView(
@@ -55,6 +64,8 @@ class BuscaMotoristaFragment : Fragment() {
         startAnimations()
         viewModel.carregarMototaxistas()
         observarMototaxistas()
+        observarSolicitacaoCorrida()
+        registrarResultadoEscolha()
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -102,6 +113,37 @@ class BuscaMotoristaFragment : Fragment() {
                     binding.layoutAnimacoes.visibility = View.GONE
                     Snackbar.make(binding.root, resultado.mensagem, Snackbar.LENGTH_LONG).show()
                 }
+            }
+        }
+    }
+
+    private fun registrarResultadoEscolha() {
+        setFragmentResultListener(EscolhaMototaxistaFragment.REQUEST_KEY) { _, bundle ->
+            val mototaxistaId = bundle.getString(EscolhaMototaxistaFragment.RESULT_ID).orEmpty()
+            if (mototaxistaId.isBlank()) return@setFragmentResultListener
+            if (passageiroId.isBlank()) {
+                Snackbar.make(binding.root, "Usuário não identificado. Faça login novamente.", Snackbar.LENGTH_LONG).show()
+                return@setFragmentResultListener
+            }
+            corridaViewModel.solicitarCorrida(passageiroId, mototaxistaId = mototaxistaId)
+        }
+    }
+
+    private fun observarSolicitacaoCorrida() {
+        corridaViewModel.resultadoSolicitacao.observe(viewLifecycleOwner) { resultado ->
+            when (resultado) {
+                is Resultado.Sucesso -> {
+                    Snackbar.make(binding.root, "Corrida criada com sucesso", Snackbar.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_global_mototaxistaCaminhoFragment)
+                    corridaViewModel.limparResultado()
+                }
+
+                is Resultado.Erro -> {
+                    Snackbar.make(binding.root, resultado.mensagem, Snackbar.LENGTH_LONG).show()
+                    corridaViewModel.limparResultado()
+                }
+
+                Resultado.Carregando, null -> {}
             }
         }
     }

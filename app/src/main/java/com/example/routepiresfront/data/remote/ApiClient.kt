@@ -3,6 +3,8 @@ package com.example.routepiresfront.data.remote
 import com.example.routepiresfront.BuildConfig
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 object ApiClient {
 
@@ -24,25 +27,34 @@ object ApiClient {
         .addInterceptor(logging) // loga requisições/respostas
         .build()
 
+    private val isoSerializer = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
+        timeZone = TimeZone.getTimeZone("UTC")
+    }
+
+    private val dateAdapter = object : JsonSerializer<Date>, JsonDeserializer<Date> {
+        override fun serialize(src: Date?, typeOfSrc: java.lang.reflect.Type?, context: com.google.gson.JsonSerializationContext?): com.google.gson.JsonElement {
+            if (src == null) return JsonPrimitive("")
+            return JsonPrimitive(isoSerializer.format(src))
+        }
+
+        override fun deserialize(json: com.google.gson.JsonElement?, typeOfT: java.lang.reflect.Type?, context: com.google.gson.JsonDeserializationContext?): Date {
+            val valor = json?.asString ?: throw IllegalArgumentException("Data vazia")
+            val formatos = listOf(
+                "dd-MM-yyyy'T'HH:mm:ss.SSSZ",
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            )
+            return formatos.firstNotNullOfOrNull { padrao ->
+                runCatching {
+                    SimpleDateFormat(padrao, Locale.getDefault()).parse(valor)
+                }.getOrNull()
+            } ?: throw IllegalArgumentException("Formato de data não suportado: $valor")
+        }
+    }
+
     private val gson = GsonBuilder()
         .setLenient()
-        .registerTypeAdapter(
-            Date::class.java,
-            JsonDeserializer { json, _, _ ->
-                val valor = json.asString
-                // Aceita múltiplos formatos (backend retornando dd-MM-yyyy'T'HH:mm:ss.SSSZ)
-                val formatos = listOf(
-                    "dd-MM-yyyy'T'HH:mm:ss.SSSZ",
-                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                    "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                )
-                formatos.firstNotNullOfOrNull { padrao ->
-                    runCatching {
-                        SimpleDateFormat(padrao, Locale.getDefault()).parse(valor)
-                    }.getOrNull()
-                } ?: throw IllegalArgumentException("Formato de data não suportado: $valor")
-            }
-        )
+        .registerTypeAdapter(Date::class.java, dateAdapter)
         .create()
 
     val instance: Retrofit by lazy {
