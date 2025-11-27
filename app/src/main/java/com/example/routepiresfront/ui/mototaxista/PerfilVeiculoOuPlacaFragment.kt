@@ -13,7 +13,7 @@ import com.example.routepiresfront.databinding.FragmentPerfilVeiculoOuPlacaBindi
 import com.example.routepiresfront.viewmodel.EditarVeiculoViewModel
 import com.example.routepiresfront.viewmodel.EditarVeiculoViewModelFactory
 
-class EditarVeiculoFragment : Fragment() {
+class PerfilVeiculoOuPlacaFragment : Fragment() {
 
     private var _binding: FragmentPerfilVeiculoOuPlacaBinding? = null
     private val binding get() = _binding!!
@@ -21,7 +21,7 @@ class EditarVeiculoFragment : Fragment() {
     private val viewModel: EditarVeiculoViewModel by viewModels {
         EditarVeiculoViewModelFactory(
             repository = MototaxistaRepository(ApiClient.mototaxistaApi),
-            mototaxistaId = "OYwpWzjyda6DsIE0UnwT"
+            "OYwpWzjyda6DsIE0UnwT"
         )
     }
 
@@ -36,7 +36,7 @@ class EditarVeiculoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // OBSERVERS PRIMEIRO
+        // Observers
         viewModel.veiculo.observe(viewLifecycleOwner) { veiculo ->
             binding.editPlacaPerfil.setText(veiculo?.placa ?: "")
             binding.editModeloMotoPerfil.setText(veiculo?.modelo ?: "")
@@ -47,33 +47,33 @@ class EditarVeiculoFragment : Fragment() {
         viewModel.resultadoEdicao.observe(viewLifecycleOwner) { resultado ->
             resultado.onSuccess {
                 Toast.makeText(requireContext(), "Veículo atualizado!", Toast.LENGTH_SHORT).show()
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                parentFragmentManager.popBackStack()
             }
             resultado.onFailure {
                 Toast.makeText(requireContext(), "Erro ao atualizar veículo!", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Agora chamamos a API para buscar os dados
+        // Carrega dados do veículo
         viewModel.carregarDados()
 
-        // Botão de atualizar
+        // Botão salvar
         binding.buttonAtualizarPerfil.setOnClickListener {
-            val placa = binding.editPlacaPerfil.text.toString()
-            val modelo = binding.editModeloMotoPerfil.text.toString()
-            val renavam = binding.editRenavamPerfil.text.toString()
-            val ano = binding.editAnoDaMotoPerfil.text.toString().toIntOrNull() ?: 0
-
-            viewModel.editarVeiculo(placa, modelo, renavam, ano)
+            viewModel.editarVeiculo(
+                placa = binding.editPlacaPerfil.text.toString(),
+                modelo = binding.editModeloMotoPerfil.text.toString(),
+                renavam = binding.editRenavamPerfil.text.toString(),
+                ano = binding.editAnoDaMotoPerfil.text.toString().toIntOrNull() ?: 0
+            )
         }
 
-        // Botões de voltar
+        // Voltar
         binding.buttonCancelarPerfil.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
 
         binding.btnVoltar.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
     }
 

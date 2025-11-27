@@ -1,12 +1,10 @@
 package com.example.routepiresfront.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.routepiresfront.data.model.MototaxistaUpdate
-import com.example.routepiresfront.data.model.VeiculoCreate
+import com.example.routepiresfront.data.model.VeiculoUpdate
 import com.example.routepiresfront.data.remote.responses.VeiculoResponse
 import com.example.routepiresfront.data.repository.MototaxistaRepository
 import kotlinx.coroutines.launch
@@ -34,16 +32,15 @@ class EditarVeiculoViewModel(
     }
 
     fun editarVeiculo(placa: String, modelo: String, renavam: String, ano: Int) {
-        val req = VeiculoCreate(
+        val veiculo = VeiculoUpdate(
             placa = placa,
             modelo = modelo,
             renavam = renavam,
-            ano = ano,
-            fotoUrl = "https://example.com/default.jpg"
+            ano = ano
         )
 
         viewModelScope.launch {
-            val resultado = repository.atualizarVeiculo(mototaxistaId, req)
+            val resultado = repository.atualizarVeiculo(mototaxistaId, veiculo)
             resultado.onSuccess {
                 _resultadoEdicao.postValue(Result.success(Unit))
             }.onFailure { erro ->

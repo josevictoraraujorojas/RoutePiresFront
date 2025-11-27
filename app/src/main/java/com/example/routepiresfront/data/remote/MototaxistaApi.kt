@@ -3,6 +3,7 @@ package com.example.routepiresfront.data.remote
 import com.example.routepiresfront.data.model.MototaxistaCreate
 import com.example.routepiresfront.data.model.MototaxistaUpdate
 import com.example.routepiresfront.data.model.VeiculoCreate
+import com.example.routepiresfront.data.model.VeiculoUpdate
 import com.example.routepiresfront.data.remote.responses.MototaxistaResponse
 import com.example.routepiresfront.data.remote.responses.VeiculoResponse
 import retrofit2.Response
@@ -30,13 +31,11 @@ interface MototaxistaApi {
     ): Response<MototaxistaResponse>
 
     @GET("mototaxistas/{id}/veiculo")
-    suspend fun getVeiculo(
-        @Path("id") id: String
-    ): Response<VeiculoResponse>
+    suspend fun getVeiculo(@Path("id") id: String): Response<VeiculoResponse>
 
     @PATCH("mototaxistas/{id}/veiculo")
     suspend fun atualizarVeiculo(
         @Path("id") id: String,
-        @Body veiculo: VeiculoCreate
+        @Body veiculo: VeiculoUpdate
     ): Response<VeiculoResponse>
 }

@@ -3,6 +3,7 @@ package com.example.routepiresfront.data.repository
 import com.example.routepiresfront.data.model.MototaxistaCreate
 import com.example.routepiresfront.data.model.MototaxistaUpdate
 import com.example.routepiresfront.data.model.VeiculoCreate
+import com.example.routepiresfront.data.model.VeiculoUpdate
 import com.example.routepiresfront.data.remote.MototaxistaApi
 import com.example.routepiresfront.data.remote.responses.MototaxistaResponse
 import com.example.routepiresfront.data.remote.responses.VeiculoResponse
@@ -95,7 +96,7 @@ class MototaxistaRepository(private val api: MototaxistaApi) {
         }
 
 
-    suspend fun atualizarVeiculo(id: String, v: VeiculoCreate): Result<VeiculoResponse> =
+    suspend fun atualizarVeiculo(id: String, v: VeiculoUpdate): Result<VeiculoResponse> =
         withContext(Dispatchers.IO) {
             try {
                 val resp = api.atualizarVeiculo(id, v)
