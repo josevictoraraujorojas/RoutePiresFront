@@ -88,22 +88,22 @@ class ConfiguracaoMotoristaFragment : Fragment() {
         // Sempre configura os listeners das opções — navegação funciona mesmo que userId seja nulo
         val navController = view.findNavController()
         binding.opcaoEditar.setOnClickListener {
-            val bundle = Bundle().apply { putString("USER_ID", userId) }
+            val bundle = Bundle().apply { putString("USER_ID", userId); putString("USER_TYPE", "mototaxista") }
             navController.navigate(R.id.action_configuracaoMotoristaFragment_to_editarPerfilFragment, bundle)
         }
 
         binding.opcaoVeiculo.setOnClickListener {
-            val bundle = Bundle().apply { putString("USER_ID", userId) }
+            val bundle = Bundle().apply { putString("USER_ID", userId); putString("USER_TYPE", "mototaxista") }
             navController.navigate(R.id.action_configuracaoMotoristaFragment_to_perfilVeiculoOuPlacaFragment, bundle)
         }
 
         binding.opcaoHistorico.setOnClickListener {
-            val bundle = Bundle().apply { putString("USER_ID", userId) }
+            val bundle = Bundle().apply { putString("USER_ID", userId); putString("USER_TYPE", "mototaxista") }
             navController.navigate(R.id.action_configuracaoMotoristaFragment_to_historicoCorridasFragment, bundle)
         }
 
         binding.opcaoNotificacoes.setOnClickListener {
-            val bundle = Bundle().apply { putString("USER_ID", userId) }
+            val bundle = Bundle().apply { putString("USER_ID", userId); putString("USER_TYPE", "mototaxista") }
             navController.navigate(R.id.action_configuracaoMotoristaFragment_to_notificacaoFragment, bundle)
         }
 

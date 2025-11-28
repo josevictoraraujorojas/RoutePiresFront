@@ -5,6 +5,4 @@ data class VeiculoDTOUpdate(
     val modelo: String,
     val renavam: String,
     val ano: Int,
-    val capacidade: Int,
-    val fotoUrl: String
 )

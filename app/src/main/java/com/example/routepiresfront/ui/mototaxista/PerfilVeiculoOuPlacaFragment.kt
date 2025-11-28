@@ -78,9 +78,7 @@ class PerfilVeiculoOuPlacaFragment: Fragment() {
                 placa = placa,
                 modelo = modelo,
                 renavam = renavam,
-                ano = ano,
-                capacidade = 1,
-                fotoUrl = ""
+                ano = ano
             )
 
             // Chama update; aguarda confirmação via updateStatus

@@ -5,6 +5,5 @@ data class VeiculoDTOResponse(
     val modelo: String? = null,
     val renavam: String? = null,
     val ano: Int? = null,
-    val capacidade: Int? = null,
     val fotoUrl: String? = null
 )

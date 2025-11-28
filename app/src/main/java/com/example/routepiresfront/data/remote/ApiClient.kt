@@ -1,5 +1,6 @@
 package com.example.routepiresfront.data.remote
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,11 +22,15 @@ object ApiClient {
         .addInterceptor(logging) // loga requisições/respostas
         .build()
 
+    // Usar Gson padrão (sem FieldNamingPolicy) porque o backend utiliza camelCase nas chaves JSON
+    private val gson = GsonBuilder()
+        .create()
+
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

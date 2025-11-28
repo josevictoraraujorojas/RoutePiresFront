@@ -34,7 +34,7 @@ interface MototaxistaPerfilService {
         @Path("id") id: String
     ): Response<VeiculoDTOResponse>
 
-    @PUT("mototaxistas/{id}/veiculo")
+    @PATCH("mototaxistas/{id}/veiculo")
     suspend fun updateVeiculo(
         @Path("id") id: String,
         @Body dto: VeiculoDTOUpdate

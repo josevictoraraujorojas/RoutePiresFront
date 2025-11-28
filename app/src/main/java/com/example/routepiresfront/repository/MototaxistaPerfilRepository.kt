@@ -51,8 +51,43 @@ class MototaxistaPerfilRepository {
     // ===== HISTÓRICO DE CORRIDAS =====
     suspend fun getHistoricoCorridas(id: String): Result<List<CorridaDTOResponse>> =
         withContext(Dispatchers.IO) {
-            // Restaurado para o comportamento original: delega para safeCall e retorna o resultado direto.
-            safeCall { api.getHistoricoCorridas(id) }
+            try {
+                Log.d("MototaxistaRepo", "getHistoricoCorridas direct call for id=$id")
+                val response = api.getHistoricoCorridas(id)
+                Log.d("MototaxistaRepo", "HTTP ${response.raw().request.method} ${response.raw().request.url} -> ${response.code()}")
+
+                if (response.isSuccessful) {
+                    if (response.code() == 204) {
+                        Log.d("MototaxistaRepo", "Historico vazio (204)")
+                        return@withContext Result.success(emptyList())
+                    }
+
+                    val body = response.body()
+                    return@withContext if (body != null) {
+                        Result.success(body)
+                    } else {
+                        Result.failure(Exception("Resposta vazia ao obter histórico de corridas"))
+                    }
+                } else {
+                    val msg = "Erro HTTP ${response.code()}: ${response.message()}"
+                    val errorBodyStr = try { response.errorBody()?.string() } catch (e: Exception) { null }
+                    val fullMsg = if (!errorBodyStr.isNullOrBlank()) "$msg - $errorBodyStr" else msg
+                    Log.e("MototaxistaRepo", fullMsg)
+                    Log.e("MototaxistaRepo", "Request URL: ${response.raw().request.url}")
+
+                    // Se o endpoint não existe (404) — provavelmente a API ainda não implementou —
+                    // tratamos como histórico vazio para não quebrar a UI.
+                    if (response.code() == 404) {
+                        Log.w("MototaxistaRepo", "Endpoint de histórico de corridas para mototaxista não encontrado (404), retornando lista vazia. Error body: $errorBodyStr")
+                        return@withContext Result.success(emptyList())
+                    }
+
+                    return@withContext Result.failure(Exception(fullMsg))
+                }
+            } catch (e: Exception) {
+                Log.e("MototaxistaRepo", "Exception durante getHistoricoCorridas: ${e.message}", e)
+                Result.failure(e)
+            }
         }
 
     // ===== NOTIFICAÇÕES =====
@@ -74,42 +109,42 @@ class MototaxistaPerfilRepository {
         withContext(Dispatchers.IO) {
             safeCall { api.logout(id) }
         }
+
     private suspend inline fun <T> safeCall(
         crossinline call: suspend () -> Response<T>
     ): Result<T> {
         return try {
-            val response = runCatching { call() }.getOrElse { throw it }
+            val response = call()
 
             Log.d("MototaxistaRepo", "HTTP ${response.raw().request.method} ${response.raw().request.url} -> ${response.code()}")
 
             if (response.isSuccessful) {
-                // Tratamento para 204 No Content
-                if (response.code() == 204) {
-                    // No Content: retorna null para que o chamador possa decidir o que fazer
-                    Log.d("MototaxistaRepo", "Resposta 204 No Content")
-                    @Suppress("UNCHECKED_CAST")
-                    return Result.success(null as T)
-                }
-
                 val body = response.body()
                 if (body != null) {
-                    Log.d("MototaxistaRepo", "Resposta body: $body")
+                    Log.d("MototaxistaRepo", "Resposta com corpo: $body")
                     Result.success(body)
+                } else if (response.code() == 204) {
+                    Log.d("MototaxistaRepo", "Resposta 204 No Content, retornando sucesso com corpo nulo.")
+                    @Suppress("UNCHECKED_CAST")
+                    Result.success(null as T)
                 } else {
-                    Log.w("MototaxistaRepo", "Resposta com body nulo e código ${response.code()}")
-                    Result.failure(Exception("Resposta vazia do servidor"))
+                    val msg = "Resposta com código ${response.code()} mas corpo nulo ou malformado."
+                    Log.e("MototaxistaRepo", msg)
+                    Result.failure(Exception(msg))
                 }
             } else {
-                val msg = "Erro HTTP ${response.code()}: ${response.message()}"
-                // Tenta ler o corpo de erro para informações mais detalhadas
-                val errorBodyStr = try { response.errorBody()?.string() } catch (e: Exception) { null }
-                val fullMsg = if (!errorBodyStr.isNullOrBlank()) "$msg - $errorBodyStr" else msg
-                Log.e("MototaxistaRepo", fullMsg)
-                Result.failure(Exception(fullMsg))
+                val errorBodyStr = try {
+                    response.errorBody()?.string()?.take(500)
+                } catch (e: Exception) {
+                    "Falha ao ler o corpo do erro: ${e.message}"
+                }
+                val errorMsg = "Erro HTTP ${response.code()}: ${response.message()}. Detalhes: $errorBodyStr"
+                Log.e("MototaxistaRepo", errorMsg)
+                Result.failure(Exception(errorMsg))
             }
         } catch (e: Exception) {
-            Log.e("MototaxistaRepo", "Exception durante chamada: ${e.message}", e)
-            Result.failure(e)
+            Log.e("MototaxistaRepo", "Exceção na chamada de rede: ${e.message}", e)
+            Result.failure(Exception("Falha na comunicação com o servidor. Verifique a conexão. Detalhes: ${e.message}", e))
         }
     }
 }

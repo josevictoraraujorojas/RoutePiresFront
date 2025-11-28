@@ -1,6 +1,7 @@
 package com.example.routepiresfront.ui.comum
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,23 +9,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.routepiresfront.data.model.CorridaDTOResponse
 import com.example.routepiresfront.databinding.FragmentHistoricoCorridasBinding
 import com.example.routepiresfront.ui.comum.adapter.CorridaAdapter
+import com.example.routepiresfront.viewModel.MototaxistaPerfilViewModel
 import com.example.routepiresfront.viewModel.PassageiroPerfilViewModel
-import android.util.Log
 
 class HistoricoCorridasFragment : Fragment() {
 
     private var _binding: FragmentHistoricoCorridasBinding? = null
     private val binding get() = _binding!!
 
-    // Observamos apenas o ViewModel do passageiro enquanto o endpoint do mototaxista estiver indisponível
     private val passViewModel: PassageiroPerfilViewModel by activityViewModels()
+    private val motoViewModel: MototaxistaPerfilViewModel by activityViewModels()
+
     private var userId: String? = null
+    private var userType: String? = null
+
+    private lateinit var adapter: CorridaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userId = arguments?.getString("USER_ID") ?: activity?.intent?.getStringExtra("USER_ID")
+        arguments?.let {
+            userId = it.getString("USER_ID")
+            userType = it.getString("USER_TYPE")
+            Log.d("HistoricoFragment", "onCreate: userId=$userId, userType=$userType")
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -35,45 +45,53 @@ class HistoricoCorridasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            val adapter = CorridaAdapter(emptyList()) // Começa com a lista vazia
-            binding.recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerCorridas.adapter = adapter
+        // Inicializa o adapter com o userType correto
+        adapter = CorridaAdapter(emptyList(), userType)
+        binding.recyclerCorridas.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerCorridas.adapter = adapter
 
-            binding.btnVoltar.setOnClickListener {
-                findNavController().navigateUp()
+        binding.btnVoltar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        fun handleReceivedList(corridas: List<CorridaDTOResponse>?) {
+            val size = corridas?.size ?: 0
+            Log.d("HistoricoFragment", "Corridas recebidas: $size. Atualizando adapter.")
+            if (corridas.isNullOrEmpty()) {
+                binding.tvEmptyHistorico.visibility = View.VISIBLE
+                binding.recyclerCorridas.visibility = View.GONE
+            } else {
+                binding.tvEmptyHistorico.visibility = View.GONE
+                binding.recyclerCorridas.visibility = View.VISIBLE
+                adapter.updateCorridas(corridas)
             }
+        }
 
-            // Observa somente o ViewModel do passageiro enquanto o endpoint do mototaxista estiver indisponível
-            fun handleReceivedList(corridas: List<com.example.routepiresfront.data.model.CorridaDTOResponse>?) {
-                val size = corridas?.size ?: 0
-                Log.d("HistoricoFragment", "corridas passageiro recebidas: size=$size")
-                if (corridas == null || corridas.isEmpty()) {
-                    binding.tvEmptyHistorico.visibility = View.VISIBLE
-                    binding.recyclerCorridas.visibility = View.GONE
-                } else {
-                    binding.tvEmptyHistorico.visibility = View.GONE
-                    binding.recyclerCorridas.visibility = View.VISIBLE
-                    adapter.updateCorridas(corridas)
-                }
+        Log.d("HistoricoFragment", "ViewCreated: userType=$userType")
+
+        if (userType == "mototaxista") {
+            Log.d("HistoricoFragment", "Observando histórico do mototaxista...")
+            motoViewModel.historico.observe(viewLifecycleOwner, ::handleReceivedList)
+            motoViewModel.error.observe(viewLifecycleOwner) { error ->
+                error?.let { Log.e("HistoricoFragment", "Erro mototaxista: $it") }
             }
-
-            passViewModel.historico.observe(viewLifecycleOwner) { corridas ->
-                Log.d("HistoricoFragment", "corridas passageiro emitidas: size=${corridas?.size}")
-                handleReceivedList(corridas)
+        } else {
+            Log.d("HistoricoFragment", "Observando histórico do passageiro...")
+            passViewModel.historico.observe(viewLifecycleOwner, ::handleReceivedList)
+            passViewModel.error.observe(viewLifecycleOwner) { error ->
+                error?.let { Log.e("HistoricoFragment", "Erro passageiro: $it") }
             }
+        }
 
-            passViewModel.error.observe(viewLifecycleOwner) { err ->
-                err?.let {
-                    Log.e("HistoricoFragment", "Erro passageiro ao obter histórico: $it")
-                    try { android.widget.Toast.makeText(requireContext(), "Erro ao obter histórico: $it", android.widget.Toast.LENGTH_LONG).show() } catch (_: Exception) {}
-                }
-            }
-
-            // Solicita carregamento apenas do histórico do passageiro (mototaxista temporariamente sem endpoint)
-            userId?.let {
-                Log.d("HistoricoFragment", "carregarHistorico passageiro para userId=$it")
+        userId?.let {
+            if (userType == "mototaxista") {
+                Log.d("HistoricoFragment", "Carregando histórico para mototaxista (id=$it)")
+                motoViewModel.carregarHistorico(it)
+            } else {
+                Log.d("HistoricoFragment", "Carregando histórico para passageiro (id=$it)")
                 passViewModel.carregarHistorico(it)
             }
+        } ?: Log.e("HistoricoFragment", "userId é nulo, não foi possível carregar o histórico.")
     }
 
     override fun onDestroyView() {

@@ -15,7 +15,7 @@ import retrofit2.http.Path
 
 interface PassageiroPerfilService {
     // ===== EDITAR PERFIL =====
-    @PUT("passageiros/{id}")
+    @PATCH("passageiros/{id}")
     suspend fun updatePerfil(
         @Path("id") id: String,
         @Body dto: PassageiroUpdateDTO

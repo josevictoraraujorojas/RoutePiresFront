@@ -60,7 +60,8 @@ class ConfiguracaoPassageiroFragment : Fragment() {
         }
 
         binding.opcaoHistorico.setOnClickListener {
-            findNavController().navigate(R.id.action_configuracaoPassageiroFragment_to_historicoCorridasFragment2)
+            val bundle = Bundle().apply { putString("USER_ID", userId); putString("USER_TYPE", "passageiro") }
+            findNavController().navigate(R.id.action_configuracaoPassageiroFragment_to_historicoCorridasFragment2, bundle)
         }
 
         binding.opcaoNotificacoes.setOnClickListener {
