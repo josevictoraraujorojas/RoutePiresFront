@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 
     // Emulador Android → backend rodando no PC
-    private const val BASE_URL = "http://10.0.2.2:8080/"
+    private const val BASE_URL = "http://192.168.1.15:8080/"
 
     // Se usar celular físico → use o IP da máquina:
     // private const val BASE_URL = "http://192.168.x.x:8080/"

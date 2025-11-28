@@ -134,9 +134,9 @@ class LoginActivity : AppCompatActivity() {
 //            etPassword.requestFocus()
 //            return
 //        }
-//        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
+         startActivity(Intent(this, MenubarPassageiroActivity::class.java))
 
-        startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
+ //       startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
     }
 
     private fun loginWithGoogle() {
