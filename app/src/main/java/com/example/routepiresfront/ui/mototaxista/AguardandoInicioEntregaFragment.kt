@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentAguardandoInicioEntregaBinding
-import com.google.android.gms.maps.SupportMapFragment
+import com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel
 import com.google.android.gms.maps.model.LatLng
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,30 +20,10 @@ class AguardandoInicioEntregaFragment : Fragment() {
     private var _binding: FragmentAguardandoInicioEntregaBinding? = null
     private val binding get() = _binding!!
 
-    private var nomeSolicitante: String = "Karen Roe"
-    private var avaliacaoSolicitante: Float = 4.8f
-    private var pontosEntrega: Int = 1
-    private var descricaoEntrega: String = "Perfect flat for 4 people. Peaceful and good location, close to bus stops and many restaurants."
-    private var pesoKg: Int = 10
-    private var tipoFragil: Boolean = true
-    private lateinit var pontoPartida: LatLng
-    private lateinit var pontoDestino: LatLng
+    private val viewModel: CorridaMototaxistaViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Aqui você pode receber os dados via arguments
-        // arguments?.let {
-        //     nomeSolicitante = it.getString("NOME_SOLICITANTE") ?: "Karen Roe"
-        //     avaliacaoSolicitante = it.getFloat("AVALIACAO_SOLICITANTE", 4.8f)
-        //     pontosEntrega = it.getInt("PONTOS_ENTREGA", 1)
-        //     descricaoEntrega = it.getString("DESCRICAO_ENTREGA") ?: ""
-        //     pesoKg = it.getInt("PESO_KG", 10)
-        //     tipoFragil = it.getBoolean("TIPO_FRAGIL", true)
-        // }
-
-        pontoPartida = LatLng(-17.304889, -48.279548)
-        pontoDestino = LatLng(-17.305980, -48.283300)
     }
 
     override fun onCreateView(
@@ -50,43 +32,67 @@ class AguardandoInicioEntregaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAguardandoInicioEntregaBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupUI()
-
+        setupObservers()
         setupListeners()
     }
 
-    private fun setupUI() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-//        binding.tvDataHora.text = dateFormat.format(Date())
-//
-//        binding.tvPontosEntrega.text = "$pontosEntrega Ponto${if (pontosEntrega > 1) "s" else ""} de entrega"
+    private fun setupObservers() {
+        viewModel.corridaAtual.observe(viewLifecycleOwner) { corrida ->
+            corrida?.let {
+                binding.corrida = it
+                
+                // Atualiza UI específica de entrega
+                it.descricaoEntrega?.let { desc ->
+                    binding.tvDescricaoEntrega.text = desc
+                }
+                it.pesoKg?.let { peso ->
+                    binding.tvPeso.text = "PESO: ${peso}KG"
+                }
+                it.passageiro?.let { passageiro ->
+                    binding.tvNomeSolicitante.text = passageiro.nome
+                    binding.tvAvaliacaoSolicitante.text = String.format("%.1f", passageiro.avaliacao)
+                }
+            }
+        }
 
-        binding.tvDescricaoEntrega.text = descricaoEntrega
+        viewModel.navegarParaAndamento.observe(viewLifecycleOwner) {
+            findNavController().navigate(
+                R.id.action_aguardandoInicioEntregaFragment_to_corridaAndamentoFragment
+            )
+        }
 
-        binding.tvPeso.text = "PESO: ${pesoKg}KG"
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                viewModel.limparErro()
+            }
+        }
 
-        binding.tvNomeSolicitante.text = nomeSolicitante
-        binding.tvAvaliacaoSolicitante.text = String.format("%.1f", avaliacaoSolicitante)
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnIniciarEntrega.isEnabled = !isLoading
+            binding.btnCancelarEntrega.isEnabled = !isLoading
+        }
 
+        viewModel.fecharFluxoCorrida.observe(viewLifecycleOwner) {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupListeners() {
-
         binding.btnIniciarEntrega.setOnClickListener {
-            Toast.makeText(requireContext(), "Iniciando entrega...", Toast.LENGTH_SHORT).show()
-            // Aqui você navegaria para o fragmento de entrega em andamento
-            // findNavController().navigate(R.id.action_aguardandoInicioEntrega_to_entregaEmAndamento)
+            viewModel.iniciarCorrida()
         }
 
         binding.btnCancelarEntrega.setOnClickListener {
-            Toast.makeText(requireContext(), "Cancelando entrega...", Toast.LENGTH_SHORT).show()
-            parentFragmentManager.popBackStack()
+            viewModel.cancelarCorrida("Cancelado pelo mototaxista antes de iniciar a entrega")
         }
     }
 

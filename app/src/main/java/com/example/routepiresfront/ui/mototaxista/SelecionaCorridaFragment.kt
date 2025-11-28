@@ -45,11 +45,9 @@ class SelecionaCorridaFragment : Fragment() {
             }
         }
 
-        viewModel.navegarParaNegociacao.observe(viewLifecycleOwner) { navegar ->
-            if (navegar) {
-                navegarParaNegociacao()
-                viewModel.resetarNavegacao()
-            }
+        viewModel.navegarParaNegociacao.observe(viewLifecycleOwner) {
+            navegarParaNegociacao()
+            viewModel.resetarNavegacao()
         }
 
         // Observa erros

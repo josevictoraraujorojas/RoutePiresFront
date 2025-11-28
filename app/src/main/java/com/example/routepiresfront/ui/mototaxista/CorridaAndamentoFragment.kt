@@ -67,11 +67,9 @@ class CorridaAndamentoFragment : Fragment(), OnMapReadyCallback {
         }
 
         // Observa navegação para avaliação
-        viewModel.navegarParaAvaliacao.observe(viewLifecycleOwner) { navegar ->
-            if (navegar) {
-                navegarParaAvaliacao()
-                viewModel.resetarNavegacao()
-            }
+        viewModel.navegarParaAvaliacao.observe(viewLifecycleOwner) {
+            navegarParaAvaliacao()
+            viewModel.resetarNavegacao()
         }
 
         // Observa erros

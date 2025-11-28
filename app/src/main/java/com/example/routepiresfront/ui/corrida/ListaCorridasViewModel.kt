@@ -20,10 +20,10 @@ class ListaCorridasViewModel(private val repository: CorridaRepository) : BaseVi
     /**
      * Busca as corridas disponíveis na API e atualiza os LiveData de acordo com a resposta.
      */
-    fun carregarCorridasDisponiveis() {
+    fun carregarCorridasDisponiveis(mototaxistaId: Long) {
         viewModelScope.launch {
             _isLoading.value = true
-            when (val response = repository.getCorridasDisponiveis()) {
+            when (val response = repository.getCorridasDisponiveis(mototaxistaId)) {
                 is ApiResponse.Success -> {
                     _corridasDisponiveis.value = response.data
                 }

@@ -43,8 +43,8 @@ class HistoricoCorridasFragment : Fragment() {
                 valorEstimado = 25.50,
                 distanciaKm = 5.2,
                 dataHoraCriacao = "2025-03-20T08:30:00",
-                pontoPartida = Localizacao(endereco = "Rua A, 123"),
-                pontoDestino = Localizacao(endereco = "Av. B, 456")
+                pontoPartida = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Rua A, 123"),
+                pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Av. B, 456")
             ),
             Corrida(
                 id = 2,
@@ -53,8 +53,8 @@ class HistoricoCorridasFragment : Fragment() {
                 valorEstimado = 18.00,
                 distanciaKm = 3.5,
                 dataHoraCriacao = "2025-03-19T08:20:00",
-                pontoPartida = Localizacao(endereco = "Centro"),
-                pontoDestino = Localizacao(endereco = "Bairro Sul")
+                pontoPartida = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Centro"),
+                pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Bairro Sul")
             ),
             Corrida(
                 id = 3,
@@ -63,8 +63,8 @@ class HistoricoCorridasFragment : Fragment() {
                 valorEstimado = 32.00,
                 distanciaKm = 8.1,
                 dataHoraCriacao = "2025-03-14T10:30:00",
-                pontoPartida = Localizacao(endereco = "Zona Norte"),
-                pontoDestino = Localizacao(endereco = "Aeroporto")
+                pontoPartida = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Zona Norte"),
+                pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Aeroporto")
             ),
             Corrida(
                 id = 4,
@@ -73,8 +73,8 @@ class HistoricoCorridasFragment : Fragment() {
                 valorEstimado = 15.00,
                 distanciaKm = 2.8,
                 dataHoraCriacao = "2025-03-20T14:00:00",
-                pontoPartida = Localizacao(endereco = "Shopping"),
-                pontoDestino = Localizacao(endereco = "Residencial")
+                pontoPartida = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Shopping"),
+                pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Residencial")
             ),
             Corrida(
                 id = 5,
@@ -83,8 +83,8 @@ class HistoricoCorridasFragment : Fragment() {
                 valorEstimado = 22.50,
                 distanciaKm = 4.5,
                 dataHoraCriacao = "2025-03-20T16:30:00",
-                pontoPartida = Localizacao(endereco = "Universidade"),
-                pontoDestino = Localizacao(endereco = "Casa")
+                pontoPartida = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Universidade"),
+                pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Casa")
             )
         )
 

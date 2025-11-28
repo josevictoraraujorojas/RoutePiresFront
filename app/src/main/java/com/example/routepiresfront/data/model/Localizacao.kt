@@ -7,8 +7,14 @@ import com.google.gson.annotations.SerializedName
  */
 data class Localizacao(
     @SerializedName("latitude")
-    val latitude: Double,
+    val latitude: Double = 0.0,
 
     @SerializedName("longitude")
-    val longitude: Double
+    val longitude: Double = 0.0,
+
+    @SerializedName("endereco")
+    val endereco: String? = null,
+
+    @SerializedName("nome")
+    val nome: String? = null
 )

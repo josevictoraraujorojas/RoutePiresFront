@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.routepiresfront.data.model.Corrida
 import com.example.routepiresfront.data.model.Localizacao
 import com.example.routepiresfront.data.remote.ApiResponse
+import com.example.routepiresfront.data.remote.RetrofitClient
 import com.example.routepiresfront.data.repository.CorridaRepository
 import com.example.routepiresfront.util.SingleLiveEvent
 import kotlinx.coroutines.launch
@@ -16,7 +17,8 @@ class CorridaMototaxistaViewModel(
 ) : ViewModel() {
 
     // Construtor sem parâmetros para compatibilidade (cria repository internamente)
-    constructor() : this(CorridaRepository(com.example.routepiresfront.data.remote.ApiClient.apiService))
+    // TODO: Remover quando implementar injeção de dependências (Hilt/Koin)
+    constructor() : this(CorridaRepository(RetrofitClient.apiService))
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -31,6 +33,7 @@ class CorridaMototaxistaViewModel(
     val corridaAtual: LiveData<Corrida?> = _corridaAtual
 
     val navegarParaNegociacao = SingleLiveEvent<Void>()
+    val navegarParaAguardandoInicio = SingleLiveEvent<Void>()
     val navegarParaAndamento = SingleLiveEvent<Void>()
     val navegarParaAvaliacao = SingleLiveEvent<Void>()
     val fecharFluxoCorrida = SingleLiveEvent<Void>()
@@ -131,6 +134,36 @@ class CorridaMototaxistaViewModel(
 
     fun clearErrorMessage() {
         _errorMessage.value = null
+    }
+
+    fun limparErro() {
+        _errorMessage.value = null
+    }
+
+    fun resetarNavegacao() {
+        // Método para resetar flags de navegação se necessário
+        // Por enquanto não há ação específica, pois SingleLiveEvent já gerencia isso
+    }
+    
+    /**
+     * Chamado após negociação bem-sucedida para navegar para tela de aguardar início
+     */
+    fun confirmarNegociacaoEAguardarInicio() {
+        navegarParaAguardandoInicio.call()
+    }
+    
+    /**
+     * Verifica se a corrida atual é uma entrega
+     */
+    fun isEntrega(): Boolean {
+        return _corridaAtual.value?.tipo == "entrega"
+    }
+    
+    /**
+     * Verifica se a corrida atual é uma corrida normal
+     */
+    fun isCorrida(): Boolean {
+        return _corridaAtual.value?.tipo == "corrida"
     }
 
     fun setMototaxistaId(id: Long) {

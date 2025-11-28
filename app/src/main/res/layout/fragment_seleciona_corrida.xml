@@ -147,7 +147,7 @@
                     android:id="@+id/tvValor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.format(`R$ %.2f`, corrida.valorEstimado ?? 0.0)}"
+                    android:text="@{corrida.valorEstimado != null ? String.format(`R$ %.2f`, corrida.valorEstimado) : `R$ 0,00`}"
                     android:textSize="18sp"
                     android:textColor="@color/primary"
                     android:textStyle="bold"

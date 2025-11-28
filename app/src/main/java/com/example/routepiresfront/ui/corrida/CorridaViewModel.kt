@@ -37,12 +37,12 @@ class CorridaViewModel(private val repository: CorridaRepository) : BaseViewMode
      * Ação de aceitar a corrida.
      * Chama o repositório e, em caso de sucesso, dispara o evento para navegar para a próxima tela.
      */
-    fun aceitarCorrida() {
-        val corridaId = _corridaAtual.value?.id ?: return
+    fun aceitarCorrida(mototaxistaId: Long) {
+        val corridaId = _corridaAtual.value?.id?.toString() ?: return
 
         viewModelScope.launch {
             _isLoading.value = true
-            when (val response = repository.aceitarCorrida(corridaId)) {
+            when (val response = repository.aceitarCorrida(corridaId, mototaxistaId)) {
                 is ApiResponse.Success -> {
                     // Atualiza o status local da corrida e navega
                     _corridaAtual.value = _corridaAtual.value?.copy(status = StatusCorrida.ACEITA)
@@ -61,13 +61,13 @@ class CorridaViewModel(private val repository: CorridaRepository) : BaseViewMode
      * Ação de iniciar a corrida.
      */
     fun iniciarCorrida() {
-        val corridaId = _corridaAtual.value?.id ?: return
+        val corridaId = _corridaAtual.value?.id?.toString() ?: return
 
         viewModelScope.launch {
             _isLoading.value = true
             when (val response = repository.iniciarCorrida(corridaId)) {
                 is ApiResponse.Success -> {
-                    _corridaAtual.value = _corridaAtual.value?.copy(status = StatusCorrida.INICIADA)
+                    _corridaAtual.value = _corridaAtual.value?.copy(status = StatusCorrida.EM_ANDAMENTO)
                     navegarParaCorridaEmAndamento.call()
                 }
                 is ApiResponse.Error -> {
@@ -83,7 +83,7 @@ class CorridaViewModel(private val repository: CorridaRepository) : BaseViewMode
      * Ação de finalizar a corrida.
      */
     fun finalizarCorrida() {
-        val corridaId = _corridaAtual.value?.id ?: return
+        val corridaId = _corridaAtual.value?.id?.toString() ?: return
 
         viewModelScope.launch {
             _isLoading.value = true
@@ -104,12 +104,12 @@ class CorridaViewModel(private val repository: CorridaRepository) : BaseViewMode
     /**
      * Ação de cancelar a corrida.
      */
-    fun cancelarCorrida() {
-        val corridaId = _corridaAtual.value?.id ?: return
+    fun cancelarCorrida(motivo: String? = null) {
+        val corridaId = _corridaAtual.value?.id?.toString() ?: return
 
         viewModelScope.launch {
             _isLoading.value = true
-            when (val response = repository.cancelarCorrida(corridaId)) {
+            when (val response = repository.cancelarCorrida(corridaId, motivo)) {
                 is ApiResponse.Success -> {
                     _corridaAtual.value = null // Limpa a corrida atual
                     fecharFluxoCorrida.call() // Fecha o fluxo e volta para a lista

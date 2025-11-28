@@ -10,6 +10,8 @@
         android:id="@+id/corridaMototaxistaFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.CorridaMototaxistaFragment"
         android:label="CorridaMototaxistaFragment" />
+        
+    <!-- CORRIDA FLOW -->
     <fragment
         android:id="@+id/aguardandoInicioCorridaFragment2"
         android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioCorridaFragment"
@@ -19,9 +21,17 @@
             app:destination="@id/corridaAndamentoFragment" />
     </fragment>
 
-    <action
-        android:id="@+id/action_global_aguardandoInicioCorridaFragment2"
-        app:destination="@id/aguardandoInicioCorridaFragment2" />
+    <!-- ENTREGA FLOW -->
+    <fragment
+        android:id="@+id/aguardandoInicioEntregaFragment"
+        android:name="com.example.routepiresfront.ui.mototaxista.AguardandoInicioEntregaFragment"
+        android:label="AguardandoInicioEntregaFragment" >
+        <action
+            android:id="@+id/action_aguardandoInicioEntregaFragment_to_corridaAndamentoFragment"
+            app:destination="@id/corridaAndamentoFragment" />
+    </fragment>
+
+    <!-- ANDAMENTO (shared by corrida and entrega) -->
     <fragment
         android:id="@+id/corridaAndamentoFragment"
         android:name="com.example.routepiresfront.ui.mototaxista.CorridaAndamentoFragment"
@@ -31,5 +41,13 @@
             app:destination="@id/corridaMototaxistaFragment" />
     </fragment>
 
+    <!-- GLOBAL ACTIONS -->
+    <action
+        android:id="@+id/action_global_aguardandoInicioCorridaFragment2"
+        app:destination="@id/aguardandoInicioCorridaFragment2" />
+        
+    <action
+        android:id="@+id/action_global_aguardandoInicioEntregaFragment"
+        app:destination="@id/aguardandoInicioEntregaFragment" />
 
 </navigation>

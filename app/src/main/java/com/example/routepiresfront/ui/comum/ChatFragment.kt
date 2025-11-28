@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentChatBinding
 import com.example.routepiresfront.data.model.Mensagem
 import com.example.routepiresfront.ui.comum.adapter.MensagensAdapter
+import com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ChatFragment : Fragment() {
@@ -20,6 +22,9 @@ class ChatFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var chatAdapter: MensagensAdapter
+    
+    // ViewModel compartilhado para verificar o tipo de corrida
+    private val viewModel: CorridaMototaxistaViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,17 +95,29 @@ class ChatFragment : Fragment() {
 //        }
 
         binding.buttonAceitarCorrida.setOnClickListener {
-            // 1️⃣ Seleciona a aba Corrida
+            // 1️⃣ Seleciona a aba Home (Corrida)
             val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
             bottom.selectedItemId = R.id.bottom_home
 
-            // 2️⃣ Envia sinal para CorridaMototaxistaFragment abrir o agurandoiniciocorrida
+            // 2️⃣ Obtém NavController da aba Home
             val corridaNav = requireActivity()
                 .supportFragmentManager
                 .findFragmentById(R.id.nav_host_home_moto)
                 ?.findNavController()
 
-            corridaNav?.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
+            // 3️⃣ Navega para o fragment correto baseado no tipo (corrida ou entrega)
+            corridaNav?.let { navController ->
+                if (viewModel.isEntrega()) {
+                    // É uma entrega
+                    navController.navigate(R.id.action_global_aguardandoInicioEntregaFragment)
+                } else {
+                    // É uma corrida normal
+                    navController.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
+                }
+            }
+            
+            // Chama o método do ViewModel para atualizar estado
+            viewModel.confirmarNegociacaoEAguardarInicio()
         }
 
     }

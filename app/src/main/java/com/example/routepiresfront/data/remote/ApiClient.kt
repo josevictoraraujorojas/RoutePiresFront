@@ -5,6 +5,15 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * @deprecated Use RetrofitClient ao invés desta classe.
+ * Esta classe está mantida apenas para compatibilidade com código legado.
+ * Será removida em versões futuras.
+ */
+@Deprecated(
+    message = "Use RetrofitClient.apiService",
+    replaceWith = ReplaceWith("RetrofitClient.apiService", "com.example.routepiresfront.data.remote.RetrofitClient")
+)
 object ApiClient {
 
     // Emulador Android → backend rodando no PC
@@ -30,7 +39,7 @@ object ApiClient {
     }
 
     val apiService: ApiService by lazy {
-        instance.create(ApiService::class.java)
+        RetrofitClient.apiService // Delega para RetrofitClient
     }
 
 }
