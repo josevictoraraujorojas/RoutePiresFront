@@ -42,6 +42,14 @@
                 android:contentDescription="img_mototaxista"
                 android:src="@drawable/avatar_pic" />
 
+            <ProgressBar
+                android:id="@+id/pbPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:visibility="gone" />
+
             <RatingBar
                 android:id="@+id/rating_bar"
                 style="?android:attr/ratingBarStyleSmall"
@@ -66,6 +74,34 @@
                 android:textColor="@color/blue"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDisponibilidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:text=""
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvVeiculo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
+                android:text=""
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
+                android:text=""
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,160 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="24dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.routepiresfront.ui.passageiro.viewmodel.CadastroPassageiroViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="24dp">
 
-        <!-- Cabeçalho com seta e título -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/btnVoltar"
-                android:layout_width="wrap_content"
+            <!-- Cabeçalho com seta e título -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_voltar_custom"
-                android:contentDescription="Voltar" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <ImageButton
+                    android:id="@+id/btnVoltar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Voltar"
+                    android:src="@drawable/ic_voltar_custom" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Cadastro de passageiro"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Nome completo -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cadastro de passageiro"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
+                android:layout_marginTop="24dp"
+                android:text="Nome completo"
+                android:textColor="@android:color/black" />
 
-        <!-- Nome completo -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome completo"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="24dp" />
+            <EditText
+                android:id="@+id/edtNome"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_border_selector"
+                android:hint="Digite seu nome completo"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="16dp"
+                android:text="@={viewModel.nome}" />
 
-        <EditText
-            android:id="@+id/edtNome"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Digite seu nome completo"
-            android:background="@drawable/edittext_border_selector"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
-            android:inputType="textPersonName" />
-
-        <!-- E-mail -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="nome@email.com"
-            android:background="@drawable/edittext_border_selector"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
-            android:inputType="textEmailAddress" />
-
-        <!-- Número de telefone -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Número de telefone"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/edtTelefone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="(64) 12345-6789"
-            android:background="@drawable/edittext_border_selector"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
-            android:inputType="phone" />
-
-        <!-- Senha -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Senha"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/edtSenha"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Crie uma senha"
-            android:background="@drawable/edittext_border_selector"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/edtConfirmarSenha"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Confirme a senha"
-            android:background="@drawable/edittext_border_selector"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="12dp"
-            android:inputType="textPassword" />
-
-        <!-- Checkbox Termos corrigido -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <CheckBox
-                android:id="@+id/chkTermos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
+            <!-- E-mail -->
             <TextView
-                android:id="@+id/txtTermosCompletos"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Li e concordo com os Termos de uso e a Política de Privacidade"
-                android:textColor="@android:color/black"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:singleLine="false"/>
+                android:text="E-mail"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_border_selector"
+                android:hint="nome@email.com"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="16dp"
+                android:text="@={viewModel.email}" />
+
+            <!-- Número de telefone -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de telefone"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/edtTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_border_selector"
+                android:hint="(64) 12345-6789"
+                android:inputType="phone"
+                android:paddingHorizontal="16dp"
+                android:text="@={viewModel.telefone}" />
+
+            <!-- Senha -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Senha"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/edtSenha"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittext_border_selector"
+                android:hint="Crie uma senha"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp"
+                android:text="@={viewModel.senha}" />
+
+            <EditText
+                android:id="@+id/edtConfirmarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_border_selector"
+                android:hint="Confirme a senha"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp"
+                android:text="@={viewModel.confirmarSenha}" />
+
+            <!-- Checkbox Termos corrigido -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/chkTermos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@={viewModel.aceitouTermos}" />
+
+                <TextView
+                    android:id="@+id/txtTermosCompletos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:scrollHorizontally="false"
+                    android:singleLine="false"
+                    android:text="Li e concordo com os Termos de uso e a Política de Privacidade"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- Botão Finalizar -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFinalizar"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bg_botao_arredondado"
+                android:enabled="@{viewModel.botaoHabilitado}"
+                android:onClick="@{() -> viewModel.onClickCadastrar()}"
+                android:text="Finalizar"
+                android:textColor="#FFFFFF"
+                android:alpha="@{viewModel.botaoHabilitado ? 1f : 0.5f}" />
+
+            <!-- Indicador simples de carregamento durante a chamada Retrofit -->
+            <ProgressBar
+                android:id="@+id/pbCadastro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:visibility="@{viewModel.carregando ? View.VISIBLE : View.GONE}" />
+
         </LinearLayout>
-
-
-        <!-- Botão Finalizar -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnFinalizar"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="Finalizar"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/bg_botao_arredondado"
-            />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</layout>

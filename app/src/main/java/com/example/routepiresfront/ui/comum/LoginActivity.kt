@@ -7,13 +7,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.routepiresfront.R
+import com.example.routepiresfront.core.Resultado
+import com.example.routepiresfront.data.model.auth.LoginRequest
+import com.example.routepiresfront.data.model.auth.UsuarioResponse
+import com.example.routepiresfront.data.repository.auth.AuthRepository
+import com.example.routepiresfront.core.SessionManager
 import com.example.routepiresfront.ui.mototaxista.CadastroMototaxistaActivity
 import com.example.routepiresfront.ui.mototaxista.MenubarMototaxistaActivity
 import com.example.routepiresfront.ui.passageiro.CadastroPassageiroActivity
 import com.example.routepiresfront.ui.passageiro.MenubarPassageiroActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -25,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnGoogle: ImageView
     private lateinit var btnApple: ImageView
     private lateinit var btnFacebook: ImageView
+    private val authRepository = AuthRepository()
 
     // 🔹 Elementos do popup
     private lateinit var registrationOverlay: View
@@ -108,35 +116,70 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin() {
-//        val email = etEmail.text.toString().trim()
-//        val password = etPassword.text.toString().trim()
-//
-//        if (email.isEmpty()) {
-//            etEmail.error = "Digite seu email"
-//            etEmail.requestFocus()
-//            return
-//        }
-//
-//        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//            etEmail.error = "Email inválido"
-//            etEmail.requestFocus()
-//            return
-//        }
-//
-//        if (password.isEmpty()) {
-//            etPassword.error = "Digite sua senha"
-//            etPassword.requestFocus()
-//            return
-//        }
-//
-//        if (password.length < 6) {
-//            etPassword.error = "Senha deve ter no mínimo 6 caracteres"
-//            etPassword.requestFocus()
-//            return
-//        }
-//        startActivity(Intent(this, MenubarPassageiroActivity::class.java))
+        val email = etEmail.text?.toString()?.trim().orEmpty()
+        val password = etPassword.text?.toString()?.trim().orEmpty()
 
-        startActivity(Intent(this, MenubarMototaxistaActivity::class.java))
+        if (email.isEmpty()) {
+            etEmail.error = "Digite seu email"
+            etEmail.requestFocus()
+            return
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.error = "Email inválido"
+            etEmail.requestFocus()
+            return
+        }
+
+        if (password.isEmpty()) {
+            etPassword.error = "Digite sua senha"
+            etPassword.requestFocus()
+            return
+        }
+
+        if (password.length < 6) {
+            etPassword.error = "Senha deve ter no mínimo 6 caracteres"
+            etPassword.requestFocus()
+            return
+        }
+
+        executarLogin(email, password)
+    }
+
+    private fun executarLogin(email: String, senha: String) {
+        btnLogin.isEnabled = false
+        val textoOriginal = btnLogin.text
+        btnLogin.text = "Aguarde..."
+
+        lifecycleScope.launch {
+            when (val resultado = authRepository.login(LoginRequest(email, senha))) {
+                is Resultado.Sucesso -> {
+                    Toast.makeText(this@LoginActivity, "Login realizado", Toast.LENGTH_SHORT).show()
+                    abrirHome(resultado.dado)
+                }
+
+                is Resultado.Erro -> {
+                    Toast.makeText(this@LoginActivity, resultado.mensagem, Toast.LENGTH_LONG).show()
+                }
+
+                Resultado.Carregando -> { /* nunca cai aqui */ }
+            }
+            btnLogin.isEnabled = true
+            btnLogin.text = textoOriginal
+        }
+    }
+
+    private fun abrirHome(usuario: UsuarioResponse) {
+        SessionManager.salvarUsuario(this, usuario.id, usuario.tipo)
+        val tipo = usuario.tipo?.uppercase()
+        val destino = if (tipo == "MOTOTAXISTA") {
+            Intent(this, MenubarMototaxistaActivity::class.java)
+        } else {
+            Intent(this, MenubarPassageiroActivity::class.java)
+        }
+        destino.putExtra("usuarioId", usuario.id)
+        startActivity(destino)
+        finish()
     }
 
     private fun loginWithGoogle() {

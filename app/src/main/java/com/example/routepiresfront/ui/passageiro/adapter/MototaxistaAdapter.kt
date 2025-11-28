@@ -2,41 +2,39 @@ package com.example.routepiresfront.ui.passageiro.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.routepiresfront.ui.passageiro.EscolhaMototaxistaFragment
+import com.example.routepiresfront.R
+import com.example.routepiresfront.data.model.passageiro.MototaxistaResumo
 import com.example.routepiresfront.databinding.ItemMototaxistaBinding
-import com.example.routepiresfront.data.model.Mototaxista
 
-class MototaxistaAdapter(private val lista: List<Mototaxista>) :
-    RecyclerView.Adapter<MototaxistaAdapter.MototaxistaViewHolder>() {
+class MototaxistaAdapter(
+    private var lista: List<MototaxistaResumo>,
+    private val onItemClick: (MototaxistaResumo) -> Unit
+) : RecyclerView.Adapter<MototaxistaAdapter.MototaxistaViewHolder>() {
 
     inner class MototaxistaViewHolder(val binding: ItemMototaxistaBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MototaxistaViewHolder {
-        val binding = ItemMototaxistaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemMototaxistaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MototaxistaViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MototaxistaViewHolder, position: Int) {
         val mototaxista = lista[position]
 
-        // Preenche os dados do item
-        holder.binding.txtNome.text = mototaxista.nome
-        holder.binding.ratingAvaliacao.rating = mototaxista.avaliacao
-        holder.binding.imgPerfil.setImageResource(mototaxista.imagemRes)
+        holder.binding.txtNome.text = mototaxista.nome ?: "Mototaxista"
+        holder.binding.ratingAvaliacao.rating = mototaxista.avaliacaoMedia ?: 0f
+        holder.binding.imgPerfil.setImageResource(R.drawable.ic_user_avatar)
 
-        // 🔹 Ao clicar no item, abre o pop-up do fragmento
-        holder.itemView.setOnClickListener {
-            val activity = holder.itemView.context as AppCompatActivity
-            val fragment = EscolhaMototaxistaFragment.newInstance(
-                mototaxista.nome,
-                mototaxista.avaliacao
-            )
-            fragment.show(activity.supportFragmentManager, "EscolhaMototaxistaFragment")
-        }
+        holder.itemView.setOnClickListener { onItemClick(mototaxista) }
     }
 
     override fun getItemCount() = lista.size
+
+    fun submitList(novaLista: List<MototaxistaResumo>) {
+        lista = novaLista
+        notifyDataSetChanged()
+    }
 }
