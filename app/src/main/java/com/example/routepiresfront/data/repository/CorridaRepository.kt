@@ -1,11 +1,15 @@
 package com.example.routepiresfront.data.repository
 
 import com.example.routepiresfront.data.model.Corrida
-import com.example.routepiresfront.data.model.Localizacao
+import com.example.routepiresfront.data.model.mapper.CorridaMapper
+import com.example.routepiresfront.data.remote.ApiClient
 import com.example.routepiresfront.data.remote.ApiResponse
-import com.example.routepiresfront.data.remote.ApiService
+import com.example.routepiresfront.data.remote.CorridaService
 import retrofit2.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * REPOSITORY - Camada que conversa com a API REST
@@ -13,8 +17,11 @@ import java.io.IOException
  * ● Retorna dados para o ViewModel (sucesso/erro)
  * ● Contém toda a lógica de obtenção dos dados da API
  * ● Isola a parte de rede do resto do app
+ * ● Usa DTOs e Mapper para compatibilidade com backend
  */
-class CorridaRepository(private val apiService: ApiService) {
+class CorridaRepository {
+
+    private val corridaService: CorridaService = ApiClient.getService(CorridaService::class.java)
 
     private suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): ApiResponse<T> {
         return try {
@@ -37,57 +44,31 @@ class CorridaRepository(private val apiService: ApiService) {
         }
     }
 
-    /**
-     * Busca corridas disponíveis para o mototaxista aceitar
-     * Usa endpoint de corridas de passageiro como base
-     */
-    suspend fun getCorridasDisponiveis(mototaxistaId: Long): ApiResponse<List<Corrida>> {
-        return safeApiCall { apiService.getCorridasDisponiveis(mototaxistaId) }
+
+    suspend fun getCorridasDisponiveis(): ApiResponse<List<Corrida>> {
+        return safeApiCall { corridaService.getCorridasDisponiveis() }
     }
 
-    /**
-     * Aceita uma corrida (inicia negociação)
-     * Atualiza status da corrida para aceita
-     */
-    suspend fun aceitarCorrida(corridaId: String, mototaxistaId: Long): ApiResponse<Corrida> {
-        val body = mapOf(
-            "mototaxistaId" to mototaxistaId,
-            "status" to "ACEITA"
-        )
-        return safeApiCall { apiService.aceitarCorrida(corridaId, body) }
+    suspend fun aceitarCorrida(corridaId: String, mototaxistaId: String): ApiResponse<Corrida> {
+        val dto = CorridaMapper.toAceitarCorridaDTO(mototaxistaId)
+        return safeApiCall { corridaService.atualizarCorrida(corridaId, dto) }
     }
 
-    /**
-     * Inicia a corrida (mototaxista começa a se deslocar)
-     * Atualiza status da corrida para em andamento
-     */
     suspend fun iniciarCorrida(corridaId: String): ApiResponse<Corrida> {
-        return safeApiCall { apiService.iniciarCorrida(corridaId) }
+        val dataHora = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+        val dto = CorridaMapper.toIniciarCorridaDTO(dataHora)
+        return safeApiCall { corridaService.atualizarCorrida(corridaId, dto) }
     }
 
-    /**
-     * Atualiza localização do mototaxista durante a corrida
-     */
-    suspend fun atualizarLocalizacao(corridaId: String, localizacao: Localizacao): ApiResponse<Unit> {
-        return safeApiCall { apiService.atualizarLocalizacao(corridaId, localizacao) }
-    }
-
-    /**
-     * Finaliza a corrida
-     * Atualiza status da corrida para finalizada
-     */
     suspend fun finalizarCorrida(corridaId: String): ApiResponse<Corrida> {
-        return safeApiCall { apiService.finalizarCorrida(corridaId) }
+        val dataHora = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(Date())
+        val dto = CorridaMapper.toFinalizarCorridaDTO(dataHora)
+        return safeApiCall { corridaService.atualizarCorrida(corridaId, dto) }
     }
 
-    /**
-     * Cancela a corrida
-     * Atualiza status e adiciona motivo do cancelamento
-     */
     suspend fun cancelarCorrida(corridaId: String, motivo: String?): ApiResponse<Corrida> {
-        val body = motivo?.let { mapOf("motivo" to it, "status" to "CANCELADA") }
-        return safeApiCall { apiService.cancelarCorrida(corridaId, body) }
+        val dto = CorridaMapper.toCancelarCorridaDTO(motivo)
+        return safeApiCall { corridaService.atualizarCorrida(corridaId, dto) }
     }
 }
-
 

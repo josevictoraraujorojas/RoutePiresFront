@@ -18,7 +18,7 @@ class CorridaMototaxistaViewModel(
 
     // Construtor sem parâmetros para compatibilidade (cria repository internamente)
     // TODO: Remover quando implementar injeção de dependências (Hilt/Koin)
-    constructor() : this(CorridaRepository(RetrofitClient.apiService))
+    constructor() : this(CorridaRepository())
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -38,12 +38,12 @@ class CorridaMototaxistaViewModel(
     val navegarParaAvaliacao = SingleLiveEvent<Void>()
     val fecharFluxoCorrida = SingleLiveEvent<Void>()
 
-    private var mototaxistaId: Long = 1L // TODO: Obter de um sistema de sessão/autenticação
+    private var mototaxistaId: String = "1" // TODO: Obter de um sistema de sessão/autenticação
 
     fun carregarCorridasDisponiveis() {
         viewModelScope.launch {
             _isLoading.value = true
-            when (val response = repository.getCorridasDisponiveis(mototaxistaId)) {
+            when (val response = repository.getCorridasDisponiveis()) {
                 is ApiResponse.Success -> _corridasDisponiveis.value = response.data
                 is ApiResponse.Error -> _errorMessage.value = response.message
                 else -> {}
@@ -90,12 +90,14 @@ class CorridaMototaxistaViewModel(
         }
     }
 
+    // TODO: Implementar atualização de localização via WebSocket ou endpoint específico
     fun atualizarLocalizacao(latitude: Double, longitude: Double) {
-        val corridaId = _corridaAtual.value?.id?.toString() ?: return
-        val localizacao = Localizacao(latitude, longitude)
-        viewModelScope.launch {
-            repository.atualizarLocalizacao(corridaId, localizacao)
-        }
+        // Comentado até que o backend forneça endpoint adequado
+        // val corridaId = _corridaAtual.value?.id?.toString() ?: return
+        // val localizacao = Localizacao(latitude, longitude)
+        // viewModelScope.launch {
+        //     repository.atualizarLocalizacao(corridaId, localizacao)
+        // }
     }
 
     fun finalizarCorrida() {
@@ -166,7 +168,7 @@ class CorridaMototaxistaViewModel(
         return _corridaAtual.value?.tipo == "corrida"
     }
 
-    fun setMototaxistaId(id: Long) {
+    fun setMototaxistaId(id: String) {
         mototaxistaId = id
     }
 }

@@ -62,10 +62,8 @@ object RetrofitClient {
     }
 
     /**
-     * Instância do ApiService (lazy initialized)
-     * Use esta propriedade em vez de criar novas instâncias
+     * Método genérico para criar serviços Retrofit
+     * Use este método em vez de criar novas instâncias
      */
-    val apiService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
-    }
+    fun <T> getService(clazz: Class<T>): T = retrofit.create(clazz)
 }

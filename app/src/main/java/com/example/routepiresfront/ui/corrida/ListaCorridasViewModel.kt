@@ -9,21 +9,16 @@ import com.example.routepiresfront.data.repository.CorridaRepository
 import com.example.routepiresfront.ui.BaseViewModel
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel para a tela que lista as corridas disponíveis.
- */
+
 class ListaCorridasViewModel(private val repository: CorridaRepository) : BaseViewModel() {
 
     private val _corridasDisponiveis = MutableLiveData<List<Corrida>>()
     val corridasDisponiveis: LiveData<List<Corrida>> = _corridasDisponiveis
 
-    /**
-     * Busca as corridas disponíveis na API e atualiza os LiveData de acordo com a resposta.
-     */
-    fun carregarCorridasDisponiveis(mototaxistaId: Long) {
+    fun carregarCorridasDisponiveis() {
         viewModelScope.launch {
             _isLoading.value = true
-            when (val response = repository.getCorridasDisponiveis(mototaxistaId)) {
+            when (val response = repository.getCorridasDisponiveis()) {
                 is ApiResponse.Success -> {
                     _corridasDisponiveis.value = response.data
                 }
@@ -31,7 +26,6 @@ class ListaCorridasViewModel(private val repository: CorridaRepository) : BaseVi
                     _errorMessage.value = response.message
                 }
                 else -> {
-                    // O estado Loading é tratado pela flag _isLoading
                 }
             }
             _isLoading.value = false

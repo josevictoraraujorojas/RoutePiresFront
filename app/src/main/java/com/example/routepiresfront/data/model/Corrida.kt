@@ -2,9 +2,13 @@ package com.example.routepiresfront.data.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Modelo de domínio usado internamente no app
+ * Usado nas ViewModels e UI
+ */
 data class Corrida(
     @SerializedName("id")
-    val id: Long? = null,
+    val id: String? = null,  // Alterado de Long? para String? (compatível com backend)
 
     @SerializedName("passageiro")
     val passageiro: Passageiro? = null,
@@ -58,7 +62,7 @@ data class Corrida(
 
 data class Passageiro(
     @SerializedName("id")
-    val id: Long? = null,
+    val id: String? = null,  // Alterado de Long? para String?
 
     @SerializedName("nome")
     val nome: String = "",
@@ -75,7 +79,7 @@ data class Passageiro(
 
 data class MototaxistaInfo(
     @SerializedName("id")
-    val id: Long? = null,
+    val id: String? = null,  // Alterado de Long? para String?
 
     @SerializedName("nome")
     val nome: String = "",

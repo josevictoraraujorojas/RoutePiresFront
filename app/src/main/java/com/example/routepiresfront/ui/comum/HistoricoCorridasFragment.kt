@@ -34,11 +34,11 @@ class HistoricoCorridasFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // Mock data usando novo modelo
+        // Mock data usando novo modelo (IDs como String para compatibilidade com backend)
         val listaCorridas = listOf(
             Corrida(
-                id = 1,
-                passageiro = Passageiro(id = 1, nome = "João Silva", avaliacao = 4.5f),
+                id = "1",
+                passageiro = Passageiro(id = "1", nome = "João Silva", avaliacao = 4.5f),
                 status = StatusCorrida.CANCELADA,
                 valorEstimado = 25.50,
                 distanciaKm = 5.2,
@@ -47,8 +47,8 @@ class HistoricoCorridasFragment : Fragment() {
                 pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Av. B, 456")
             ),
             Corrida(
-                id = 2,
-                passageiro = Passageiro(id = 2, nome = "Jose Santos", avaliacao = 5.0f),
+                id = "2",
+                passageiro = Passageiro(id = "2", nome = "Jose Santos", avaliacao = 5.0f),
                 status = StatusCorrida.FINALIZADA,
                 valorEstimado = 18.00,
                 distanciaKm = 3.5,
@@ -57,8 +57,8 @@ class HistoricoCorridasFragment : Fragment() {
                 pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Bairro Sul")
             ),
             Corrida(
-                id = 3,
-                passageiro = Passageiro(id = 3, nome = "Rodrigo Lima", avaliacao = 4.8f),
+                id = "3",
+                passageiro = Passageiro(id = "3", nome = "Rodrigo Lima", avaliacao = 4.8f),
                 status = StatusCorrida.FINALIZADA,
                 valorEstimado = 32.00,
                 distanciaKm = 8.1,
@@ -67,8 +67,8 @@ class HistoricoCorridasFragment : Fragment() {
                 pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Aeroporto")
             ),
             Corrida(
-                id = 4,
-                passageiro = Passageiro(id = 4, nome = "Otavio Costa", avaliacao = 4.2f),
+                id = "4",
+                passageiro = Passageiro(id = "4", nome = "Otavio Costa", avaliacao = 4.2f),
                 status = StatusCorrida.CANCELADA,
                 valorEstimado = 15.00,
                 distanciaKm = 2.8,
@@ -77,8 +77,8 @@ class HistoricoCorridasFragment : Fragment() {
                 pontoDestino = Localizacao(latitude = 0.0, longitude = 0.0, endereco = "Residencial")
             ),
             Corrida(
-                id = 5,
-                passageiro = Passageiro(id = 5, nome = "Luan Campos", avaliacao = 4.9f),
+                id = "5",
+                passageiro = Passageiro(id = "5", nome = "Luan Campos", avaliacao = 4.9f),
                 status = StatusCorrida.CANCELADA,
                 valorEstimado = 22.50,
                 distanciaKm = 4.5,
