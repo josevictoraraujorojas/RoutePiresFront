@@ -3,6 +3,7 @@
     android:id="@+id/nav_negociacao_mototaxista"
     app:startDestination="@id/negociacaoFragment2">
 
+    <!-- Fragmento de negociação -->
     <fragment
         android:id="@+id/negociacaoFragment2"
         android:name="com.example.routepiresfront.ui.comum.NegociacaoFragment"
@@ -13,18 +14,35 @@
             app:destination="@id/chatFragment2" />
     </fragment>
 
+    <!-- Fragmento de chat -->
     <fragment
         android:id="@+id/chatFragment2"
         android:name="com.example.routepiresfront.chat.ChatFragment"
         android:label="Chat">
+
+        <argument
+            android:name="negociacao"
+            app:argType="com.example.routepiresfront.data.model.Negociacao" />
 
         <action
             android:id="@+id/action_chat_para_denuncia"
             app:destination="@id/denunciaFragment2" />
     </fragment>
 
+    <!-- Fragmento de denúncia -->
     <fragment
         android:id="@+id/denunciaFragment2"
         android:name="com.example.routepiresfront.ui.comum.DenunciaFragment"
-        android:label="Denúncia" />
+        android:label="Denúncia">
+
+        <!-- Argumentos para receber IDs do usuário -->
+        <argument
+            android:name="usuarioLogadoId"
+            app:argType="string" />
+
+        <argument
+            android:name="usuarioDenunciadoId"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

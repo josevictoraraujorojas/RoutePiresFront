@@ -12,23 +12,23 @@ class MensagensAdapter(
     private val mensagens: List<Mensagem>
 ) : RecyclerView.Adapter<MensagensAdapter.MensagemViewHolder>() {
 
-    // 1. ViewHolder genérico
+
     class MensagemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val textoMensagem: TextView = view.findViewById(R.id.texto_mensagem)
         private val horaMensagem: TextView = view.findViewById(R.id.hora_mensagem)
 
         fun bind(mensagem: Mensagem) {
             textoMensagem.text = mensagem.texto
-            horaMensagem.text = mensagem.hora
+            horaMensagem.text = mensagem.horaData
         }
     }
 
-    // 2. Decide qual layout usar com base no tipo
+
     override fun getItemViewType(position: Int): Int {
         return mensagens[position].tipo
     }
 
-    // 3. Cria o ViewHolder correto com base no tipo de mensagem
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MensagemViewHolder {
         val layoutId = if (viewType == Mensagem.TIPO_ENVIADA) {
             R.layout.item_mensagem_enviada

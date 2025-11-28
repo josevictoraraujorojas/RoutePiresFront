@@ -1,19 +1,26 @@
 package com.example.routepiresfront.chat
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentChatBinding
-import com.example.routepiresfront.data.model.Mensagem
-import com.example.routepiresfront.ui.comum.adapter.MensagensAdapter
-import com.example.routepiresfront.ui.mototaxista.viewmodel.CorridaMototaxistaViewModel
+import com.example.routepiresfront.ui.chat.ChatAdapter
+import com.example.routepiresfront.ui.chat.ChatViewModel
+import com.example.routepiresfront.viewmodel.ChatViewModelFactory
+import br.gov.ifgoiano.routepires.data.remote.ChatService
+import com.example.routepiresfront.data.remote.MensagemService
+import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
+import br.gov.ifgoiano.routepiresfront.repository.MensagemRepository
+import com.example.routepiresfront.data.remote.ApiClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ChatFragment : Fragment() {
@@ -21,30 +28,53 @@ class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var chatAdapter: MensagensAdapter
-    
-    // ViewModel compartilhado para verificar o tipo de corrida
-    private val viewModel: CorridaMototaxistaViewModel by activityViewModels()
+    // Safe args
+    private val args: ChatFragmentArgs by navArgs()
+
+    // ViewModel (created with factory below)
+    private val viewModel: ChatViewModel by viewModels {
+        // cria services via seu ApiClient
+        val chatApi = ApiClient.getService(ChatService::class.java)
+        val mensagemApi = ApiClient.getService(MensagemService::class.java)
+
+        // repositórios
+        val chatRepository = ChatRepository(chatApi)
+        val mensagemRepository = MensagemRepository(mensagemApi)
+
+        ChatViewModelFactory(chatRepository, mensagemRepository)
+    }
+
+    // Adapter (usa userId depois de inicializar)
+    private lateinit var adapter: ChatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentChatBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        // vincula viewModel ao data binding (xml tem a variável viewModel)
+        binding.viewModel = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Cabeçalho do chat
-        binding.chatToolbar.textViewName.text = "Lourielton João"
-        binding.chatToolbar.ratingBar.rating = 4.5f
-        binding.chatToolbar.textViewRatingValue.text = "4.5"
-        binding.chatToolbar.imgUser.setImageResource(com.example.routepiresfront.R.drawable.ic_google)
+        // pega negociacao enviada pelo Safe Args
+        val negociacao = args.negociacao
+        val chatId = negociacao.chat.id
+        val usuarioLogado = negociacao.usarioLogado
 
-        // Botão de voltar no cabeçalho
+        // destinatario
+        val destinatarioId = negociacao.chat.participantes?.firstOrNull { it != usuarioLogado } ?: ""
+
+        // configura cabeçalho
+        binding.chatToolbar.textViewName.text = negociacao.nome
+        binding.chatToolbar.ratingBar.rating = 0f
+        binding.chatToolbar.textViewRatingValue.text = ""
+
         binding.chatToolbar.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -53,98 +83,99 @@ class ChatFragment : Fragment() {
             mostrarPopupDenuncia()
         }
 
-        // Lista de mensagens de exemplo
-        val mensagens = listOf(
-            Mensagem("Olá! Tudo bem?", "10:00", Mensagem.TIPO_RECEBIDA),
-            Mensagem("Tudo sim, e com você?", "10:01", Mensagem.TIPO_ENVIADA),
-            Mensagem("Estou bem também, obrigado!", "10:01", Mensagem.TIPO_RECEBIDA),
-            Mensagem("Onde você está?", "10:02", Mensagem.TIPO_ENVIADA)
-        )
+        // cria adapter com id do usuário logado
+        adapter = ChatAdapter(usuarioLogado)
 
-        // Configura RecyclerView
-        chatAdapter = MensagensAdapter(mensagens)
-        binding.recyclerViewChat.apply {
-            adapter = chatAdapter
-            layoutManager = LinearLayoutManager(context).apply {
-                reverseLayout = false
+        // configura RecyclerView
+        val layoutManager = LinearLayoutManager(requireContext()).apply {
+            // respeitar reverseLayout definido no xml: se quiser forçar, altere aqui
+            reverseLayout = true
+        }
+        binding.recyclerViewChat.layoutManager = layoutManager
+        binding.recyclerViewChat.adapter = adapter
+
+        // inicializa ViewModel
+        if (chatId != null) {
+            viewModel.inicializar(chatId, usuarioLogado)
+        } else {
+            return
+        }
+
+
+        viewModel.mensagens.observe(viewLifecycleOwner) { lista ->
+            adapter.atualizarMensagens(lista)
+
+            // scroll: se reverseLayout == true, o "fim" está em position 0
+            val lm = binding.recyclerViewChat.layoutManager
+            val pos = if (lm is LinearLayoutManager && lm.reverseLayout) 0 else (lista.size - 1).coerceAtLeast(0)
+            if (pos >= 0) {
+                binding.recyclerViewChat.scrollToPosition(pos)
             }
         }
 
-        // Botão recusar corrida
+
+        viewModel.erro.observe(viewLifecycleOwner) { err ->
+            err?.let {
+
+            }
+        }
+
+
         binding.buttonRecusarCorrida.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // Botão aceitar corrida (aqui você pode adicionar navegação se necessário)
-//        binding.buttonAceitarCorrida.setOnClickListener {
-
-//            // 1️⃣ Trocar para a aba "Corrida"
-//            val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
-//            bottom.selectedItemId = R.id.bottom_corrida
-//
-//            // 2️⃣ Obter NavController da aba Corrida
-//            val corridaNav = requireActivity()
-//                .supportFragmentManager
-//                .findFragmentById(R.id.nav_host_corrida)
-//                ?.findNavController()
-//
-//            // 3️⃣ Navegar dentro do fluxo da aba Corrida
-//            corridaNav?.navigate(R.id.action_global_mototaxistaCaminhoFragment)
-
-//
-//        }
 
         binding.buttonAceitarCorrida.setOnClickListener {
-            // 1️⃣ Seleciona a aba Home (Corrida)
             val bottom = requireActivity().findViewById<BottomNavigationView>(R.id.menuInferior)
             bottom.selectedItemId = R.id.bottom_home
 
-            // 2️⃣ Obtém NavController da aba Home
             val corridaNav = requireActivity()
                 .supportFragmentManager
                 .findFragmentById(R.id.nav_host_home_moto)
                 ?.findNavController()
 
-            // 3️⃣ Navega para o fragment correto baseado no tipo (corrida ou entrega)
-            corridaNav?.let { navController ->
-                if (viewModel.isEntrega()) {
-                    // É uma entrega
-                    navController.navigate(R.id.action_global_aguardandoInicioEntregaFragment)
-                } else {
-                    // É uma corrida normal
-                    navController.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
-                }
-            }
-            
-            // Chama o método do ViewModel para atualizar estado
-            viewModel.confirmarNegociacaoEAguardarInicio()
+            corridaNav?.navigate(R.id.action_global_aguardandoInicioCorridaFragment2)
         }
 
-    }
 
-        private fun mostrarPopupDenuncia() {
-            val dialogView = layoutInflater.inflate(R.layout.dialog_denuncia, null)
-
-            val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setView(dialogView)
-                .create()
-
-            dialogView.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
-                dialog.dismiss()
+        binding.buttonEnviar.setOnClickListener {
+            val texto = binding.editTextMensagem.text.toString().trim()
+            if (texto.isNotEmpty()) {
+                viewModel.enviarMensagem(texto, destinatarioId)
+                binding.editTextMensagem.text.clear()
             }
-
-            dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
-                findNavController().navigate(R.id.action_chat_para_denuncia)
-                dialog.dismiss()
-
-            }
-
-            dialog.show()
-        }
-
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
         }
     }
 
+    private fun mostrarPopupDenuncia() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_denuncia, null)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btnConfirmar).setOnClickListener {
+            val usuarioLogado = args.negociacao.usarioLogado
+            val usuarioDenunciado = args.negociacao.chat.participantes?.firstOrNull { it != usuarioLogado } ?: ""
+
+            val action = ChatFragmentDirections.actionChatParaDenuncia(
+                usuarioLogadoId = usuarioLogado,
+                usuarioDenunciadoId = usuarioDenunciado
+            )
+            findNavController().navigate(action)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

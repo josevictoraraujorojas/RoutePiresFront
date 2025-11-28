@@ -10,14 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.routepiresfront.R
 import com.example.routepiresfront.data.model.Negociacao
 
-/**
- * Adaptador responsavel por vincular os itens de negociacao ao RecyclerView.
- * Recebe um callback que será chamado ao clicar em um item.
- */
 class NegociacaoAdapter(
-    private val negociacoes: List<Negociacao>,
-    private val onItemClick: (Negociacao) -> Unit // callback de clique
+    private var negociacoes: List<Negociacao>,
+    private val onItemClick: (Negociacao) -> Unit
 ) : RecyclerView.Adapter<NegociacaoAdapter.ItemNegociacaoViewHolder>() {
+
+    fun atualizar(novaLista: List<Negociacao>) {
+        negociacoes = novaLista
+        notifyDataSetChanged()
+    }
 
     class ItemNegociacaoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imagemAvatar: ImageView = itemView.findViewById(R.id.imageAvatar)
@@ -43,7 +44,7 @@ class NegociacaoAdapter(
             holder.seloQuantidade.text = negociacao.quantidadeNaoLida.toString()
         }
 
-        // Clique no item chama o callback
+
         holder.itemView.setOnClickListener {
             onItemClick(negociacao)
         }

@@ -1,22 +1,37 @@
 package com.example.routepiresfront.ui.comum
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routepiresfront.R
 import com.example.routepiresfront.databinding.FragmentNegociacaoBinding
-import com.example.routepiresfront.data.model.Negociacao
 import com.example.routepiresfront.ui.comum.adapter.NegociacaoAdapter
+import com.example.routepiresfront.ui.comum.viewmodel.NegociacaoViewModel
+import com.example.routepiresfront.ui.comum.viewmodel.NegociacaoViewModelFactory
+import br.gov.ifgoiano.routepiresfront.repository.ChatRepository
+import br.gov.ifgoiano.routepiresfront.repository.MensagemRepository
+import com.example.routepiresfront.data.remote.ApiClient
+import br.gov.ifgoiano.routepires.data.remote.ChatService
+import com.example.routepiresfront.data.remote.MensagemService
+import com.example.routepiresfront.repository.UsuarioRepository
+import com.example.routepiresfront.data.remote.MototaxistaService
+import com.example.routepiresfront.data.remote.PassageiroService
 
 class NegociacaoFragment : Fragment() {
 
     private var _binding: FragmentNegociacaoBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: NegociacaoViewModel
+    private lateinit var adaptador: NegociacaoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,15 +40,16 @@ class NegociacaoFragment : Fragment() {
     ): View {
         _binding = FragmentNegociacaoBinding.inflate(inflater, container, false)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        configurarViewModel()
         configurarCabecalho()
-        configurarListaNegociacoes()
+        configurarRecycler()
+        configurarBusca()
+
+        viewModel.carregarNegociacoes()
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun configurarCabecalho() {
@@ -44,6 +60,7 @@ class NegociacaoFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
         binding.buttonCompose.setOnClickListener {
             Toast.makeText(
                 requireContext(),
@@ -53,42 +70,65 @@ class NegociacaoFragment : Fragment() {
         }
     }
 
-    private fun configurarListaNegociacoes() {
-        val negociacoes = listOf(
-            Negociacao("Haley James", "Seu mototaxi está a caminho e chega em 2 minutos.", 9),
-            Negociacao("Nathan Scott", "Consegue me levar do centro até a rodoviária às 14h?", 0),
-            Negociacao("Brooke Davis", "Preciso de duas corridas seguidas hoje à noite, consegue?", 2),
-            Negociacao("Jamie Scott", "Pode me buscar na escola e deixar na academia?", 0),
-            Negociacao("Marvin McFadden", "Qual o valor da corrida até o aeroporto amanhã cedo?", 0),
-            Negociacao("Antwon Taylor", "Vou precisar que espere 5 minutos no endereço, tudo bem?", 1),
-            Negociacao("Jake Jagielski", "Dá pra levar uma prancha pequena? Quero ir até a praia.", 0),
-            Negociacao("Peyton Sawyer", "Você tem capacete extra tamanho pequeno disponível?", 0),
-            Negociacao("Lucas Scott", "Tem como fazer uma corrida rápida para o Rivercourt agora?", 3),
-            Negociacao("Skills Taylor", "Daria para agendar corrida corporativa para três funcionários?", 0),
-            Negociacao("Quentin Fields", "Consegue enviar o comprovante da corrida de ontem?", 1)
-        )
+    private fun configurarRecycler() {
+        adaptador = NegociacaoAdapter(emptyList()) { negociacao ->
+            val action = NegociacaoFragmentDirections
+                .actionNegociacaoParaChat(negociacao)
 
-        val adaptador = NegociacaoAdapter(negociacoes) { negociacao ->
-            // 1️⃣ Obter o NavController do NavHost da aba Negociação
-            val navController = requireActivity()
-                .supportFragmentManager
-                .findFragmentById(R.id.nav_host_negociacao_moto)  // <- id do NavHostFragment da aba
-                ?.findNavController()
-
-            // 2️⃣ Navegar usando a action declarada no nav graph da aba
-            navController?.navigate(R.id.action_negociacao_para_chat)
-
-//            // 1️⃣ Obter o NavController do NavHost da aba Negociação
-//            val navController = requireActivity()
-//                .supportFragmentManager
-//                .findFragmentById(R.id.nav_host_container)  // <- id do NavHostFragment da aba
-//                ?.findNavController()
-//
-//            // 2️⃣ Navegar usando a action declarada no nav graph da aba
-//            navController?.navigate(R.id.action_negociacaoFragment2_to_chatFragment2)
+            findNavController().navigate(action)
         }
 
         binding.recyclerNegociacoes.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerNegociacoes.adapter = adaptador
+    }
+
+    private fun configurarViewModel() {
+
+        val chatApi = ApiClient.getService(ChatService::class.java)
+        val mototaxistaApi = ApiClient.getService(MototaxistaService::class.java)
+        val passageiroApi = ApiClient.getService(PassageiroService::class.java)
+        val mensagemApi = ApiClient.getService(MensagemService::class.java)
+
+
+        val chatRepository = ChatRepository(chatApi)
+        val usuarioRepository = UsuarioRepository(mototaxistaApi, passageiroApi)
+        val mensagemRepository = MensagemRepository(mensagemApi)
+
+
+        val factory = NegociacaoViewModelFactory(chatRepository, usuarioRepository, mensagemRepository)
+
+        viewModel = ViewModelProvider(this, factory)[NegociacaoViewModel::class.java]
+        binding.viewModel = viewModel
+
+        // OBSERVER
+        viewModel.negociacoes.observe(viewLifecycleOwner) { lista ->
+            adaptador.atualizar(lista)
+
+            val termoBusca = binding.editSearch.text.toString().trim()
+            if (lista.isEmpty() && termoBusca.isNotEmpty()) {
+                Toast.makeText(requireContext(), "Nenhuma negociação encontrada", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.erro.observe(viewLifecycleOwner) { erro ->
+            erro?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun configurarBusca() {
+        binding.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.filtrar(s?.toString().orEmpty())
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
